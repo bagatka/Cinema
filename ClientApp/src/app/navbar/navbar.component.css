@@ -2,7 +2,7 @@
   border-radius: 25px;
   height: fit-content;
   display: inline-flex;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: #24204b;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   align-items: center;
@@ -35,7 +35,12 @@
   color: black;
 }
 .menu-bar li:hover::before {
-  background: linear-gradient(to bottom, #e8edec, #d2d1d3);
+  background: linear-gradient(to bottom, #5b39db, #4b25db);
   box-shadow: 0px 3px 20px 0px black;
   transform: scale(1.2);
+}
+
+.link{
+  color: #adabc7;
+  text-decoration: none;
 }

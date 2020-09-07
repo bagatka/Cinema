@@ -50,6 +50,10 @@ export class CarouselComponent implements OnInit, OnDestroy {
     this.updateSlide();
   }
 
+  getFilmName(): string{
+    return this.slides[this.currentSlide].filmName;
+  }
+
   constructor() {
   }
 
@@ -58,7 +62,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.interval());
+    clearInterval(this.interval);
   }
 
 }

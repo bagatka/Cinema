@@ -1,4 +1,5 @@
 <div class="carousel">
+
   <ng-container *ngFor="let slide of slides; let i = index">
     <img
       *ngIf="i === currentSlide"
@@ -7,7 +8,9 @@
       @carouselAnimation
     />
   </ng-container>
-
+  <div class="film-details">
+    <h2 class="film-title">{{getFilmName()}}</h2>
+  </div>
   <button class="control prev" (click)="onPreviousClick()">
     <span class="arrow left"></span>
   </button>

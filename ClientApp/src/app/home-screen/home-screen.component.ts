@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Slide} from '../carousel/slide';
 
 @Component({
   selector: 'app-home-screen',
@@ -16,10 +17,37 @@ export class HomeScreenComponent implements OnInit {
       pictureSrc: 'https://images.pexels.com/photos/5195671/pexels-photo-5195671.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
       filmName: 'John'
     },
-    {pictureSrc: 'https://images.pexels.com/photos/4526712/pexels-photo-4526712.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}
+    {
+      pictureSrc: 'https://images.pexels.com/photos/4526712/pexels-photo-4526712.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+      filmName: 'Test3'
+    }
   ];
 
-  constructor() { }
+  popularFilms: Slide[];
+
+  loadFilms(): void {
+    this.popularFilms = [
+      {
+        pictureSrc: 'http://image.tmdb.org/t/p/w500//velWPhVMQeQKcxggNEU8YmIo52R.jpg',
+        filmName: 'Green Mile'
+      },
+      {
+        pictureSrc: 'http://image.tmdb.org/t/p/w500//velWPhVMQeQKcxggNEU8YmIo52R.jpg',
+        filmName: 'Green Mile'
+      },
+      {
+        pictureSrc: 'http://image.tmdb.org/t/p/w500//velWPhVMQeQKcxggNEU8YmIo52R.jpg',
+        filmName: 'Green Mile'
+      },
+      {
+        pictureSrc: 'http://image.tmdb.org/t/p/w500//velWPhVMQeQKcxggNEU8YmIo52R.jpg',
+        filmName: 'Green Mile'
+      },
+    ];
+  }
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
