@@ -21,6 +21,7 @@ import {Slide} from './slide';
 })
 export class CarouselComponent implements OnInit, OnDestroy {
 
+  @Input() visibleAmount = 1;
   @Input() slides: Slide[];
 
   currentSlide = 0;
