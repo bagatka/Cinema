@@ -2,12 +2,12 @@
   <ng-container *ngFor="let slide of slides; let i = index">
     <img
       *ngIf="i === currentSlide"
-      [src]="slide.src"
+      [src]="slide.pictureSrc"
       class="slide"
       @carouselAnimation
     />
   </ng-container>
-  <!-- controls -->
+
   <button class="control prev" (click)="onPreviousClick()">
     <span class="arrow left"></span>
   </button>

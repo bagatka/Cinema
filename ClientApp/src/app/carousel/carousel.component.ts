@@ -1,5 +1,5 @@
 import {trigger, transition, style, animate} from '@angular/animations';
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, OnDestroy, Input} from '@angular/core';
 import {Slide} from './slide';
 
 
@@ -19,29 +19,45 @@ import {Slide} from './slide';
     ])
   ]
 })
-export class CarouselComponent implements OnInit {
+export class CarouselComponent implements OnInit, OnDestroy {
 
   @Input() slides: Slide[];
 
   currentSlide = 0;
-  filmTitle: string;
+  interval: any;
 
-  onPreviousClick(): void {
+  public onPreviousClick(): void {
     const previous = this.currentSlide - 1;
     this.currentSlide = previous < 0 ? this.slides.length - 1 : previous;
-    console.log('previous clicked, new current slide is: ', this.currentSlide);
+    this.cancelUpdate();
   }
 
-  onNextClick(): void {
+  public onNextClick(): void {
     const next = this.currentSlide + 1;
     this.currentSlide = next === this.slides.length ? 0 : next;
-    console.log('next clicked, new current slide is: ', this.currentSlide);
+    this.cancelUpdate();
+  }
+
+  private updateSlide(): void{
+    this.interval = setInterval(() => {
+      this.onNextClick();
+    }, 5000);
+  }
+
+  private cancelUpdate(): void{
+    clearInterval(this.interval);
+    this.updateSlide();
   }
 
   constructor() {
   }
 
   ngOnInit(): void {
+    this.updateSlide();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval());
   }
 
 }
