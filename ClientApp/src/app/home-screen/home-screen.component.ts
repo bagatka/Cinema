@@ -50,6 +50,7 @@ export class HomeScreenComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadFilms();
   }
 
 }

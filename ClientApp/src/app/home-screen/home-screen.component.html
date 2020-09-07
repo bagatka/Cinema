@@ -5,7 +5,10 @@
   <div class="big-carousel">
     <app-carousel [slides]="slides"></app-carousel>
   </div>
-  <div class="popular-films" *ngFor="">
-
+  <div class="popular-films" *ngFor="let film of popularFilms">
+    <div class="item">
+      <img [src]="film.pictureSrc" class="poster">
+      <h3>{{film.filmName}}</h3>
+    </div>
   </div>
 </div>

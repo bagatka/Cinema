@@ -16,10 +16,12 @@
   grid-row: 3 / span 1;
 }
 
-/*.big-carousel{
+.popular-films{
+  max-height: 10vh;
   grid-column: 2 / span 6;
-  grid-row: 2 / span 1;
-  width: border-box;
-  height: border-box;
-}*/
+  grid-row: 5 / span 1;
+}
 
+.poster{
+  height: 20vh;
+}
