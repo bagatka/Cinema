@@ -2,13 +2,19 @@
   <div class="navbar">
     <app-navbar ></app-navbar>
   </div>
+  <app-search-bar class="search"></app-search-bar>
   <div class="big-carousel">
     <app-carousel [slides]="slides"></app-carousel>
   </div>
-  <div class="popular-films" *ngFor="let film of popularFilms">
-    <div class="item">
-      <img [src]="film.pictureSrc" class="poster">
-      <h3>{{film.filmName}}</h3>
+  <h1 class="today-films-title">Movies Today</h1>
+  <div class="layout">
+    <div class="popular-films">
+      <div *ngFor="let film of popularFilms">
+        <div class="item">
+          <img [src]="film.pictureSrc" class="poster">
+          <h3 class="film-title">{{film.filmName}}</h3>
+        </div>
+      </div>
     </div>
   </div>
 </div>

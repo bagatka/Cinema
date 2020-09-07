@@ -32,7 +32,6 @@
   justify-content: center;
   top: 9vh;
   color: white;
-  font-weight: bold;
   font-size: 3em;
   user-select: none;
   height: 50vh;
@@ -44,10 +43,12 @@
   opacity: 1;
 }
 .control.next {
-  right: 7vw;
+  right: 5vw;
+  padding-right: 2vw;
 }
 .control.prev {
-  left: 7vw;
+  left: 5vw;
+  padding-left: 2vw;
 }
 
 /* style the arrows */
@@ -70,11 +71,14 @@
 }*/
 
 .film-details{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
   position: absolute;
   top: 40vh;
   left: 10vw;
 }
 
 .film-title{
+  font-weight: 500;
   font-size: 8vh;
 }

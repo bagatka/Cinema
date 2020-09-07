@@ -1,27 +1,65 @@
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr 4fr 4fr 4fr 4fr 1fr 1fr;
-  /*grid-template-rows: 2fr 2fr 10fr 3fr 10fr;*/
-  grid-template-rows: 5vh 3vh 50vh 5vh 30vh;
+  grid-template-columns: 2fr 4fr 4fr 4fr 4fr 2fr;
+  grid-template-rows: 8vh 50vh 15vh 30vh;
 }
 
 .navbar{
-  place-self: center;
-  grid-column: 3 / span 4;
-  grid-row: 1 / span 1;
+  justify-self: center;
+  align-self: start;
+  grid-column: 2 / span 4;
+  grid-row: 0 / span 1;
 }
 
 .big-carousel{
-  grid-column: 2 / span 6;
-  grid-row: 3 / span 1;
+  grid-column: 1 / span 6;
+  grid-row: 2 / span 1;
 }
 
 .popular-films{
-  max-height: 10vh;
-  grid-column: 2 / span 6;
-  grid-row: 5 / span 1;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .poster{
   height: 20vh;
+}
+
+.item:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.layout{
+  place-self: center;
+  grid-column: 1 / span 6;
+  grid-row: 4 / span 1;
+}
+
+.item{
+  padding: 2vw;
+}
+
+.film-title{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  color: #adabc7;
+  text-align: center;
+}
+
+.today-films-title{
+  grid-column: 2 / span 3;
+  grid-row: 3;
+  justify-self: start;
+  align-self: center;
+  font-size: 7vh;
+  color: #adabc7;
+  font-family: 'Poppins', sans-serif;
+}
+
+.search{
+  grid-column: 6;
+  grid-row: 0;
+  justify-self: start;
+  align-self: center;
 }

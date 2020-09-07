@@ -43,6 +43,18 @@ export class HomeScreenComponent implements OnInit {
         pictureSrc: 'http://image.tmdb.org/t/p/w500//velWPhVMQeQKcxggNEU8YmIo52R.jpg',
         filmName: 'Green Mile'
       },
+      {
+        pictureSrc: 'http://image.tmdb.org/t/p/w500//velWPhVMQeQKcxggNEU8YmIo52R.jpg',
+        filmName: 'Green Mile'
+      },
+      {
+        pictureSrc: 'http://image.tmdb.org/t/p/w500//velWPhVMQeQKcxggNEU8YmIo52R.jpg',
+        filmName: 'Green Mile'
+      },
+      {
+        pictureSrc: 'http://image.tmdb.org/t/p/w500//velWPhVMQeQKcxggNEU8YmIo52R.jpg',
+        filmName: 'Green Mile'
+      }
     ];
   }
 
