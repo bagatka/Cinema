@@ -56,10 +56,3 @@
   color: #adabc7;
   font-family: 'Poppins', sans-serif;
 }
-
-.search{
-  grid-column: 6;
-  grid-row: 0;
-  justify-self: start;
-  align-self: center;
-}

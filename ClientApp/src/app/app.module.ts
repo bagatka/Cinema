@@ -7,22 +7,18 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HomeScreenComponent } from './home-screen/home-screen.component';
-import { SearchBarComponent } from './search-bar/search-bar.component';
-import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     CarouselComponent,
-    HomeScreenComponent,
-    SearchBarComponent
+    HomeScreenComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

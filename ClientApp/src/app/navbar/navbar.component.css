@@ -9,18 +9,24 @@
   padding: 0 10px;
   margin: 5px 0 0 0;
 }
-.menu-bar li {
+
+.menu-bar li{
+  list-style: none;
+}
+
+.menu-bar button {
   list-style: none;
   color: white;
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
+  font-size: 2vh;
   padding: 12px 16px;
   margin: 0 8px;
   position: relative;
   cursor: pointer;
   white-space: nowrap;
 }
-.menu-bar li::before {
+.menu-bar button::before {
   content: " ";
   position: absolute;
   top: 0;
@@ -31,16 +37,20 @@
   transition: 0.2s;
   border-radius: 25px;
 }
-.menu-bar li:hover {
+.menu-bar button:hover {
   color: black;
 }
-.menu-bar li:hover::before {
+.menu-bar button:hover::before {
   background: linear-gradient(to bottom, #5b39db, #4b25db);
-  box-shadow: 0px 3px 20px 0px black;
+  box-shadow: 0 3px 20px 0 black;
   transform: scale(1.2);
 }
 
-.link{
+.button{
   color: #adabc7;
-  text-decoration: none;
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
+  outline: none;
 }

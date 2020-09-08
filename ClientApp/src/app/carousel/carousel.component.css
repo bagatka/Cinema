@@ -43,11 +43,11 @@
   opacity: 1;
 }
 .control.next {
-  right: 5vw;
+  right: 0.2vw;
   padding-right: 2vw;
 }
 .control.prev {
-  left: 5vw;
+  left: 0.2vw;
   padding-left: 2vw;
 }
 
