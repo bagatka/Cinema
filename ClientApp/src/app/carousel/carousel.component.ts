@@ -1,6 +1,6 @@
 import {trigger, transition, style, animate} from '@angular/animations';
 import {Component, OnInit, OnDestroy, Input} from '@angular/core';
-import {Slide} from './slide';
+import {Film} from '../film';
 
 
 @Component({
@@ -20,38 +20,36 @@ import {Slide} from './slide';
   ]
 })
 export class CarouselComponent implements OnInit, OnDestroy {
-
-  @Input() visibleAmount = 1;
-  @Input() slides: Slide[];
+  @Input() films: Film[];
 
   currentSlide = 0;
   interval: any;
 
   public onPreviousClick(): void {
     const previous = this.currentSlide - 1;
-    this.currentSlide = previous < 0 ? this.slides.length - 1 : previous;
+    this.currentSlide = previous < 0 ? this.films.length - 1 : previous;
     this.cancelUpdate();
   }
 
   public onNextClick(): void {
     const next = this.currentSlide + 1;
-    this.currentSlide = next === this.slides.length ? 0 : next;
+    this.currentSlide = next === this.films.length ? 0 : next;
     this.cancelUpdate();
   }
 
-  private updateSlide(): void{
+  private updateSlide(): void {
     this.interval = setInterval(() => {
       this.onNextClick();
     }, 5000);
   }
 
-  private cancelUpdate(): void{
+  private cancelUpdate(): void {
     clearInterval(this.interval);
     this.updateSlide();
   }
 
-  getFilmName(): string{
-    return this.slides[this.currentSlide].filmName;
+  public getFilmName(): string {
+    return this.films[this.currentSlide].filmName;
   }
 
   constructor() {

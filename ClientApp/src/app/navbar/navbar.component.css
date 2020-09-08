@@ -10,7 +10,7 @@
   margin: 5px 0 0 0;
 }
 
-.menu-bar li{
+.menu-bar li {
   list-style: none;
 }
 
@@ -26,6 +26,7 @@
   cursor: pointer;
   white-space: nowrap;
 }
+
 .menu-bar button::before {
   content: " ";
   position: absolute;
@@ -37,20 +38,22 @@
   transition: 0.2s;
   border-radius: 25px;
 }
+
 .menu-bar button:hover {
   color: black;
 }
+
 .menu-bar button:hover::before {
   background: linear-gradient(to bottom, #5b39db, #4b25db);
   box-shadow: 0 3px 20px 0 black;
   transform: scale(1.2);
 }
 
-.button{
+.button {
   color: #adabc7;
-  background:none;
-  border:none;
-  margin:0;
-  padding:0;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
   outline: none;
 }

@@ -1,9 +1,9 @@
 <div class="carousel">
 
-  <ng-container *ngFor="let slide of slides; let i = index">
+  <ng-container *ngFor="let film of films; let i = index">
     <img
       *ngIf="i === currentSlide"
-      [src]="slide.pictureSrc"
+      [src]="film.pictureSrc"
       class="slide"
       @carouselAnimation
     />

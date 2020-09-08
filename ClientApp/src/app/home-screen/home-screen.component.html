@@ -1,14 +1,14 @@
 <div class="container">
   <div class="navbar">
-    <app-navbar ></app-navbar>
+    <app-navbar></app-navbar>
   </div>
   <div class="big-carousel">
-    <app-carousel [slides]="slides"></app-carousel>
+    <app-carousel [films]="popularFilms"></app-carousel>
   </div>
   <h1 class="today-films-title">Movies Today</h1>
   <div class="layout">
     <div class="popular-films">
-      <div *ngFor="let film of popularFilms">
+      <div *ngFor="let film of todayFilms">
         <div class="item">
           <img [src]="film.pictureSrc" class="poster">
           <h3 class="film-title">{{film.filmName}}</h3>
