@@ -52,9 +52,6 @@ export class CarouselComponent implements OnInit, OnDestroy {
     return this.films[this.currentSlide].filmName;
   }
 
-  constructor() {
-  }
-
   ngOnInit(): void {
     this.updateSlide();
   }

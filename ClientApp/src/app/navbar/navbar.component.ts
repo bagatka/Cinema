@@ -1,16 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {SearchBarComponent} from '../search-bar/search-bar.component';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
   }
 
-  ngOnInit(): void {
+  openSearch(): void {
+    this.dialog.open(SearchBarComponent, {
+      width: '20vw',
+    });
   }
-
 }
