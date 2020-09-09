@@ -1,0 +1,15 @@
+<h1 mat-dialog-title class="header">Search</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Favorite Animal</mat-label>
+    <label>
+      <input #searchBox matInput [formControl]="myControl" [matAutocomplete]="auto" (input)="search(searchBox.value)">
+    </label>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let result of results$ | async" [value]="result">
+        {{result.title}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+

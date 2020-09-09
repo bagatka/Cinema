@@ -1,0 +1,83 @@
+:host {
+  flex: 1;
+}
+
+.carousel {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.5em;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 150ms cubic-bezier(0.25, 0.46, 0.45, 0.84);
+  border-radius: 0.5em;
+}
+
+.slide:hover {
+  transform: scale(1.025);
+}
+
+.control {
+  border: none;
+  background-color: transparent;
+  outline: 0;
+  position: absolute;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  top: 9vh;
+  color: white;
+  font-size: 3em;
+  user-select: none;
+  height: 50vh;
+  opacity: 80%;
+  transition: opacity 150ms cubic-bezier(0.25, 0.46, 0.45, 0.84);
+}
+
+.control:hover, .control:focus {
+  opacity: 1;
+}
+
+.control.next {
+  right: 0.2vw;
+  padding-right: 2vw;
+}
+
+.control.prev {
+  left: 0.2vw;
+  padding-left: 2vw;
+}
+
+.arrow {
+  display: block;
+  border-left: 0.1em solid white;
+  border-bottom: 0.1em solid white;
+  width: 0.5em;
+  height: 0.5em;
+}
+
+.arrow.left {
+  transform: rotate(45deg);
+}
+
+.arrow.right {
+  transform: rotate(225deg);
+}
+
+.film-details {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  position: absolute;
+  top: 45vh;
+  left: 10vw;
+}
+
+.film-title {
+  font-weight: 500;
+  font-size: 8vh;
+}
