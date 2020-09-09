@@ -1,10 +1,15 @@
+using iTechArt.CinemaWebApp.API.Data;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+
+using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Cinema.API
+namespace iTechArt.CinemaWebApp.API
 {
     public class Startup
     {
@@ -18,6 +23,9 @@ namespace Cinema.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDbContext<CinemaDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("CinemaWebAppDatabase")));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
