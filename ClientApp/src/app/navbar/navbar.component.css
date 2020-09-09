@@ -3,7 +3,6 @@
   height: fit-content;
   display: inline-flex;
   background-color: #24204b;
-  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   align-items: center;
   padding: 0 10px;

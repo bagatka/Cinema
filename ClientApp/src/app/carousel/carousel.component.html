@@ -3,7 +3,7 @@
   <ng-container *ngFor="let film of films; let i = index">
     <img
       *ngIf="i === currentSlide"
-      [src]="film.pictureSrc"
+      [src]="film.bannerUrl"
       class="slide"
       @carouselAnimation
     />

@@ -1,5 +1,6 @@
-import {trigger, transition, style, animate} from '@angular/animations';
 import {Component, OnInit, OnDestroy, Input} from '@angular/core';
+import {trigger, transition, style, animate} from '@angular/animations';
+
 import {Film} from '../film';
 
 
@@ -49,7 +50,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
   }
 
   public getFilmName(): string {
-    return this.films[this.currentSlide].filmName;
+    return this.films[this.currentSlide].title;
   }
 
   ngOnInit(): void {

@@ -1,5 +1,7 @@
 export interface Film {
   id: number;
-  pictureSrc: string;
-  filmName: string;
+  title: string;
+  description: string;
+  posterUrl?: string;
+  bannerUrl?: string;
 }

@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
+
 import {SearchBarComponent} from '../search-bar/search-bar.component';
 
 @Component({
