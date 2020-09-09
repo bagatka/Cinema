@@ -1,9 +1,9 @@
 ﻿CREATE TABLE [dbo].[films] (
-    [id]          INT             NOT NULL,
-    [title]       NVARCHAR (200)  NOT NULL,
-    [description] NVARCHAR (1000) NOT NULL,
-    [poster_url]  VARCHAR (2048)  NULL,
-    [banner_url]  VARCHAR (2048)  NULL,
+    [Id]          INT IDENTITY(1,1) NOT NULL,
+    [Title]       NVARCHAR (200)    NOT NULL,
+    [Description] NVARCHAR (1000)   NOT NULL,
+    [PosterUrl]   NVARCHAR (2048)   NULL,
+    [BannerUrl]   NVARCHAR (2048)   NULL,
     PRIMARY KEY CLUSTERED ([id] ASC)
 );
 
