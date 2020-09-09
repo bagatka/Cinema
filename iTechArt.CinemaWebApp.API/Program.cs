@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Cinema.API
+namespace iTechArt.CinemaWebApp.API
 {
     public class Program
     {
