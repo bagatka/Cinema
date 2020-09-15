@@ -20,6 +20,8 @@ import {SearchBarComponent} from './search-bar/search-bar.component';
 
 import {InMemoryDataService} from './in-memory-data.service';
 import { SearchScreenComponent } from './search-screen/search-screen.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import { SearchFiltersComponent } from './search-filters/search-filters.component';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { SearchScreenComponent } from './search-screen/search-screen.component';
     CarouselComponent,
     HomeScreenComponent,
     SearchBarComponent,
-    SearchScreenComponent
+    SearchScreenComponent,
+    SearchFiltersComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +44,7 @@ import { SearchScreenComponent } from './search-screen/search-screen.component';
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
+    FlexLayoutModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, {dataEncapsulation: false}
