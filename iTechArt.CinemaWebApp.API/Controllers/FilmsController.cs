@@ -71,7 +71,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateFilm(int id, [FromBody] Film film)
         {
-            if (id != film.Id || film == null || !ModelState.IsValid)
+            if (id != film?.Id || !ModelState.IsValid)
             {
                 return BadRequest();
             }
