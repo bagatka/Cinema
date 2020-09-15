@@ -49,7 +49,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Film>> CreateFilm(Film film)
         {
-            if (film == null)
+            if (film == null || !ModelState.IsValid)
             {
                 return BadRequest();
             }
