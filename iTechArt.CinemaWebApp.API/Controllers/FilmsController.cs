@@ -15,6 +15,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     public class FilmsController : ControllerBase
     {
         private readonly CinemaDbContext _context;
+
         public FilmsController(CinemaDbContext cinemaDbContext)
         {
             _context = cinemaDbContext;
@@ -70,7 +71,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateFilm(int id, [FromBody] Film film)
         {
-            if (id != film.Id)
+            if (id != film.Id || film == null || !ModelState.IsValid)
             {
                 return BadRequest();
             }

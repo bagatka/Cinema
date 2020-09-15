@@ -8,11 +8,14 @@ namespace iTechArt.CinemaWebApp.API.Model
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [StringLength(50, ErrorMessage = "Name length can't be more than 50.", MinimumLength = 1)]
+        [Required(ErrorMessage = "Name is required.")]
+        [StringLength(50, ErrorMessage = "Name length can't be more than 50.")]
         public string Name { get; set; }
-        [StringLength(1000, ErrorMessage = "Description length can't be more than 1000.", MinimumLength = 1)]
+        [Required(ErrorMessage = "Description is required.")]
+        [StringLength(1000, ErrorMessage = "Description length can't be more than 1000.")]
         public string Description { get; set; }
-        [StringLength(50, ErrorMessage = "City length can't be more than 50.", MinimumLength = 1)]
+        [Required(ErrorMessage = "City is required.")]
+        [StringLength(50, ErrorMessage = "City length can't be more than 50.")]
         public string City { get; set; }
         [StringLength(2048, ErrorMessage = "Image URL length can't be more than 2048.")]
         public string ImageUrl { get; set; }
