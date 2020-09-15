@@ -2,7 +2,6 @@ using iTechArt.CinemaWebApp.API.Data;
 using iTechArt.CinemaWebApp.API.Model;
 
 using Microsoft.AspNetCore.Mvc;
-
 using Microsoft.EntityFrameworkCore;
 
 using System.Collections.Generic;
@@ -16,10 +15,6 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     public class FilmsController : ControllerBase
     {
         private readonly CinemaDbContext _context;
-        public FilmsController(CinemaDbContext cinemaDbContext)
-        {
-            _context = cinemaDbContext;
-        }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Film>>> GetFilmByName([FromQuery] string title)
@@ -32,6 +27,19 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             }
 
             return await films.OrderBy(film => film.Id).ToListAsync();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Film>> GetFilmById(int id)
+        {
+            var result = await _context.Films.FindAsync(id);
+
+            if(result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
         }
 
         [HttpPost]
@@ -47,7 +55,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             await _context.Films.AddAsync(newFilm);
             await _context.SaveChangesAsync();
 
-            return StatusCode(201);
+            return CreatedAtAction(nameof(GetFilmById), new { id = newFilm.Id }, newFilm);
         }
 
         [HttpPut("{id}")]
@@ -80,6 +88,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         public async Task<ActionResult<Film>> DeleteFilm(int id)
         {
             var resultFilm = await _context.Films.FindAsync(id);
+
             if (resultFilm == null)
             {
                 return NotFound();
@@ -93,6 +102,11 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         private bool FilmExists(int id)
         {
             return _context.Films.Any(film => film.Id == id);
+        }
+
+        public FilmsController(CinemaDbContext cinemaDbContext)
+        {
+            _context = cinemaDbContext;
         }
     }
 }
