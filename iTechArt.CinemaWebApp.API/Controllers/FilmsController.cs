@@ -15,13 +15,17 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     public class FilmsController : ControllerBase
     {
         private readonly CinemaDbContext _context;
+        public FilmsController(CinemaDbContext cinemaDbContext)
+        {
+            _context = cinemaDbContext;
+        }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Film>>> GetFilmByName([FromQuery] string title)
         {
             var films = _context.Films.AsQueryable();
 
-            if(!string.IsNullOrEmpty(title))
+            if (!string.IsNullOrEmpty(title))
             {
                 films = films.Where(n => n.Title.Contains(title));
             }
@@ -34,7 +38,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         {
             var result = await _context.Films.FindAsync(id);
 
-            if(result == null)
+            if (result == null)
             {
                 return NotFound();
             }
@@ -45,6 +49,11 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Film>> CreateFilm(Film film)
         {
+            if (film == null)
+            {
+                return BadRequest();
+            }
+
             Film newFilm = new Film()
             {
                 Title = film.Title,
@@ -102,11 +111,6 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         private bool FilmExists(int id)
         {
             return _context.Films.Any(film => film.Id == id);
-        }
-
-        public FilmsController(CinemaDbContext cinemaDbContext)
-        {
-            _context = cinemaDbContext;
         }
     }
 }
