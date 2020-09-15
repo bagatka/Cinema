@@ -19,6 +19,7 @@ import {HomeScreenComponent} from './home-screen/home-screen.component';
 import {SearchBarComponent} from './search-bar/search-bar.component';
 
 import {InMemoryDataService} from './in-memory-data.service';
+import { SearchScreenComponent } from './search-screen/search-screen.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {InMemoryDataService} from './in-memory-data.service';
     NavbarComponent,
     CarouselComponent,
     HomeScreenComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    SearchScreenComponent
   ],
   imports: [
     BrowserModule,
