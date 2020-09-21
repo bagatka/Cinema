@@ -1,3 +1,35 @@
 .navbar-container {
   padding-top: 1vh;
 }
+
+.search-card {
+  width: 70vw;
+  height: 13vh;
+}
+
+.main-container {
+  gap: 4vw;
+  padding-top: 10vh;
+}
+
+.search-title {
+  font-weight: 900;
+  font-size: 1.7vw;
+  padding-left: 1.3vw;
+  padding-top: 1.6vh;
+  padding-bottom: 1vh;
+}
+
+.search-form{
+  font-size: 1.4vw;
+  padding-left: 2vw;
+  width: 66vw;
+  padding-bottom: 0;
+}
+
+:host /deep/ .mat-form-field-infix{
+  border-top-width: 0;
+  padding-bottom: 0.5vh;
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
+}

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-search-screen',
@@ -7,7 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchScreenComponent implements OnInit {
 
-  constructor() { }
+  myControl = new FormControl();
+
+  constructor() {
+  }
+
+  search(filmName: string): void {
+    return;
+  }
 
   ngOnInit(): void {
   }

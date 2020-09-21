@@ -5,7 +5,7 @@
       <input #searchBox matInput [formControl]="myControl" [matAutocomplete]="auto" (input)="search(searchBox.value)">
     </label>
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let result of results$ | async" [value]="result">
+      <mat-option *ngFor="let result of results$ | async" [value]="result.title">
         {{result.title}}
       </mat-option>
     </mat-autocomplete>
