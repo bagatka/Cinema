@@ -1,5 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
+
+import {Observable, Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+
+import {Filter} from '../filter';
+import {Film} from '../film';
+import {FilmService} from '../film.service';
 
 @Component({
   selector: 'app-search-screen',
@@ -8,16 +14,34 @@ import {FormControl} from '@angular/forms';
 })
 export class SearchScreenComponent implements OnInit {
 
-  myControl = new FormControl();
+  filmTitle = '';
+  films$: Observable<Film[]>;
+  private filter: Filter = {};
+  private searchTerms = new Subject<Filter>();
 
-  constructor() {
+  constructor(private filmService: FilmService) {
   }
 
-  search(filmName: string): void {
-    return;
+  addFilter(filter: Filter): void {
+    this.filter = filter;
+    this.search();
+  }
+
+  onTitleChange(value): void {
+    this.filmTitle = value;
+    this.search();
+  }
+
+  search(): void {
+    this.filter.filmTitle = this.filmTitle;
+    this.searchTerms.next(this.filter);
   }
 
   ngOnInit(): void {
+    this.films$ = this.searchTerms.pipe(
+      debounceTime(1000),
+      distinctUntilChanged(),
+      switchMap((filter: Filter) => this.filmService.searchFilmsByFilter(filter))
+    );
   }
-
 }

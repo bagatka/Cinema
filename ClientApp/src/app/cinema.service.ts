@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {of, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 
 import {Cinema} from './cinema';
-import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,23 +16,15 @@ export class CinemaService {
     return this.http.get<Cinema[]>(this.cinemasUrl);
   }
 
-  getCinemasCities(): string[] {
-    const cities: string[] = [];
-    this.getCinemas().pipe(
-      map(cinemas => {
-        for (const cinema of cinemas) {
-          cities.push(cinema.city);
-        }
-      })
-    );
-    return cities;
+  getCinemasCities(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.cinemasUrl}/cities`);
   }
 
-  searchCinemas(term: string): Observable<Cinema[]> {
-    if (!term.trim()) {
-      return of([]);
+  getCinemasByCity(city: string): Observable<Cinema[]> {
+    if (!city.trim()) {
+      return this.getCinemas();
     }
-    return this.http.get<Cinema[]>(`${this.cinemasUrl}/?title=${term}`);
+    return this.http.get<Cinema[]>(`${this.cinemasUrl}/?city=${city}`);
   }
 
   constructor(private http: HttpClient) {
