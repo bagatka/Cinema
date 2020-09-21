@@ -13,23 +13,19 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
+import {InMemoryDataService} from './in-memory-data.service';
 
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {CarouselComponent} from './carousel/carousel.component';
 import {HomeScreenComponent} from './home-screen/home-screen.component';
 import {SearchBarComponent} from './search-bar/search-bar.component';
-
-import {InMemoryDataService} from './in-memory-data.service';
 import {SearchScreenComponent} from './search-screen/search-screen.component';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import {SearchFiltersComponent} from './search-filters/search-filters.component';
-
-
-
 
 @NgModule({
   declarations: [
