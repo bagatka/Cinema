@@ -24,11 +24,17 @@ import {HomeScreenComponent} from './home-screen/home-screen.component';
 import {SearchBarComponent} from './search-bar/search-bar.component';
 
 import {InMemoryDataService} from './in-memory-data.service';
+<<<<<<< HEAD
 import {SearchScreenComponent} from './search-screen/search-screen.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {SearchFiltersComponent} from './search-filters/search-filters.component';
 
 
+=======
+import { SearchScreenComponent } from './search-screen/search-screen.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import { SearchFiltersComponent } from './search-filters/search-filters.component';
+>>>>>>> 818ef25c5f4f86fab4c6a7212b847ac52c014a93
 
 
 @NgModule({
@@ -51,11 +57,14 @@ import {SearchFiltersComponent} from './search-filters/search-filters.component'
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
+<<<<<<< HEAD
     MatCardModule,
     MatButtonModule,
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
+=======
+>>>>>>> 818ef25c5f4f86fab4c6a7212b847ac52c014a93
     FlexLayoutModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
