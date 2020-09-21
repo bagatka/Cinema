@@ -6,9 +6,9 @@
     <h2 class="filter-text">Select city</h2>
     <mat-form-field appearance="fill">
       <mat-label>City</mat-label>
-      <mat-select [(value)]="filters.city">
+      <mat-select>
         <mat-option></mat-option>
-        <mat-option [value]="option.value" *ngFor="let option of foods">{{ option.viewValue }}</mat-option>
+        <mat-option [value]="option" *ngFor="let option of cities">{{ option }}</mat-option>
       </mat-select>
     </mat-form-field>
   </mat-card-content>
@@ -16,9 +16,9 @@
     <h2 class="filter-text">Select cinema</h2>
     <mat-form-field appearance="fill">
       <mat-label>Cinema</mat-label>
-      <mat-select [(value)]="selectedFood">
+      <mat-select>
         <mat-option></mat-option>
-        <mat-option [value]="option.value" *ngFor="let option of foods">{{ option.viewValue }}</mat-option>
+        <mat-option [value]="option" *ngFor="let option of cinemas">{{ option }}</mat-option>
       </mat-select>
     </mat-form-field>
   </mat-card-content>
