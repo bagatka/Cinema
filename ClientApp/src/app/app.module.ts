@@ -56,9 +56,9 @@ import {SearchFiltersComponent} from './search-filters/search-filters.component'
     MatNativeDateModule,
     FlexLayoutModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
+    /*HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, {dataEncapsulation: false}
-    )
+    )*/
   ],
   providers: [],
   bootstrap: [AppComponent]

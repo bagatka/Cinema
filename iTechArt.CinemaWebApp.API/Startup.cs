@@ -24,6 +24,12 @@ namespace iTechArt.CinemaWebApp.API
         {
             services.AddControllers();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins("http://localhost:4200/"));
+            });
+
             services.AddDbContext<CinemaDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CinemaWebAppDatabase")));
         }
@@ -34,6 +40,13 @@ namespace iTechArt.CinemaWebApp.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader()
+                .AllowAnyMethod()
+                .Build();
+            });
 
             app.UseHttpsRedirection();
 
