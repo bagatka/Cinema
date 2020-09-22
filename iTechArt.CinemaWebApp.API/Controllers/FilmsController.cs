@@ -22,15 +22,20 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Film>>> GetFilmByName([FromQuery] string title)
+        public async Task<ActionResult<IEnumerable<Film>>> GetFilmsByFilter([FromQuery] Filter filter)
         {
             var films = _context.Films
                 .AsNoTracking()
                 .AsQueryable();
 
-            if (!string.IsNullOrEmpty(title))
+            if (filter == null)
             {
-                films = films.Where(n => n.Title.Contains(title));
+                return BadRequest();
+            }
+
+            if (!string.IsNullOrEmpty(filter.FilmTitle))
+            {
+                films = films.Where(film => film.Title.Contains(filter.FilmTitle));
             }
 
             return await films.OrderBy(film => film.Id).ToListAsync();
