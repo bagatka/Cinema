@@ -61,7 +61,6 @@ export class SearchFiltersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.filter);
     this.cities$ = this.cinemaService.getCinemasCities();
     this.cinemas$ = this.cinemaService.getCinemas();
   }

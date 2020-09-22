@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 import {of, Observable} from 'rxjs';
 
@@ -27,15 +27,15 @@ export class FilmService {
 
   searchFilmsByFilter(filter: Filter): Observable<Film[]> {
     if (!filter) {
-      return of([]);
+      return this.getFilms();
     }
-    let query = '';
-    for (const prop in filter) {
-      if (filter[prop]) {
-        query += `${prop}=${filter[prop]}&`;
-      }
-    }
-    return this.http.get<Film[]>(`${this.filmsUrl}/?${query.slice(0, -1)}`);
+    const options = {
+      params: new HttpParams()
+    };
+    Object.keys(filter).forEach((key) => {
+      options.params.append(key, filter[key]);
+    });
+    return this.http.get<Film[]>(this.filmsUrl, options);
   }
 
   constructor(private http: HttpClient) {

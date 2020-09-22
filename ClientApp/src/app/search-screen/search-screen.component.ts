@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 import {Observable, Subject} from 'rxjs';
-import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {distinctUntilChanged, switchMap} from 'rxjs/operators';
 
 import {Filter} from '../filter';
 import {Film} from '../film';
@@ -22,7 +22,7 @@ export class SearchScreenComponent implements OnInit {
   constructor(private filmService: FilmService) {
   }
 
-  addFilter(filter: Filter): void {
+  onFilterChange(filter: Filter): void {
     this.filter = filter;
     this.search();
   }
@@ -39,7 +39,6 @@ export class SearchScreenComponent implements OnInit {
 
   ngOnInit(): void {
     this.films$ = this.searchTerms.pipe(
-      debounceTime(1000),
       distinctUntilChanged(),
       switchMap((filter: Filter) => this.filmService.searchFilmsByFilter(filter))
     );
