@@ -33,7 +33,7 @@ export class FilmService {
       params: new HttpParams()
     };
     Object.keys(filter).forEach((key) => {
-      options.params.append(key, filter[key]);
+      options.params = options.params.set(key, filter[key]);
     });
     return this.http.get<Film[]>(this.filmsUrl, options);
   }
