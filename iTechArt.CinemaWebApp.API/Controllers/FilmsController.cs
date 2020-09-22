@@ -24,7 +24,9 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Film>>> GetFilmByName([FromQuery] string title)
         {
-            var films = _context.Films.AsNoTracking().AsQueryable();
+            var films = _context.Films
+                .AsNoTracking()
+                .AsQueryable();
 
             if (!string.IsNullOrEmpty(title))
             {

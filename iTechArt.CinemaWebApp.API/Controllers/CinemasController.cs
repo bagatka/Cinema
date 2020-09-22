@@ -24,19 +24,27 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cinema>>> GetCinemas()
         {
-            return await _context.Cinemas.AsNoTracking().OrderBy(cinema => cinema.Id).ToListAsync();
+            return await _context.Cinemas
+                .AsNoTracking()
+                .OrderBy(cinema => cinema.Id)
+                .ToListAsync();
         }
 
         [HttpGet("cities")]
         public async Task<ActionResult<IEnumerable<string>>> GetCinemasCities()
         {
-            return await _context.Cinemas.AsNoTracking().Select(cinema => cinema.City).ToListAsync();
+            return await _context.Cinemas
+                .AsNoTracking()
+                .Select(cinema => cinema.City)
+                .ToListAsync();
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cinema>>> GetCinemasByCity([FromQuery] string city)
         {
-            var cinemas = _context.Cinemas.AsNoTracking().AsQueryable();
+            var cinemas = _context.Cinemas
+                .AsNoTracking()
+                .AsQueryable();
 
             if (!string.IsNullOrEmpty(city))
             {
