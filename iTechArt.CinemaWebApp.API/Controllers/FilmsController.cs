@@ -1,12 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 using iTechArt.CinemaWebApp.API.Data;
 using iTechArt.CinemaWebApp.API.Model;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
@@ -24,7 +24,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Film>>> GetFilmByName([FromQuery] string title)
         {
-            var films = _context.Films.AsQueryable();
+            var films = _context.Films.AsNoTracking().AsQueryable();
 
             if (!string.IsNullOrEmpty(title))
             {
