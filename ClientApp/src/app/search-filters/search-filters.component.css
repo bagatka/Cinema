@@ -1,0 +1,28 @@
+.filter-card {
+  width: 15vw;
+}
+
+.filter-title{
+  font-weight: 900;
+  font-size: 1.7vw;
+  padding-left: 0.5vw;
+  padding-top: 1.6vh;
+  padding-bottom: 1vh;
+}
+
+.filter-text{
+  font-weight: 600;
+  font-size: 1vw;
+}
+
+.selector{
+  padding-left: 1vw;
+}
+
+.sits-input-field{
+  width: 41.5%;
+}
+
+mat-form-field {
+  width: 90%;
+}

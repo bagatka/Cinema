@@ -1,0 +1,18 @@
+<div class="navbar-container" fxLayout="row" fxLayoutAlign="center">
+  <app-navbar></app-navbar>
+</div>
+<div class="main-container" fxLayout="row" fxLayoutAlign="center">
+  <app-search-filters (applyFilter)="onFilterChange($event)"></app-search-filters>
+  <div class="search-container">
+    <mat-card class="search-card">
+      <mat-card-title class="search-title">
+        Search
+      </mat-card-title>
+      <mat-card-content>
+        <mat-form-field class="search-form">
+          <input #titleBox matInput (input)="onTitleChange(titleBox.value)" class="search-input" autofocus>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

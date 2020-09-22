@@ -58,6 +58,29 @@ export class InMemoryDataService implements InMemoryDbService {
         bannerUrl: 'https://images.pexels.com/photos/4903255/pexels-photo-4903255.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
       },
     ];
-    return {films};
+    const cinemas = [
+      {
+        id: 1,
+        name: 'Cinema 1',
+        description: 'New cinema in the city center.',
+        city: 'Minsk',
+        imageUrl: null
+      },
+      {
+        id: 2,
+        name: 'Cinema 2',
+        description: 'Old cinema in the suburbs.',
+        city: 'Minsk',
+        imageUrl: null
+      },
+      {
+        id: 3,
+        name: 'SuperCinema9D',
+        description: 'Bla-bla-bla cinema in bla-bla-bla with bla-bla-bla.',
+        city: 'Las Vegas',
+        imageUrl: 'https://assets.simpleviewcms.com/simpleview/image/upload/c_limit,h_1200,q_75,w_1200/v1/clients/lasvegas/strip_b86ddbea-3add-4995-b449-ac85d700b027.jpg'
+      }
+    ];
+    return {films, cinemas};
   }
 }
