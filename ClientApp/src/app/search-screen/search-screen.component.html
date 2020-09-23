@@ -13,6 +13,9 @@
           <input #titleBox matInput (input)="onTitleChange(titleBox.value)" class="search-input" autofocus>
         </mat-form-field>
       </mat-card-content>
+      <div class="results" *ngFor="let film of films$ | async">
+        <app-film-card [filmData]="film"></app-film-card>
+      </div>
     </mat-card>
   </div>
 </div>

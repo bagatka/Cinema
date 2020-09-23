@@ -1,0 +1,13 @@
+<mat-card fxLayout="row" fxLayoutAlign="space-between">
+  <div fxLayout="row" >
+    <img [src]="filmData.posterUrl" class="poster" height="300px">
+    <div class="film-details">
+      <mat-card-title class="title">{{filmData.title}}</mat-card-title>
+      <mat-card-subtitle class="year">{{filmData.year}}</mat-card-subtitle>
+      <p class="description">{{filmData.description}}</p>
+    </div>
+  </div>
+  <div class="buy-btn-pos">
+    <button mat-raised-button color="primary" class="buy-btn">Buy</button>
+  </div>
+</mat-card>
