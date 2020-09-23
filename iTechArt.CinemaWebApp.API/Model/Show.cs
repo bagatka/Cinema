@@ -13,7 +13,7 @@ namespace iTechArt.CinemaWebApp.API.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required(ErrorMessage = "Date and time is required.")]
-        public DateTime DateTime { get; set; }
+        public DateTime StartDateTime { get; set; }
         [Required(ErrorMessage = "Price is required.")]
         [Range(0, double.MaxValue)]
         public double Price { get; set; }
