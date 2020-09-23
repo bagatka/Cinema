@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Halls] (
     [Id]          INT IDENTITY(1,1) NOT NULL,
     [Name]        NVARCHAR (200) NOT NULL,
-    [SeatsAmount] INT NOT NULL,
+    [Seats] INT NOT NULL,
     [CinemaId]    INT NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     FOREIGN KEY ([CinemaId]) REFERENCES [dbo].[Cinemas] ([Id])

@@ -17,7 +17,7 @@ namespace iTechArt.CinemaWebApp.API.Model
         public string Name { get; set; }
         [Required(ErrorMessage = "Size is required.")]
         [Range(1, int.MaxValue)]
-        public int SeatsAmount { get; set; }
+        public int Seats { get; set; }
         [Required(ErrorMessage = "CinemaId is required.")]
         public int CinemaId { get; set; }
         [ForeignKey("CinemaId")]
