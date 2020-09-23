@@ -3,7 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -18,8 +17,6 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {AppRoutingModule} from './app-routing.module';
-
-import {InMemoryDataService} from './in-memory-data.service';
 
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
@@ -55,10 +52,7 @@ import {SearchFiltersComponent} from './search-filters/search-filters.component'
     MatDatepickerModule,
     MatNativeDateModule,
     FlexLayoutModule,
-    HttpClientModule,
-    /*HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, {dataEncapsulation: false}
-    )*/
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

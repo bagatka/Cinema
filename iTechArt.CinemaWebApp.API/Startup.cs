@@ -13,22 +13,28 @@ namespace iTechArt.CinemaWebApp.API
 {
     public class Startup
     {
+        private readonly string AllowedSpecificOrigins = "_AllowedSpecificOrigins";
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("http://localhost:4200/"));
+                options.AddPolicy(AllowedSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins(Configuration.GetSection("AllowedOrigins").Get<string[]>())
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
             });
+
+            services.AddControllers();
 
             services.AddDbContext<CinemaDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CinemaWebAppDatabase")));
@@ -41,16 +47,11 @@ namespace iTechArt.CinemaWebApp.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyHeader()
-                .AllowAnyMethod()
-                .Build();
-            });
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(AllowedSpecificOrigins);
 
             app.UseAuthorization();
 
