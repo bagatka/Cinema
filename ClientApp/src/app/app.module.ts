@@ -25,6 +25,7 @@ import {HomeScreenComponent} from './home-screen/home-screen.component';
 import {SearchBarComponent} from './search-bar/search-bar.component';
 import {SearchScreenComponent} from './search-screen/search-screen.component';
 import {SearchFiltersComponent} from './search-filters/search-filters.component';
+import { FilmCardComponent } from './film-card/film-card.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {SearchFiltersComponent} from './search-filters/search-filters.component'
     HomeScreenComponent,
     SearchBarComponent,
     SearchScreenComponent,
-    SearchFiltersComponent
+    SearchFiltersComponent,
+    FilmCardComponent
   ],
   imports: [
     BrowserModule,
