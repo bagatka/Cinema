@@ -1,0 +1,55 @@
+<div class="navbar-container" fxLayout="row" fxLayoutAlign="center">
+  <app-navbar></app-navbar>
+</div>
+<div fxLayout="row" fxLayoutAlign="center center" class="container">
+  <mat-card class="registration-card">
+    <mat-card-title class="title">Registration</mat-card-title>
+    <div fxLayout="column" class="form">
+      <form [formGroup]="userInput">
+        <div fxLayout="row">
+          <mat-form-field>
+            <mat-label>First Name</mat-label>
+            <input autocomplete="off" matInput type="text" formControlName="firstName">
+          </mat-form-field>
+          <mat-form-field class="right-filed">
+            <mat-label>Surname</mat-label>
+            <input autocomplete="off" matInput type="text" formControlName="surname">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="pat@example.com" type="email" formControlName="email">
+            <mat-error>Invalid email</mat-error>
+          </mat-form-field>
+          <mat-form-field class="right-filed">
+            <mat-label>Username</mat-label>
+            <input autocomplete="off" matInput type="text" formControlName="username">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row">
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input [type]="hide ? 'password' : 'text'" autocomplete="off" matInput formControlName="password">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide" tabindex="-1">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          <mat-form-field class="right-filed">
+            <mat-label>Confirm Password</mat-label>
+            <input [type]="hideConfirm ? 'password' : 'text'" autocomplete="off" matInput formControlName="confirmPassword">
+            <button mat-icon-button matSuffix (click)="hideConfirm = !hideConfirm" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hideConfirm" tabindex="-1">
+              <mat-icon>{{hideConfirm ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="userInput.get('confirmPassword').invalid">Passwords must match</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="confirm-btn">
+          <button mat-raised-button color="primary" [disabled]="!userInput.valid">Create an account</button>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+</div>

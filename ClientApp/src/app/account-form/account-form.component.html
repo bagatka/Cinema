@@ -1,0 +1,23 @@
+<h1 mat-dialog-title class="header">Account</h1>
+<div mat-dialog-content>
+  <form [formGroup]="userInput" fxLayout="column" fxLayoutAlign="center center">
+    <mat-form-field appearance="fill" class="email-form">
+      <mat-label>Enter your email</mat-label>
+      <input matInput type="email" placeholder="pat@example.com" formControlName="email">
+      <mat-error>Invalid email</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your password</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide" tabindex="-1">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="login-btn">Log in</button>
+    <a mat-card-subtitle routerLink="" class="reset-password">Forgot your password?</a>
+    <mat-divider></mat-divider>
+    <p class="no-account-title">No account yet?</p>
+    <a mat-card-subtitle class="sing-up-link" (click)="closeDialog()" routerLink="/registration">Sign Up</a>
+  </form>
+</div>

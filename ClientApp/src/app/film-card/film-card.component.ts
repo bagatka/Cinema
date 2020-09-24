@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 import {Film} from '../film';
 
@@ -9,5 +9,5 @@ import {Film} from '../film';
 })
 export class FilmCardComponent {
 
-  @Input filmData: Film;
+  @Input() filmData: Film;
 }

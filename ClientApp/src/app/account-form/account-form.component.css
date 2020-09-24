@@ -1,0 +1,54 @@
+.header {
+  font-weight: 900;
+  font-size: 1.7vw;
+  padding-left: 0.8vw;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+}
+
+.email-form{
+  padding-top: 3vh;
+}
+
+.login-btn {
+  font-size: 0.9vw;
+  height: 4vh;
+  width: 5vw;
+}
+
+.reset-password {
+  padding-top: 1vh;
+  padding-bottom: 2vh;
+}
+
+.sing-up-link {
+  padding-top: 0.1vh;
+}
+
+.no-account-title {
+  padding-bottom: 0.1vh;
+  padding-top: 2vh;
+  margin: 0;
+}
+
+mat-form-field {
+  width: 16vw;
+  padding-bottom: 1vh;
+}
+
+mat-label {
+  font-size: 0.9vw;
+}
+
+mat-error {
+  font-size: 0.65vw;
+}
+
+input {
+  height: 3vh;
+  font-size: 0.9vw;
+}
+
+mat-divider {
+  width: 100%;
+}
