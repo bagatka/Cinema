@@ -23,7 +23,7 @@ export class NavbarComponent {
   openAccountForm(): void {
     this.dialog.open(AccountFormComponent, {
       width: '20vw',
-      height: '50vh'
+      height: '55vh'
     });
   }
 }
