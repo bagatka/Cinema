@@ -13,6 +13,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
 
 import {FlexLayoutModule} from '@angular/flex-layout';
 
@@ -26,6 +28,8 @@ import {SearchBarComponent} from './search-bar/search-bar.component';
 import {SearchScreenComponent} from './search-screen/search-screen.component';
 import {SearchFiltersComponent} from './search-filters/search-filters.component';
 import { FilmCardComponent } from './film-card/film-card.component';
+import { AccountFormComponent } from './account-form/account-form.component';
+import { RegistrationScreenComponent } from './registration-screen/registration-screen.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,9 @@ import { FilmCardComponent } from './film-card/film-card.component';
     SearchBarComponent,
     SearchScreenComponent,
     SearchFiltersComponent,
-    FilmCardComponent
+    FilmCardComponent,
+    AccountFormComponent,
+    RegistrationScreenComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +59,8 @@ import { FilmCardComponent } from './film-card/film-card.component';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatIconModule,
+    MatDividerModule,
     FlexLayoutModule,
     HttpClientModule
   ],

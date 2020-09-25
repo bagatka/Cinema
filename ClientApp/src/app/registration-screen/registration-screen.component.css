@@ -1,0 +1,45 @@
+.navbar-container {
+  padding-top: 1vh;
+}
+
+.container{
+  padding-top: 10vh;
+}
+
+.registration-card{
+  height: 45vh;
+  width: 70vw;
+}
+
+.title{
+  font-weight: 900;
+  font-size: 2vw;
+  padding-top: 5vh;
+  padding-left: 3vw;
+}
+
+.form{
+  padding-left: 3vw;
+  padding-top: 5vh;
+}
+
+.form mat-label{
+  font-size: 0.9vw;
+}
+
+.form input{
+  font-size: 1vw;
+  height: 3vh;
+}
+
+.form mat-form-field{
+  width: 18vw;
+}
+
+.right-filed{
+  padding-left: 2vw;
+}
+
+.confirm-btn{
+  padding-top: 3vh;
+}
