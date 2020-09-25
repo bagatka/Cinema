@@ -9,12 +9,12 @@
     <mat-form-field appearance="fill">
       <mat-label>Enter your password</mat-label>
       <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+      <button mat-icon-button matSuffix type="button" (click)="hide = !hide" [attr.aria-label]="'Hide password'"
               [attr.aria-pressed]="hide" tabindex="-1">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>
-    <button mat-raised-button color="primary" class="login-btn">Log in</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="userInput.invalid" (click)="closeDialog()" routerLink="/profile" class="login-btn">Log in</button>
     <a mat-card-subtitle routerLink="" class="reset-password">Forgot your password?</a>
     <mat-divider></mat-divider>
     <p class="no-account-title">No account yet?</p>

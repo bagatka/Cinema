@@ -1,0 +1,54 @@
+.navbar-container {
+  padding-top: 1vh;
+}
+
+.container {
+  padding-top: 10vh;
+}
+
+.registration-card {
+  height: auto;
+  width: 70vw;
+  padding-bottom: 15vh;
+}
+
+.menu-buttons button {
+  transition: none;
+  box-shadow: none;
+}
+
+.menu-buttons button:hover {
+  transition: none;
+  box-shadow: none;
+}
+
+.title {
+  font-weight: 900;
+  font-size: 2vw;
+  padding-top: 5vh;
+  padding-left: 3vw;
+}
+
+.menu {
+  width: 12vw;
+  padding-left: 2vw;
+}
+
+.menu mat-panel-title {
+  font-size: 1.1vw;
+  font-weight: 600;
+}
+
+.menu button{
+  font-size: 0.9vw;
+  width: 7vw;
+  text-align: left;
+}
+
+.menu-padding{
+  padding-top: 5vh;
+}
+
+.log-out-btn{
+  color: red;
+}

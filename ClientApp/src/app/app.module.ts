@@ -15,6 +15,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import {FlexLayoutModule} from '@angular/flex-layout';
 
@@ -30,6 +32,9 @@ import {SearchFiltersComponent} from './search-filters/search-filters.component'
 import { FilmCardComponent } from './film-card/film-card.component';
 import { AccountFormComponent } from './account-form/account-form.component';
 import { RegistrationScreenComponent } from './registration-screen/registration-screen.component';
+import { UserControlScreenComponent } from './user-control-screen/user-control-screen.component';
+import { UserSettingsComponent } from './user-control-screen/user-settings/user-settings.component';
+import { UserBookmarksComponent } from './user-control-screen/user-bookmarks/user-bookmarks.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +47,10 @@ import { RegistrationScreenComponent } from './registration-screen/registration-
     SearchFiltersComponent,
     FilmCardComponent,
     AccountFormComponent,
-    RegistrationScreenComponent
+    RegistrationScreenComponent,
+    UserControlScreenComponent,
+    UserSettingsComponent,
+    UserBookmarksComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +69,8 @@ import { RegistrationScreenComponent } from './registration-screen/registration-
     MatNativeDateModule,
     MatIconModule,
     MatDividerModule,
+    MatExpansionModule,
+    MatTabsModule,
     FlexLayoutModule,
     HttpClientModule
   ],
