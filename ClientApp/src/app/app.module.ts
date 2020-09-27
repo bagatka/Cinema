@@ -17,6 +17,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
 
 import {FlexLayoutModule} from '@angular/flex-layout';
 
@@ -35,6 +38,9 @@ import { RegistrationScreenComponent } from './registration-screen/registration-
 import { UserControlScreenComponent } from './user-control-screen/user-control-screen.component';
 import { UserSettingsComponent } from './user-control-screen/user-settings/user-settings.component';
 import { UserBookmarksComponent } from './user-control-screen/user-bookmarks/user-bookmarks.component';
+import { AdminControlScreenComponent } from './admin-control-screen/admin-control-screen.component';
+import { UserTicketsComponent } from './user-control-screen/user-tickets/user-tickets.component';
+import { UserHistoryComponent } from './user-control-screen/user-history/user-history.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +56,10 @@ import { UserBookmarksComponent } from './user-control-screen/user-bookmarks/use
     RegistrationScreenComponent,
     UserControlScreenComponent,
     UserSettingsComponent,
-    UserBookmarksComponent
+    UserBookmarksComponent,
+    AdminControlScreenComponent,
+    UserTicketsComponent,
+    UserHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +80,9 @@ import { UserBookmarksComponent } from './user-control-screen/user-bookmarks/use
     MatDividerModule,
     MatExpansionModule,
     MatTabsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     FlexLayoutModule,
     HttpClientModule
   ],

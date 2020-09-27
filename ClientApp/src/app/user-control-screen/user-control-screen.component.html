@@ -1,11 +1,11 @@
 <div class="navbar-container" fxLayout="row" fxLayoutAlign="center">
   <app-navbar></app-navbar>
 </div>
-<div fxLayout="row" fxLayoutAlign="center center" class="container">
+<div class="container" fxLayout="row" fxLayoutAlign="center center">
   <mat-card class="registration-card">
     <mat-card-title class="title">Menu</mat-card-title>
     <div fxLayout="row" fxLayoutGap="4vw">
-      <div fxLayout="column" fxLayoutGap="1vw" class="menu-padding">
+      <div class="menu-padding" fxLayout="column" fxLayoutGap="1vw">
         <mat-accordion class="menu">
           <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
@@ -13,14 +13,20 @@
                 Profile
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div fxLayout="column" fxLayoutAlign="center start" class="menu-buttons">
-              <button [style.color] ="activeSettings[menuSelect.Bookmarks] ? 'black' : 'grey'" (click)="setActive(menuSelect.Bookmarks)" mat-raised-button  routerLink="/profile/bookmarks">Bookmarks</button>
-              <button mat-raised-button [style.color] ="activeSettings[menuSelect.Settings] ? 'black' : 'grey'" (click)="setActive(menuSelect.Settings)" routerLink="/profile/settings">Settings</button>
-              <button mat-raised-button routerLink="/home" class="log-out-btn">Log out</button>
+            <div class="menu-buttons" fxLayout="column" fxLayoutAlign="center start">
+              <button (click)="setActive(menuSelect.Bookmarks)"
+                      [style.color]="activeSettings[menuSelect.Bookmarks] ? 'black' : 'grey'" mat-raised-button
+                      routerLink="/profile/bookmarks">
+                Bookmarks
+              </button>
+              <button (click)="setActive(menuSelect.Settings)"
+                      [style.color]="activeSettings[menuSelect.Settings] ? 'black' : 'grey'"
+                      mat-raised-button routerLink="/profile/settings">Settings
+              </button>
+              <button class="log-out-btn" mat-raised-button routerLink="/home">Log out</button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>
-        <!--SECOND-->
         <mat-accordion class="menu">
           <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
@@ -28,9 +34,17 @@
                 Tickets
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div fxLayout="column" fxLayoutAlign="center start" class="menu-buttons">
-              <button mat-raised-button color="white">My tickets</button>
-              <button mat-raised-button color="white">History</button>
+            <div class="menu-buttons" fxLayout="column" fxLayoutAlign="center start">
+              <button (click)="setActive(menuSelect.Tickets)"
+                      [style.color]="activeSettings[menuSelect.Tickets] ? 'black' : 'grey'" color="white"
+                      mat-raised-button
+                      routerLink="/profile/tickets">My tickets
+              </button>
+              <button (click)="setActive(menuSelect.History)"
+                      [style.color]="activeSettings[menuSelect.History] ? 'black' : 'grey'" color="white"
+                      mat-raised-button
+                      routerLink="/profile/history">History
+              </button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>

@@ -1,0 +1,117 @@
+<div class="navbar-container" fxLayout="row" fxLayoutAlign="center">
+  <app-navbar></app-navbar>
+</div>
+<div class="container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="registration-card">
+    <mat-card-title class="title">Menu</mat-card-title>
+    <div fxLayout="row" fxLayoutGap="4vw">
+      <div class="menu-padding" fxLayout="column" fxLayoutGap="1vw">
+        <mat-accordion class="menu">
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Global
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="menu-buttons" fxLayout="column" fxLayoutAlign="center start">
+              <button (click)="setActive(adminMenuSelect.Global)"
+                      [style.color]="activeSettings[adminMenuSelect.Global] ? 'black' : 'grey'"
+                      mat-raised-button routerLink="/admin/settings">Global
+              </button>
+              <button class="log-out-btn" mat-raised-button routerLink="/home">Log out</button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <!--SECOND-->
+        <mat-accordion class="menu">
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Films
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="menu-buttons" fxLayout="column" fxLayoutAlign="center start">
+              <button (click)="setActive(adminMenuSelect.AddFilm)"
+                      [style.color]="activeSettings[adminMenuSelect.AddFilm] ? 'black' : 'grey'" color="white"
+                      mat-raised-button
+                      routerLink="/admin/films/add">Add film
+              </button>
+              <button (click)="setActive(adminMenuSelect.EditFilm)"
+                      [style.color]="activeSettings[adminMenuSelect.EditFilm] ? 'black' : 'grey'" color="white"
+                      mat-raised-button
+                      routerLink="/admin/films">Edit film
+              </button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion class="menu">
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Cinemas
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="menu-buttons" fxLayout="column" fxLayoutAlign="center start">
+              <button (click)="setActive(adminMenuSelect.AddCinema)"
+                      [style.color]="activeSettings[adminMenuSelect.AddCinema] ? 'black' : 'grey'" color="white"
+                      mat-raised-button
+                      routerLink="/admin/cinemas/add">Add cinema
+              </button>
+              <button (click)="setActive(adminMenuSelect.EditCinema)"
+                      [style.color]="activeSettings[adminMenuSelect.EditCinema] ? 'black' : 'grey'" color="white"
+                      mat-raised-button
+                      routerLink="/admin/cinemas">Edit cinema
+              </button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion class="menu">
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Shows
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="menu-buttons" fxLayout="column" fxLayoutAlign="center start">
+              <button (click)="setActive(adminMenuSelect.AddShow)"
+                      [style.color]="activeSettings[adminMenuSelect.AddShow] ? 'black' : 'grey'" color="white"
+                      mat-raised-button
+                      routerLink="/admin/shows/add">Add show
+              </button>
+              <button (click)="setActive(adminMenuSelect.EditShow)"
+                      [style.color]="activeSettings[adminMenuSelect.EditShow] ? 'black' : 'grey'" color="white"
+                      mat-raised-button
+                      routerLink="/admin/shows">Edit show
+              </button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <mat-accordion class="menu">
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Services
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="menu-buttons" fxLayout="column" fxLayoutAlign="center start">
+              <button (click)="setActive(adminMenuSelect.AddService)"
+                      [style.color]="activeSettings[adminMenuSelect.AddService] ? 'black' : 'grey'" color="white"
+                      mat-raised-button
+                      routerLink="/admin/services/add">Add service
+              </button>
+              <button (click)="setActive(adminMenuSelect.EditService)"
+                      [style.color]="activeSettings[adminMenuSelect.EditService] ? 'black' : 'grey'" color="white"
+                      mat-raised-button
+                      routerLink="/admin/services/">Edit service
+              </button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-card>
+</div>

@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
-enum MenuSelect {
+enum UserMenuSelect {
   Bookmarks,
-  Settings
+  Settings,
+  Tickets,
+  History
 }
 
 @Component({
@@ -10,32 +12,25 @@ enum MenuSelect {
   templateUrl: './user-control-screen.component.html',
   styleUrls: ['./user-control-screen.component.css']
 })
-export class UserControlScreenComponent implements OnInit {
+export class UserControlScreenComponent {
 
-  activeSettings: boolean[] = [false, false];
+  menuSize: number;
+  activeSettings: boolean[] = [];
 
   constructor() {
-  }
-
-  public get menuSelect(): typeof MenuSelect {
-    return MenuSelect;
-  }
-
-  setActive(select: MenuSelect): void {
-    this.activeSettings = this.activeSettings.map(() => false);
-    console.log('Hello');
-    switch (select) {
-      case MenuSelect.Bookmarks:
-        this.activeSettings[select] = true;
-        break;
-      case MenuSelect.Settings:
-        this.activeSettings.map(value => false);
-        this.activeSettings[select] = true;
-        break;
+    this.menuSize = Object.keys(UserMenuSelect).length / 2;
+    for (let i = 0; i < this.menuSize; i++) {
+      this.activeSettings.push(false);
     }
   }
 
-  ngOnInit(): void {
+  public get menuSelect(): typeof UserMenuSelect {
+    return UserMenuSelect;
+  }
+
+  setActive(select: UserMenuSelect): void {
+    this.activeSettings = this.activeSettings.map(() => false);
+    this.activeSettings[select] = true;
   }
 
 }
