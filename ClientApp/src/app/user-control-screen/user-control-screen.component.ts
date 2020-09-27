@@ -32,5 +32,4 @@ export class UserControlScreenComponent {
     this.activeSettings = this.activeSettings.map(() => false);
     this.activeSettings[select] = true;
   }
-
 }

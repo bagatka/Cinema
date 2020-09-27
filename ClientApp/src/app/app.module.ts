@@ -57,9 +57,9 @@ import { UserHistoryComponent } from './user-control-screen/user-history/user-hi
     UserControlScreenComponent,
     UserSettingsComponent,
     UserBookmarksComponent,
-    AdminControlScreenComponent,
     UserTicketsComponent,
-    UserHistoryComponent
+    UserHistoryComponent,
+    AdminControlScreenComponent
   ],
   imports: [
     BrowserModule,
