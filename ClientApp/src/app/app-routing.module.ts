@@ -10,11 +10,19 @@ const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'cinemas', component: HomeScreenComponent},
   {path: 'films', component: SearchScreenComponent},
-  {path: 'registration', component: RegistrationScreenComponent}
+  {path: 'registration', component: RegistrationScreenComponent},
+  {
+    path: 'profile', loadChildren: () => import(`./user-control-screen/user-control-screen-routing.module`)
+      .then(m => m.UserControlScreenRoutingModule)
+  },
+  {
+    path: 'admin', loadChildren: () => import(`./admin-control-screen/admin-control-screen-routing.module`)
+      .then(m => m.AdminControlScreenRoutingModule)
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {enableTracing: false})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

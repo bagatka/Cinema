@@ -1,0 +1,43 @@
+<mat-tab-group mat-stretch-tabs>
+  <mat-tab label="Account">
+    <div class="account-settings" fxLayout="column">
+      <div>
+        <mat-label class="settings-titles email-label">Change email</mat-label>
+        <mat-form-field>
+          <mat-label>Enter your new email</mat-label>
+          <input matInput type="email" placeholder="pat@example.com" class="email-form">
+          <mat-error>Invalid email</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-label class="settings-titles">Change username</mat-label>
+        <mat-form-field>
+          <mat-label>Enter your new username</mat-label>
+          <input matInput type="text">
+          <mat-error>Invalid username</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-label class="settings-titles">Change password</mat-label>
+        <mat-form-field>
+          <mat-label>Enter your new password</mat-label>
+          <input matInput type="password">
+          <mat-error>Invalid password</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="General">
+    <h1>Empty.</h1>
+  </mat-tab>
+  <mat-tab label="Payment methods">
+    <div class="account-settings" fxLayout="column">
+      <div>
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10vw">
+          <mat-label class="settings-titles email-label">Added payment methods</mat-label>
+          <button mat-button color="accent">Add payment method</button>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

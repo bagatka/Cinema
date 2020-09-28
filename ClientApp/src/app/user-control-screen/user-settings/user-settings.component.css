@@ -1,0 +1,21 @@
+mat-tab-group {
+  width: 40vw;
+}
+
+.account-settings {
+  padding-top: 2vh;
+}
+
+.settings-titles {
+  font-size: 0.9vw;
+  font-weight: 600;
+  padding-right: 2vw;
+}
+
+.email-label {
+  padding-right: 3.9vw;
+}
+
+input {
+  height: 2vh;
+}

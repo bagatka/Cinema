@@ -1,0 +1,23 @@
+.film-title {
+  font-weight: 800;
+  font-size: 1.5vw;
+}
+
+.film-details {
+  padding-left: 2vw;
+}
+
+.film-description {
+  width: 70%;
+  font-size: 0.9vw;
+}
+
+.date {
+  margin-bottom: 0.1vh;
+}
+
+.date-value {
+  font-weight: 800;
+  font-size: 0.9vw;
+  color: red;
+}
