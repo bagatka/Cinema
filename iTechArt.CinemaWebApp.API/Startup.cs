@@ -1,5 +1,6 @@
 using iTechArt.CinemaWebApp.API.Data;
-
+using iTechArt.CinemaWebApp.API.Model;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
@@ -8,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Text;
 
 namespace iTechArt.CinemaWebApp.API
 {
@@ -34,6 +38,30 @@ namespace iTechArt.CinemaWebApp.API
                     });
             });
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.Unicode.GetBytes(Configuration["Jwt:SecretKey"])),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy(Policies.Admin, Policies.AdminPolicy());
+                config.AddPolicy(Policies.User, Policies.UserPolicy());
+            });
+
             services.AddControllers();
 
             services.AddDbContext<CinemaDbContext>(options =>
@@ -52,6 +80,8 @@ namespace iTechArt.CinemaWebApp.API
             app.UseRouting();
 
             app.UseCors(AllowedSpecificOrigins);
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
