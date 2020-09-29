@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using iTechArt.CinemaWebApp.API.Data;
-using iTechArt.CinemaWebApp.API.Model;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+
+using iTechArt.CinemaWebApp.API.Application.Interfaces;
+using iTechArt.CinemaWebApp.API.Application.DTOs;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
@@ -15,27 +11,35 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly CinemaDbContext _context;
-        private readonly IConfiguration _config;
+        private readonly IAccountService _accountService;
 
-        public AccountController(CinemaDbContext cinemaDbContext, IConfiguration configuration)
+        public AccountController(IAccountService accountService)
         {
-            _context = cinemaDbContext;
-            _config = configuration;
+            _accountService = accountService;
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public IActionResult Login([FromBody]User login)
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginAsync(LoginRequest request)
         {
-            IActionResult response = Unauthorized();
-            User account = AuthenticateAccount(login);
+            var response = await _accountService.LoginAsync(request);
+            if (response == null)
+            {
+                return BadRequest();
+            }
+            return Ok(response);
         }
 
-        private User AuthenticateAccount(User loginCredentials)
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterAsync(RegisterRequest request)
         {
-            User account = _context.Users.FirstOrDefault();
-            return account;
+            var response = await _accountService.RegisterAsync(request);
+
+            if (response == null || response == false)
+            {
+                return BadRequest();
+            }
+
+            return Ok(response);
         }
     }
 }

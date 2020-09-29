@@ -1,5 +1,6 @@
-using iTechArt.CinemaWebApp.API.Data;
-using iTechArt.CinemaWebApp.API.Model;
+using System;
+using System.Text;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,9 +10,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Text;
+
+using AutoMapper;
+
+using iTechArt.CinemaWebApp.API.Application.Interfaces;
+using iTechArt.CinemaWebApp.API.Application.Services;
+using iTechArt.CinemaWebApp.API.Data;
+using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API
 {
@@ -55,6 +62,9 @@ namespace iTechArt.CinemaWebApp.API
                         ClockSkew = TimeSpan.Zero
                     };
                 });
+
+            services.AddAutoMapper(typeof(Startup));
+            services.AddTransient<IAccountService, AccountService>();
 
             services.AddAuthorization(config =>
             {

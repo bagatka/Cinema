@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace iTechArt.CinemaWebApp.API.Model
+namespace iTechArt.CinemaWebApp.API.Models
 {
     public class Filter
     {

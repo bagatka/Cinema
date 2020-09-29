@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using iTechArt.CinemaWebApp.API.Data;
-using iTechArt.CinemaWebApp.API.Model;
+using iTechArt.CinemaWebApp.API.Models;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
