@@ -2,8 +2,8 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-using iTechArt.CinemaWebApp.API.Application.Interfaces;
 using iTechArt.CinemaWebApp.API.Application.DTOs;
+using iTechArt.CinemaWebApp.API.Application.Services;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
@@ -11,9 +11,9 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountService _accountService;
+        private readonly AccountService _accountService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(AccountService accountService)
         {
             _accountService = accountService;
         }
@@ -21,25 +21,13 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(LoginRequest request)
         {
-            var response = await _accountService.LoginAsync(request);
-            if (response == null)
-            {
-                return BadRequest();
-            }
-            return Ok(response);
+            return Ok(await _accountService.LoginAsync(request));
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(RegisterRequest request)
         {
-            var response = await _accountService.RegisterAsync(request);
-
-            if (response == null || response == false)
-            {
-                return BadRequest();
-            }
-
-            return Ok(response);
+            return Ok(await _accountService.RegisterAsync(request));
         }
     }
 }

@@ -64,7 +64,7 @@ namespace iTechArt.CinemaWebApp.API
                 });
 
             services.AddAutoMapper(typeof(Startup));
-            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<AccountService>();
 
             services.AddAuthorization(config =>
             {
