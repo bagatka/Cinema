@@ -15,7 +15,6 @@ using Microsoft.IdentityModel.Tokens;
 
 using AutoMapper;
 
-using iTechArt.CinemaWebApp.API.Application.Interfaces;
 using iTechArt.CinemaWebApp.API.Application.Services;
 using iTechArt.CinemaWebApp.API.Data;
 using iTechArt.CinemaWebApp.API.Models;
