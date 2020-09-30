@@ -21,6 +21,7 @@ namespace iTechArt.CinemaWebApp.API.Models
         public int FilmId { get; set; }
         [Required(ErrorMessage = "HallId is required.")]
         public int HallId { get; set; }
+
         [ForeignKey("FilmId")]
         public Film Film { get; set; }
         [ForeignKey("HallId")]

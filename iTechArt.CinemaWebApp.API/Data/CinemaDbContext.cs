@@ -1,5 +1,6 @@
-﻿using iTechArt.CinemaWebApp.API.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+
+using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Data
 {
@@ -10,6 +11,10 @@ namespace iTechArt.CinemaWebApp.API.Data
         public DbSet<Hall> Halls { get; set; }
         public DbSet<Show> Shows { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<HallService> HallServices { get; set; }
+
         public CinemaDbContext(DbContextOptions<CinemaDbContext> options) : base(options)
         {
         }

@@ -8,18 +8,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-using iTechArt.CinemaWebApp.API.Application.DTOs;
-using iTechArt.CinemaWebApp.API.Application.Interfaces;
-using iTechArt.CinemaWebApp.API.Data;
-using iTechArt.CinemaWebApp.API.Models;
-
 using BCrypter = BCrypt.Net.BCrypt;
 
 using AutoMapper;
 
+using iTechArt.CinemaWebApp.API.Data;
+using iTechArt.CinemaWebApp.API.Models;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Account;
+
 namespace iTechArt.CinemaWebApp.API.Application.Services
 {
-    public class AccountService : IAccountService
+    public class AccountService
     {
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
@@ -33,7 +32,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             _mapper = mapper;
             _config = configuration;
         }
-        public async Task<LoginResponse> LoginAsync(LoginRequest request)
+        public async Task<LoginResponse> LoginAsync(LoginRequest request) // Response
         {
             var user = await _context.Users.FirstOrDefaultAsync(user => user.Email == request.Email);
 

@@ -2,8 +2,8 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-using iTechArt.CinemaWebApp.API.Application.Interfaces;
-using iTechArt.CinemaWebApp.API.Application.DTOs;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Account;
+using iTechArt.CinemaWebApp.API.Application.Services;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
@@ -11,9 +11,9 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IAccountService _accountService;
+        private readonly AccountService _accountService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(AccountService accountService)
         {
             _accountService = accountService;
         }
