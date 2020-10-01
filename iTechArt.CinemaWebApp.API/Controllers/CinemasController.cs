@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-using iTechArt.CinemaWebApp.API.Data;
-using iTechArt.CinemaWebApp.API.Models;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
+using iTechArt.CinemaWebApp.API.Data;
+using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
@@ -46,10 +46,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
                 .AsNoTracking()
                 .AsQueryable();
 
-            if (!string.IsNullOrEmpty(city))
-            {
-                cinemas = cinemas.Where(c => c.City == city);
-            }
+            if (!string.IsNullOrEmpty(city)) cinemas = cinemas.Where(c => c.City == city);
 
             return await cinemas.OrderBy(film => film.Id).ToListAsync();
         }
