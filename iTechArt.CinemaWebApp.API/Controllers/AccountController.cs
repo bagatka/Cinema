@@ -21,14 +21,20 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(LoginRequest request)
         {
-            if (!ModelState.IsValid) return BadRequest("Incorrect request body.");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Incorrect request body.");
+            }
             return Ok(await _accountService.LoginAsync(request));
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(RegisterRequest request)
         {
-            if (!ModelState.IsValid) return BadRequest("Incorrect request body.");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Incorrect request body.");
+            }
             return Ok(await _accountService.RegisterAsync(request));
         }
     }

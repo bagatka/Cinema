@@ -29,10 +29,15 @@ namespace iTechArt.CinemaWebApp.API.Controllers
                 .AsNoTracking()
                 .AsQueryable();
 
-            if (filter == null) return BadRequest();
+            if (filter == null)
+            {
+                return BadRequest();
+            }
 
             if (!string.IsNullOrEmpty(filter.FilmTitle))
+            {
                 films = films.Where(film => film.Title.Contains(filter.FilmTitle));
+            }
 
             return await films.OrderBy(film => film.Id).ToListAsync();
         }
@@ -42,7 +47,10 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         {
             var result = await _context.Films.FindAsync(id);
 
-            if (result == null) return NotFound();
+            if (result == null)
+            {
+                return NotFound();
+            }
 
             return result;
         }
@@ -50,7 +58,10 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Film>> CreateFilm(Film film)
         {
-            if (film == null || !ModelState.IsValid) return BadRequest();
+            if (film == null || !ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
             var newFilm = new Film
             {
@@ -62,13 +73,16 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             await _context.Films.AddAsync(newFilm);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetFilmById), new {id = newFilm.Id}, newFilm);
+            return CreatedAtAction(nameof(GetFilmById), new { id = newFilm.Id }, newFilm);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateFilm(int id, [FromBody] Film film)
         {
-            if (id != film?.Id || !ModelState.IsValid) return BadRequest();
+            if (id != film?.Id || !ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
             _context.Entry(film).State = EntityState.Modified;
 
@@ -78,7 +92,10 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FilmExists(id)) return NotFound();
+                if (!FilmExists(id))
+                {
+                    return NotFound();
+                }
                 throw;
             }
 
@@ -90,7 +107,10 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         {
             var resultFilm = await _context.Films.FindAsync(id);
 
-            if (resultFilm == null) return NotFound();
+            if (resultFilm == null)
+            {
+                return NotFound();
+            }
             _context.Films.Remove(resultFilm);
             await _context.SaveChangesAsync();
 

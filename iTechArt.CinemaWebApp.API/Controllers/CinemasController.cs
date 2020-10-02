@@ -46,7 +46,10 @@ namespace iTechArt.CinemaWebApp.API.Controllers
                 .AsNoTracking()
                 .AsQueryable();
 
-            if (!string.IsNullOrEmpty(city)) cinemas = cinemas.Where(c => c.City == city);
+            if (!string.IsNullOrEmpty(city))
+            {
+                cinemas = cinemas.Where(c => c.City == city);
+            }
 
             return await cinemas.OrderBy(film => film.Id).ToListAsync();
         }
