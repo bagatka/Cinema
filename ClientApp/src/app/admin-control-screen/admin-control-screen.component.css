@@ -52,3 +52,7 @@
 .log-out-btn{
   color: red;
 }
+
+mat-panel-title{
+  height: 2.35vh;
+}

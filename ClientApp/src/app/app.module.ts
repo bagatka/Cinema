@@ -41,6 +41,17 @@ import { UserBookmarksComponent } from './user-control-screen/user-bookmarks/use
 import { AdminControlScreenComponent } from './admin-control-screen/admin-control-screen.component';
 import { UserTicketsComponent } from './user-control-screen/user-tickets/user-tickets.component';
 import { UserHistoryComponent } from './user-control-screen/user-history/user-history.component';
+import { AdminFilmsComponent } from './admin-control-screen/admin-films/admin-films.component';
+import { AdminSettingsComponent } from './admin-control-screen/admin-settings/admin-settings.component';
+import { AdminCinemasComponent } from './admin-control-screen/admin-cinemas/admin-cinemas.component';
+import { AdminShowsComponent } from './admin-control-screen/admin-shows/admin-shows.component';
+import { AdminServicesComponent } from './admin-control-screen/admin-services/admin-services.component';
+import { AdminUsersComponent } from './admin-control-screen/admin-users/admin-users.component';
+import { AdminAddFilmComponent } from './admin-control-screen/admin-films/admin-add-film/admin-add-film.component';
+import { AdminAddCinemaComponent } from './admin-control-screen/admin-cinemas/admin-add-cinema/admin-add-cinema.component';
+import { AdminAddServiceComponent } from './admin-control-screen/admin-services/admin-add-service/admin-add-service.component';
+import { AdminAddShowComponent } from './admin-control-screen/admin-shows/admin-add-show/admin-add-show.component';
+import { AdminAllFilmsComponent } from './admin-control-screen/admin-films/admin-all-films/admin-all-films.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +70,18 @@ import { UserHistoryComponent } from './user-control-screen/user-history/user-hi
     UserBookmarksComponent,
     UserTicketsComponent,
     UserHistoryComponent,
-    AdminControlScreenComponent
+    AdminControlScreenComponent,
+    AdminFilmsComponent,
+    AdminSettingsComponent,
+    AdminCinemasComponent,
+    AdminShowsComponent,
+    AdminServicesComponent,
+    AdminUsersComponent,
+    AdminAddFilmComponent,
+    AdminAddCinemaComponent,
+    AdminAddServiceComponent,
+    AdminAddShowComponent,
+    AdminAllFilmsComponent
   ],
   imports: [
     BrowserModule,

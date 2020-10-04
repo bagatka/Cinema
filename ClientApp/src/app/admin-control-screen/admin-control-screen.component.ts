@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 
 enum AdminMenuSelect {
-  Global,
+  Settings,
   AddFilm,
   EditFilm,
   AddCinema,
