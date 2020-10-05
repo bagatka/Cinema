@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 
-import {Film} from '../film';
+import {Film} from '../Interfaces/film';
 import {FilmService} from '../film.service';
 import {Observable} from 'rxjs';
 

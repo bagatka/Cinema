@@ -5,7 +5,7 @@ import {Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 
 import {FilmService} from '../film.service';
-import {Film} from '../film';
+import {Film} from '../Interfaces/film';
 
 @Component({
   selector: 'app-search-bar',

@@ -1,0 +1,43 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <h1 class="header">Hall</h1>
+  <button mat-button color="warn" (click)="onNoClick()">Close</button>
+</div>
+<div class="hall-form" fxLayout="row" fxLayoutAlign="space-between start">
+  <form [formGroup]="addHallInput" (submit)="updateHall()">
+    <div fxLayout="column" fxLayoutAlign="start start">
+      <mat-label class="option-title">Name</mat-label>
+      <mat-form-field>
+        <mat-label>Enter hall name</mat-label>
+        <input formControlName="name" matInput placeholder="Hall 1"
+               type="text">
+        <mat-error>Hall name is required</mat-error>
+      </mat-form-field>
+      <mat-label class="option-title">Size</mat-label>
+      <mat-form-field>
+        <mat-label>Enter hall size</mat-label>
+        <input formControlName="size" matInput placeholder="56"
+               type="number">
+        <mat-error>Hall size is required</mat-error>
+      </mat-form-field>
+      <mat-label class="option-title">Cinema</mat-label>
+      <mat-form-field>
+        <mat-label>Select the cinema</mat-label>
+        <mat-select formControlName="cinemaName">
+          <mat-option *ngFor="let cinema of cinemas" [value]="cinema.name">
+            {{cinema.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error>Cinema is required</mat-error>
+      </mat-form-field>
+      <button mat-button color="primary" type="submit" class="update-btn" [disabled]="!addHallInput.valid">Update Hall</button>
+    </div>
+  </form>
+  <div fxLayout="column" fxLayoutAlign="center start">
+    <app-hall-schema></app-hall-schema>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <div class="seat common">Common</div>
+      <div class="seat sofa">Sofa</div>
+      <div class="seat vip">VIP</div>
+    </div>
+  </div>
+</div>

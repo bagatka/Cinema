@@ -1,0 +1,40 @@
+.schema {
+  width: 700px;
+  height: 450px;
+  background-color: #adabc7;
+}
+
+.container {
+  perspective: 1000px;
+}
+
+.screen {
+  margin-bottom: 5vh;
+  background-color: #171430;
+  width: 300px;
+  height: 5px;
+  padding-left: 1vw;
+}
+
+.seat {
+  background-color: #a2a0ba;
+  height: 12px;
+  width: 15px;
+  margin: 3px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.selected {
+  background-color: #ff4081;
+}
+
+.seat:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+p {
+  margin: 0;
+  width: 1vw;
+}

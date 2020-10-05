@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import validate = WebAssembly.validate;
 
 @Component({
   selector: 'app-admin-add-film',

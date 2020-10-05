@@ -1,34 +1,43 @@
 <div fxLayout="column">
   <form [formGroup]="addFilmInput">
     <div fxLayout="column">
+      <mat-label class="option-title">Title</mat-label>
       <mat-form-field>
         <mat-label>Enter film title</mat-label>
         <input formControlName="title" matInput placeholder="Green Mile"
                type="text">
         <mat-error>Title is required</mat-error>
       </mat-form-field>
+      <mat-label class="option-title">Description</mat-label>
       <mat-form-field>
         <mat-label>Enter film description</mat-label>
-        <input formControlName="description" matInput
-               type="text">
+        <textarea matInput maxlength="1000" formControlName="description" #description></textarea>
+        <mat-hint align="end">{{description.value.length}} / 1000</mat-hint>
         <mat-error>Description is required</mat-error>
       </mat-form-field>
+      <mat-label class="option-title">Year</mat-label>
       <mat-form-field>
-        <mat-label>Enter film yaer</mat-label>
+        <mat-label>Enter film year</mat-label>
         <input formControlName="year" matInput
                type="number">
         <mat-error>Year is required</mat-error>
       </mat-form-field>
+      <mat-label class="option-title">Poster URL</mat-label>
       <mat-form-field>
-        <mat-label>Enter poster url</mat-label>
+        <mat-label>Enter poster URL</mat-label>
         <input formControlName="posterUrl" matInput
                type="text">
       </mat-form-field>
+      <mat-label class="option-title">Banner URL</mat-label>
       <mat-form-field>
-        <mat-label>Enter banner url</mat-label>
+        <mat-label>Enter banner URL</mat-label>
         <input formControlName="bannerUrl" matInput
                type="text">
       </mat-form-field>
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button color="primary">Add</button>
+        <button mat-button color="warn">Cancel</button>
+      </div>
     </div>
   </form>
 </div>

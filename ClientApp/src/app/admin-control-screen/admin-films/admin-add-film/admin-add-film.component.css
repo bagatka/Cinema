@@ -1,0 +1,14 @@
+.option-title{
+  font-weight: 500;
+  font-size: 1.3vw;
+  padding-bottom: 0.5vh;
+  padding-top: 0.7vh;
+}
+
+mat-form-field{
+  width: 20vw;
+}
+
+textarea {
+  height: 10vh;
+}
