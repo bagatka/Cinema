@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import validate = WebAssembly.validate;
 
 @Component({
   selector: 'app-admin-add-film',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminAddFilmComponent implements OnInit {
 
-  constructor() { }
+  addFilmInput: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.addFilmInput = this.formBuilder.group({
+      title: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      year: new FormControl('', Validators.required),
+      posterUrl: new FormControl(''),
+      bannerUrl: new FormControl('')
+    });
   }
-
 }

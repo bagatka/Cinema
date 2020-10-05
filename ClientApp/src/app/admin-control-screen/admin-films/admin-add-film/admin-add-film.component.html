@@ -1,1 +1,34 @@
-<p>admin-add-film works!</p>
+<div fxLayout="column">
+  <form [formGroup]="addFilmInput">
+    <div fxLayout="column">
+      <mat-form-field>
+        <mat-label>Enter film title</mat-label>
+        <input formControlName="title" matInput placeholder="Green Mile"
+               type="text">
+        <mat-error>Title is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Enter film description</mat-label>
+        <input formControlName="description" matInput
+               type="text">
+        <mat-error>Description is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Enter film yaer</mat-label>
+        <input formControlName="year" matInput
+               type="number">
+        <mat-error>Year is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Enter poster url</mat-label>
+        <input formControlName="posterUrl" matInput
+               type="text">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Enter banner url</mat-label>
+        <input formControlName="bannerUrl" matInput
+               type="text">
+      </mat-form-field>
+    </div>
+  </form>
+</div>
