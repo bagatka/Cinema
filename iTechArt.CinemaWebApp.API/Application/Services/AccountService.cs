@@ -32,7 +32,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             _mapper = mapper;
             _config = configuration;
         }
-        public async Task<LoginResponse> LoginAsync(LoginRequest request) // Response
+        public async Task<LoginResponse> LoginAsync(LoginRequest request)
         {
             var user = await _context.Users.FirstOrDefaultAsync(user => user.Email == request.Email);
 
