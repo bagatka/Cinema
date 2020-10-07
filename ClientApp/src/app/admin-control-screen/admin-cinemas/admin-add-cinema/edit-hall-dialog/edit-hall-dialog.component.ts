@@ -53,7 +53,7 @@ export class EditHallDialogComponent implements OnInit {
       size: new FormControl(this.data.hallData.size, [Validators.required, Validators.min(1)]),
       cinemaName: new FormControl(this.data.hallData.cinemaName, Validators.required)
     });
-    this.seatsSchema = this.data.hallData.seatsSchema;
+    this.seatsSchema = JSON.parse(JSON.stringify(this.data.hallData.seatsSchema));
   }
 
   updateHall(): void {
@@ -71,13 +71,12 @@ export class EditHallDialogComponent implements OnInit {
     this.onCurrentSeatPosition = value;
   }
 
-  setActiveSeatType(type: SeatType): void {
+  setActiveSeatType(type: SeatType, event): void {
     this.activeSeatType = type;
-    const seats = document.getElementsByClassName('seat');
-    Array.from(seats).forEach((el) => el.classList.remove('active-seat-type', 'ng-star-inserted'));
-    const element = document.getElementsByClassName(type)[0];
+    const seats = document.getElementsByClassName('seatSelector');
+    Array.from(seats).forEach((el) => el.classList.remove('active-seat-type'));
+    const element = event.target;
     element.classList.add('active-seat-type');
-    console.log(element.classList);
   }
 
   public get SeatType(): typeof SeatType {

@@ -28,17 +28,20 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   }
 
   selectSeat(selectedRow, selectedColumn): void {
+    if (!this.activeSeatType) {
+      return;
+    }
     const seat = {seat: selectedColumn, row: selectedRow, type: this.activeSeatType};
     let status: boolean;
     status = this.checkSeat(seat);
     this.colorizeSeat(this.countIndex(seat), status);
   }
 
-  private colorizeSeat(index: number, status: boolean): void {
+  private colorizeSeat(index: number, status: boolean, type: SeatType = this.activeSeatType): void {
     const element = document.getElementsByClassName('seat')[index];
     if (status) {
       element.classList.remove(SeatType.Common, SeatType.Sofa, SeatType.VIP);
-      element.classList.add(this.activeSeatType);
+      element.classList.add(type);
     } else {
       element.classList.remove(SeatType.Common, SeatType.Sofa, SeatType.VIP);
     }
@@ -61,7 +64,7 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
 
   private drawSchema(): void {
     for (const seat of this.schemaData) {
-      this.colorizeSeat(this.countIndex(seat), true);
+      this.colorizeSeat(this.countIndex(seat), true, seat.type);
     }
   }
 

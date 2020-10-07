@@ -60,10 +60,12 @@ export class AdminAddCinemaComponent implements OnInit {
       height: '85vh',
       data: {hallData: hall}
     });
-    console.log(hall);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if (result) {
+        this.halls = this.halls.filter(h => h.name !== result);
+        console.log(result);
+      }
     });
   }
 }

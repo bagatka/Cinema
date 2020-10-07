@@ -30,10 +30,10 @@
         <mat-error>Cinema is required</mat-error>
       </mat-form-field>
       <div class="buttons" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1vh">
-        <button mat-button color="primary" type="submit" class="update-btn" [disabled]="!addHallInput.valid">
+        <button mat-raised-button color="primary" type="submit" class="update-btn" [disabled]="!addHallInput.valid">
           Update hall
         </button>
-        <button mat-raised-button color="warn" class="update-btn">Delete hall</button>
+        <button mat-raised-button color="warn" class="update-btn" [mat-dialog-close]="addHallInput.value.name">Delete hall</button>
       </div>
     </div>
   </form>
@@ -45,15 +45,15 @@
     <ng-container>
       <div class="picker" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1vw">
         <div class="single-picker" fxLayout="column" fxLayoutAlign="center center">
-          <div class="seat common" (click)="setActiveSeatType(SeatType.Common)"></div>
+          <div class="seatSelector common" (click)="setActiveSeatType(SeatType.Common, $event)"></div>
           <mat-label>Common</mat-label>
         </div>
         <div class="single-picker" fxLayout="column" fxLayoutAlign="center center">
-          <div class="seat sofa" (click)="setActiveSeatType(SeatType.Sofa)"></div>
+          <div class="seatSelector sofa" (click)="setActiveSeatType(SeatType.Sofa, $event)"></div>
           <mat-label>Sofa</mat-label>
         </div>
         <div class="single-picker" fxLayout="column" fxLayoutAlign="center center">
-          <div class="seat vip" (click)="setActiveSeatType(SeatType.VIP)"></div>
+          <div class="seatSelector vip" (click)="setActiveSeatType(SeatType.VIP, $event)"></div>
           <mat-label>VIP</mat-label>
         </div>
       </div>
