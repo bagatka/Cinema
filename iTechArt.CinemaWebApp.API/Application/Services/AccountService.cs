@@ -4,18 +4,17 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-using AutoMapper;
-
-using iTechArt.CinemaWebApp.API.Application.DTOs;
-using iTechArt.CinemaWebApp.API.Application.Wrappers;
-using iTechArt.CinemaWebApp.API.Data;
-using iTechArt.CinemaWebApp.API.Models;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 using BCrypter = BCrypt.Net.BCrypt;
+
+using AutoMapper;
+
+using iTechArt.CinemaWebApp.API.Data;
+using iTechArt.CinemaWebApp.API.Models;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Account;
 
 namespace iTechArt.CinemaWebApp.API.Application.Services
 {

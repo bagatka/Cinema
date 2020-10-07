@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-using iTechArt.CinemaWebApp.API.Application.DTOs;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Account;
 using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Application.Mapping
@@ -11,6 +11,6 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
         {
             CreateMap<User, LoginResponse>();
             CreateMap<RegisterRequest, User>();
-        }  
+        }
     }
 }

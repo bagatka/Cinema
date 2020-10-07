@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-using iTechArt.CinemaWebApp.API.Application.DTOs;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Account;
 using iTechArt.CinemaWebApp.API.Application.Services;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
