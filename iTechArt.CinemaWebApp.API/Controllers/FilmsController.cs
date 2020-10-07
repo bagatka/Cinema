@@ -67,8 +67,8 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             {
                 Title = film.Title,
                 Description = film.Description,
-                PosterUrl = !string.IsNullOrEmpty(film.PosterUrl) ? film.PosterUrl : "",
-                BannerUrl = !string.IsNullOrEmpty(film.BannerUrl) ? film.BannerUrl : ""
+                PosterUrl = !string.IsNullOrEmpty(film.PosterUrl) ? film.PosterUrl : string.Empty,
+                BannerUrl = !string.IsNullOrEmpty(film.BannerUrl) ? film.BannerUrl : string.Empty
             };
             await _context.Films.AddAsync(newFilm);
             await _context.SaveChangesAsync();

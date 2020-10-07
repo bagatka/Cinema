@@ -50,7 +50,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
                 return new Response<LoginResponse>($"Invalid Credentials for {request.Email}.");
             }
 
-            var jwtSecurityToken = GenerateJWTToken(user);
+            var jwtSecurityToken = GenerateJwtToken(user);
             var response = _mapper.Map<LoginResponse>(user);
             response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
@@ -81,29 +81,34 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             await _context.AddAsync(newUser);
             await _context.SaveChangesAsync();
 
-            var jwtSecurityToken = GenerateJWTToken(newUser);
+            var jwtSecurityToken = GenerateJwtToken(newUser);
             var response = _mapper.Map<LoginResponse>(newUser);
             response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
             return new Response<LoginResponse>(response, $"{request.Email} has been successfully registered.");
         }
 
-        private JwtSecurityToken GenerateJWTToken(User userInfo)
+        private JwtSecurityToken GenerateJwtToken(User userInfo)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.Unicode.GetBytes(_config["Jwt:SecretKey"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub,
+                new Claim(
+                    JwtRegisteredClaimNames.Sub,
                     userInfo.UserName),
-                new Claim("firstName",
+                new Claim(
+                    "firstName",
                     userInfo.FirstName),
-                new Claim("lastName",
+                new Claim(
+                    "lastName",
                     userInfo.LastName),
-                new Claim("role",
+                new Claim(
+                    "role",
                     userInfo.Role),
-                new Claim(JwtRegisteredClaimNames.Jti,
+                new Claim(
+                    JwtRegisteredClaimNames.Jti,
                     Guid.NewGuid()
                         .ToString())
             };
