@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace iTechArt.CinemaWebApp.API.Model
+namespace iTechArt.CinemaWebApp.API.Models
 {
     public class Cinema
     {
