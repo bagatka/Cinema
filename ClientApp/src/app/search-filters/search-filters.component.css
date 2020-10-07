@@ -2,7 +2,7 @@
   width: 15vw;
 }
 
-.filter-title{
+.filter-title {
   font-weight: 900;
   font-size: 1.7vw;
   padding-left: 0.5vw;
@@ -10,16 +10,16 @@
   padding-bottom: 1vh;
 }
 
-.filter-text{
+.filter-text {
   font-weight: 600;
   font-size: 1vw;
 }
 
-.selector{
+.selector {
   padding-left: 1vw;
 }
 
-.sits-input-field{
+.sits-input-field {
   width: 41.5%;
 }
 

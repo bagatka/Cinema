@@ -15,7 +15,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     public class FilmsController : ControllerBase
     {
         private readonly CinemaDbContext _context;
-        
+
 
         public FilmsController(CinemaDbContext cinemaDbContext)
         {
@@ -63,12 +63,12 @@ namespace iTechArt.CinemaWebApp.API.Controllers
                 return BadRequest();
             }
 
-            Film newFilm = new Film()
+            var newFilm = new Film
             {
                 Title = film.Title,
                 Description = film.Description,
-                PosterUrl = (!string.IsNullOrEmpty(film.PosterUrl)) ? film.PosterUrl : "",
-                BannerUrl = (!string.IsNullOrEmpty(film.BannerUrl)) ? film.BannerUrl : ""
+                PosterUrl = !string.IsNullOrEmpty(film.PosterUrl) ? film.PosterUrl : string.Empty,
+                BannerUrl = !string.IsNullOrEmpty(film.BannerUrl) ? film.BannerUrl : string.Empty
             };
             await _context.Films.AddAsync(newFilm);
             await _context.SaveChangesAsync();

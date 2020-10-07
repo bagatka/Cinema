@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
-using System.Text;
-using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,72 +32,90 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             _mapper = mapper;
             _config = configuration;
         }
-        public async Task<LoginResponse> LoginAsync(LoginRequest request)
+
+        public async Task<Response<LoginResponse>> LoginAsync(LoginRequest request)
         {
             var user = await _context.Users.FirstOrDefaultAsync(user => user.Email == request.Email);
 
-            if(user == null)
+            if (user == null)
             {
-                return null;
+                return new Response<LoginResponse>($"No Accounts Registered with {request.Email}.");
             }
 
             var validatePassword = BCrypter.EnhancedVerify(request.Password, user.PasswordHash);
-            
-            if(!validatePassword)
+
+            if (!validatePassword)
             {
-                return null;
+                return new Response<LoginResponse>($"Invalid Credentials for {request.Email}.");
             }
 
-            var jwtSecurityToken = GenerateJWTToken(user);
+            var jwtSecurityToken = GenerateJwtToken(user);
             var response = _mapper.Map<LoginResponse>(user);
             response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
-            return response;
+            return new Response<LoginResponse>(response, $"{request.Email} has been successfully logged in.");
         }
 
-        public async Task<bool?> RegisterAsync(RegisterRequest request)
+        public async Task<Response<LoginResponse>> RegisterAsync(RegisterRequest request)
         {
-            var userWithSameUserName = await _context.Users.FirstOrDefaultAsync(user => user.UserName.ToLower() == request.UserName.ToLower());
+            var userWithSameUserName =
+                await _context.Users.FirstOrDefaultAsync(user => user.UserName.ToLower() == request.UserName.ToLower());
 
             if (userWithSameUserName != null)
             {
-                return null;
+                return new Response<LoginResponse>($"A user with {request.UserName} username already exists.");
             }
 
             var userWithSameEmail = await _context.Users.FirstOrDefaultAsync(user => user.Email == request.Email);
 
             if (userWithSameEmail != null)
             {
-                return null;
+                return new Response<LoginResponse>($"A user with {request.Email} email already exists.");
             }
 
             var hashedPassword = BCrypter.HashPassword(request.Password);
             var newUser = _mapper.Map<User>(request);
             newUser.PasswordHash = hashedPassword;
             newUser.Role = Policies.User;
-            var result = await _context.AddAsync(newUser);
+            await _context.AddAsync(newUser);
             await _context.SaveChangesAsync();
 
-            return true;
+            var jwtSecurityToken = GenerateJwtToken(newUser);
+            var response = _mapper.Map<LoginResponse>(newUser);
+            response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+
+            return new Response<LoginResponse>(response, $"{request.Email} has been successfully registered.");
         }
-        private JwtSecurityToken GenerateJWTToken(User userInfo)
+
+        private JwtSecurityToken GenerateJwtToken(User userInfo)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.Unicode.GetBytes(_config["Jwt:SecretKey"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
-                new Claim("firstName", userInfo.FirstName.ToString()),
-                new Claim("lastName", userInfo.LastName.ToString()),
-                new Claim("role",userInfo.Role),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(
+                    JwtRegisteredClaimNames.Sub,
+                    userInfo.UserName),
+                new Claim(
+                    "firstName",
+                    userInfo.FirstName),
+                new Claim(
+                    "lastName",
+                    userInfo.LastName),
+                new Claim(
+                    "role",
+                    userInfo.Role),
+                new Claim(
+                    JwtRegisteredClaimNames.Jti,
+                    Guid.NewGuid()
+                        .ToString())
             };
 
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
-                claims: claims,
+                _config["Jwt:Issuer"],
+                _config["Jwt:Audience"],
+                claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials
             );

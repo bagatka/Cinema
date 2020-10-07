@@ -39,16 +39,16 @@
   font-weight: 600;
 }
 
-.menu button{
+.menu button {
   font-size: 0.9vw;
   width: 7vw;
   text-align: left;
 }
 
-.menu-padding{
+.menu-padding {
   padding-top: 5vh;
 }
 
-.log-out-btn{
+.log-out-btn {
   color: red;
 }
