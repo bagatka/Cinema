@@ -29,15 +29,34 @@
         </mat-select>
         <mat-error>Cinema is required</mat-error>
       </mat-form-field>
-      <button mat-button color="primary" type="submit" class="update-btn" [disabled]="!addHallInput.valid">Update Hall</button>
+      <div class="buttons" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1vh">
+        <button mat-button color="primary" type="submit" class="update-btn" [disabled]="!addHallInput.valid">
+          Update hall
+        </button>
+        <button mat-raised-button color="warn" class="update-btn">Delete hall</button>
+      </div>
     </div>
   </form>
   <div fxLayout="column" fxLayoutAlign="center start">
-    <app-hall-schema></app-hall-schema>
-    <div fxLayout="row" fxLayoutAlign="center center">
-      <div class="seat common">Common</div>
-      <div class="seat sofa">Sofa</div>
-      <div class="seat vip">VIP</div>
-    </div>
+    <h1
+      class="current-seat">{{(onCurrentSeatPosition) ? 'Current seat: Row ' + onCurrentSeatPosition.row + ', Seat ' + onCurrentSeatPosition.seat : 'Current seat: '}} </h1>
+    <app-hall-schema (enterSeatPosition)="displayCurrentSeatPosition($event)"
+                     [(schemaData)]="seatsSchema" [activeSeatType]="activeSeatType"></app-hall-schema>
+    <ng-container>
+      <div class="picker" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1vw">
+        <div class="single-picker" fxLayout="column" fxLayoutAlign="center center">
+          <div class="seat common" (click)="setActiveSeatType(SeatType.Common)"></div>
+          <mat-label>Common</mat-label>
+        </div>
+        <div class="single-picker" fxLayout="column" fxLayoutAlign="center center">
+          <div class="seat sofa" (click)="setActiveSeatType(SeatType.Sofa)"></div>
+          <mat-label>Sofa</mat-label>
+        </div>
+        <div class="single-picker" fxLayout="column" fxLayoutAlign="center center">
+          <div class="seat vip" (click)="setActiveSeatType(SeatType.VIP)"></div>
+          <mat-label>VIP</mat-label>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>

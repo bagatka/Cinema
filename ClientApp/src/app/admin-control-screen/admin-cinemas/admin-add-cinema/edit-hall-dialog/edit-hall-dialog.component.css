@@ -1,7 +1,7 @@
 .option-title {
   font-weight: 500;
   font-size: 1.3vw;
-  padding-bottom: 0.5vh;
+  padding-bottom: 0.8vh;
   padding-top: 0.7vh;
 }
 
@@ -30,6 +30,19 @@
   border-top-right-radius: 10px;
 }
 
+.buttons {
+  padding-top: 6vh;
+}
+
+.picker {
+  padding-top: 2vh;
+  width: 35vw;
+}
+
+.single-picker {
+  width: 5vw;
+}
+
 .common {
   background-color: #444451;
 }
@@ -40,6 +53,19 @@
 
 .vip {
   background-color: darkorange;
+}
+
+.current-seat {
+  font-size: 1.1vw;
+}
+
+.seat:hover {
+  cursor: pointer;
+  transform: scale(1.4);
+}
+
+.active-seat-type {
+  transform: scale(1.4);
 }
 
 app-hall-schema {

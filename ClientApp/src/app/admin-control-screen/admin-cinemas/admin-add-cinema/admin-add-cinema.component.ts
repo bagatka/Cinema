@@ -16,17 +16,20 @@ export class AdminAddCinemaComponent implements OnInit {
     {
       name: 'Hall 1',
       size: 15,
-      cinemaName: 'SilverScreen'
+      cinemaName: 'SilverScreen',
+      seatsSchema: []
     },
     {
       name: 'Hall 2',
       size: 120,
-      cinemaName: 'SilverScreen'
+      cinemaName: 'SilverScreen',
+      seatsSchema: []
     },
     {
       name: 'Hall 3',
       size: 86,
-      cinemaName: 'SilverScreen'
+      cinemaName: 'SilverScreen',
+      seatsSchema: []
     },
   ];
 
@@ -46,7 +49,8 @@ export class AdminAddCinemaComponent implements OnInit {
     this.halls.push({
       name: 'Change the name',
       size: 0,
-      cinemaName: 'Default'
+      cinemaName: 'Default',
+      seatsSchema: []
     });
   }
 
@@ -56,10 +60,10 @@ export class AdminAddCinemaComponent implements OnInit {
       height: '85vh',
       data: {hallData: hall}
     });
+    console.log(hall);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      console.log(result);
     });
   }
 }
