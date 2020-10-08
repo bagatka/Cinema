@@ -11,6 +11,7 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
 
   @Output() enterSeatPosition = new EventEmitter<SeatPosition>();
   @Output() schemaDataChange = new EventEmitter<SeatPosition[]>();
+  @Output() hallSize = new EventEmitter<number>();
   @Input() schemaData: SeatPosition[];
   @Input() activeSeatType: SeatType;
 
@@ -53,13 +54,21 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
 
   private checkSeat(seat: SeatPosition): boolean {
     if (this.schemaData.find(s => s.row === seat.row && s.seat === seat.seat)) {
-      this.schemaData = this.schemaData.filter(savedSeat => savedSeat.row !== seat.row || savedSeat.seat !== seat.seat);
-      this.updateSelectedSeatsData();
+      this.removeSeat(seat);
       return false;
     }
-    this.schemaData.push(seat);
+    this.addSeat(seat);
     this.updateSelectedSeatsData();
     return true;
+  }
+
+  private removeSeat(seat: SeatPosition): void {
+    this.schemaData = this.schemaData.filter(savedSeat => savedSeat.row !== seat.row || savedSeat.seat !== seat.seat);
+    this.updateSelectedSeatsData();
+  }
+
+  private addSeat(seat: SeatPosition): void {
+    this.schemaData.push(seat);
   }
 
   private drawSchema(): void {
@@ -70,6 +79,7 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
 
   updateSelectedSeatsData(): void {
     this.schemaDataChange.emit(this.schemaData);
+    this.hallSize.emit(this.schemaData.length);
   }
 
   updateSelectedHint(selectedRow, selectedColumn): void {
