@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace iTechArt.CinemaWebApp.API.Application.DTOs
+namespace iTechArt.CinemaWebApp.API.Application.DTOs.Account
 {
     public class LoginRequest
     {
@@ -12,4 +12,3 @@ namespace iTechArt.CinemaWebApp.API.Application.DTOs
         public string Password { get; set; }
     }
 }
-
