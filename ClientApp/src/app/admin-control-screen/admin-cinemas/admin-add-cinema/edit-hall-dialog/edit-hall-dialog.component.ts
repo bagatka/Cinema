@@ -4,6 +4,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Cinema} from '../../../../Interfaces/cinema';
 import {SeatPosition} from '../../../../Interfaces/seat-position';
 import {SeatType} from '../../../../Enums/seat-type.enum';
+import {CinemaService} from '../../../../cinema.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-edit-hall-dialog',
@@ -18,40 +20,16 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
   activeSeatType: SeatType;
   selectedSeatsNumber: number;
   hallSizeError: boolean;
-
-  today = new Date();
-  maxDate = new Date();
-
-  cinemas: Cinema[] = [
-    {
-      name: 'SuperCinema',
-      description: 'asdasd',
-      id: 1,
-      city: 'Minsk'
-    },
-    {
-      name: 'SilverScreen',
-      description: 'asdasd',
-      id: 2,
-      city: 'Minsk'
-    },
-    {
-      name: 'GoldenScreen',
-      description: 'asdasd',
-      id: 3,
-      city: 'Brest'
-    }
-  ];
+  cinemas$ = new Observable<Cinema[]>();
 
   constructor(
     public dialogRef: MatDialogRef<EditHallDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private cinemaService: CinemaService) {
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+
 
   ngOnInit(): void {
     this.seatsSchema = JSON.parse(JSON.stringify(this.data.hallData.seatsSchema));
@@ -62,10 +40,15 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
       size: new FormControl(this.data.hallData.size, [Validators.required, Validators.min(1)]),
       cinemaName: new FormControl(this.data.hallData.cinemaName, Validators.required)
     });
+    this.cinemas$ = this.cinemaService.getCinemas();
   }
 
   ngAfterContentChecked(): void {
     this.checkHallSize();
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
   updateHall(): void {
@@ -110,12 +93,8 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
   }
 
   setHallSizeError(status: boolean): void {
-      status ? this.addHallInput.setErrors(Validators) : this.addHallInput.setErrors(null);
-      this.hallSizeError = status;
-  }
-
-  checkName(): void {
-    console.log(!this.addHallInput.valid && this.hallSizeError);
+    status ? this.addHallInput.setErrors(Validators) : this.addHallInput.setErrors(null);
+    this.hallSizeError = status;
   }
 
   public get SeatType(): typeof SeatType {
