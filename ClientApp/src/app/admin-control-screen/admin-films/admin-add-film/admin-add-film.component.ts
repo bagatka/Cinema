@@ -17,6 +17,7 @@ export class AdminAddFilmComponent implements OnInit {
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
       year: new FormControl('', Validators.required),
+      duration: new FormControl('', Validators.required),
       posterUrl: new FormControl(''),
       bannerUrl: new FormControl('')
     });

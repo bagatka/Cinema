@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Film} from '../../../Interfaces/film';
 import {Cinema} from '../../../Interfaces/cinema';
 import {Hall} from '../../../Interfaces/hall';
@@ -17,6 +17,7 @@ export class AdminAddShowComponent implements OnInit {
   films$ = new Observable<Film[]>();
   cinemas$ = new Observable<Cinema[]>();
   halls$ = new Observable<Hall[]>();
+  hallTimeTable$ = new Observable();
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -25,7 +26,8 @@ export class AdminAddShowComponent implements OnInit {
       film: new FormControl('', Validators.required),
       cinema: new FormControl('', Validators.required),
       hall: new FormControl('', Validators.required),
-      dateTime: new FormControl('', Validators.required)
+      dateTime: new FormControl('', Validators.required),
+      time: new FormControl('', Validators.required)
     });
   }
 }

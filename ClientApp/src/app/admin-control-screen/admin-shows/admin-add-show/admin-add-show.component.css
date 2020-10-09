@@ -5,10 +5,32 @@
   padding-top: 0.7vh;
 }
 
+.container {
+  width: 45vw;
+}
+
+.films-container {
+  width: 30vw;
+}
+
+.film-title {
+  font-size: 1.1vw !important;
+  font-weight: 600 !important;
+}
+
+.film-list {
+  padding-top: 3vh;
+}
+
 mat-form-field{
   width: 20vw;
 }
 
 textarea {
   height: 10vh;
+}
+
+mat-list-option{
+  margin-bottom: 2vh;
+  height: auto !important;
 }
