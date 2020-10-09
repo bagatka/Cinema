@@ -13,7 +13,7 @@ import {Hall} from '../../../Interfaces/hall';
 export class AdminAddCinemaComponent implements OnInit {
 
   addCinemaInput: FormGroup;
-  halls: Hall[];
+  halls: Hall[] = [];
 
   constructor(private formBuilder: FormBuilder, public dialog: MatDialog) {
   }
