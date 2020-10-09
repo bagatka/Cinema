@@ -41,7 +41,8 @@
       <mat-label class="option-title">Halls</mat-label>
       <button mat-button color="accent" (click)="onAddCinemaClick()">Add hall</button>
     </div>
-    <mat-selection-list #selectedHall [multiple]="false" (click)="openEditHallDialog(selectedHall.selectedOptions.selected[0]?.value)">
+    <mat-selection-list #selectedHall [multiple]="false"
+                        (click)="openEditHallDialog(selectedHall.selectedOptions.selected[0]?.value)">
       <mat-list-option *ngFor="let hall of halls" [value]="hall">
         {{hall.name}}
       </mat-list-option>

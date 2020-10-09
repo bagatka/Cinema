@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable, of} from 'rxjs';
 import {Film} from '../../../Interfaces/film';
@@ -19,7 +19,8 @@ export class AdminAddShowComponent implements OnInit {
   halls$ = new Observable<Hall[]>();
   hallTimeTable$ = new Observable();
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {
+  }
 
   ngOnInit(): void {
     this.addShowInput = this.formBuilder.group({

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AdminAddShowComponent } from './admin-add-show.component';
+import {AdminAddShowComponent} from './admin-add-show.component';
 
 describe('AdminAddShowComponent', () => {
   let component: AdminAddShowComponent;
@@ -8,9 +8,9 @@ describe('AdminAddShowComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminAddShowComponent ]
+      declarations: [AdminAddShowComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

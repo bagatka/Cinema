@@ -1,5 +1,5 @@
 export enum SeatType {
-  Common= 'common',
+  Common = 'common',
   Sofa = 'sofa',
   VIP = 'vip'
 }

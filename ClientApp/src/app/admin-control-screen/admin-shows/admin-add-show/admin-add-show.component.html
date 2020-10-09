@@ -51,8 +51,8 @@
         <mat-label class="option-title">Hall timetable</mat-label>
         <mat-selection-list [multiple]="false" class="film-list">
           <mat-list-option *ngFor="let show of hallTimeTable$ | async" [value]="show">
-                <mat-label class="film-title">{{show.title}}</mat-label>
-                <mat-label>{{'(' + show.startTime + ' - ' + show.endTime + ')'}}</mat-label>
+            <mat-label class="film-title">{{show.title}}</mat-label>
+            <mat-label>{{'(' + show.startTime + ' - ' + show.endTime + ')'}}</mat-label>
           </mat-list-option>
         </mat-selection-list>
       </div>

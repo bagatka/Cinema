@@ -1,11 +1,14 @@
 import {Component, Inject, OnInit, AfterContentChecked} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+
+import {Observable} from 'rxjs';
+
 import {Cinema} from '../../../../Interfaces/cinema';
 import {SeatPosition} from '../../../../Interfaces/seat-position';
 import {SeatType} from '../../../../Enums/seat-type.enum';
 import {CinemaService} from '../../../../cinema.service';
-import {Observable} from 'rxjs';
+
 
 @Component({
   selector: 'app-edit-hall-dialog',
@@ -28,8 +31,6 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
     private formBuilder: FormBuilder,
     private cinemaService: CinemaService) {
   }
-
-
 
   ngOnInit(): void {
     this.seatsSchema = JSON.parse(JSON.stringify(this.data.hallData.seatsSchema));
@@ -77,19 +78,13 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
 
   setSelectedSeatsNumber(value): void {
     this.selectedSeatsNumber = value;
-    if (value !== this.addHallInput.value.size) {
-      this.setHallSizeError(true);
-    } else {
-      this.setHallSizeError(false);
-    }
+    const hallSizeErrorStatus = value !== this.addHallInput.value.size;
+    this.setHallSizeError(hallSizeErrorStatus);
   }
 
   checkHallSize(): void {
-    if (this.selectedSeatsNumber !== this.addHallInput.value.size) {
-      this.setHallSizeError(true);
-    } else {
-      this.setHallSizeError(false);
-    }
+    const hallSizeErrorStatus = this.selectedSeatsNumber !== this.addHallInput.value.size;
+    this.setHallSizeError(hallSizeErrorStatus);
   }
 
   setHallSizeError(status: boolean): void {

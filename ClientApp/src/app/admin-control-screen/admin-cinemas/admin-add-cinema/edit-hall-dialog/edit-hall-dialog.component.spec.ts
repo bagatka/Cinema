@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { EditHallDialogComponent } from './edit-hall-dialog.component';
+import {EditHallDialogComponent} from './edit-hall-dialog.component';
 
 describe('EditHallDialogComponent', () => {
   let component: EditHallDialogComponent;
@@ -8,9 +8,9 @@ describe('EditHallDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditHallDialogComponent ]
+      declarations: [EditHallDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

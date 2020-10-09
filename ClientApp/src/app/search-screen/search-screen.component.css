@@ -20,22 +20,22 @@
   padding-bottom: 1vh;
 }
 
-.search-form{
+.search-form {
   font-size: 1.4vw;
   padding-left: 2vw;
   width: 66vw;
   padding-bottom: 0;
 }
 
-.results{
+.results {
   padding-top: 3vh;
 }
 
-.film-card{
+.film-card {
   padding-left: 4vh;
 }
 
-:host /deep/ .mat-form-field-infix{
+:host /deep/ .mat-form-field-infix {
   border-top-width: 0;
   padding-bottom: 0.5vh;
   padding-left: 0.5vw;

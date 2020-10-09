@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AdminCinemasComponent } from './admin-cinemas.component';
+import {AdminCinemasComponent} from './admin-cinemas.component';
 
 describe('AdminCinemasComponent', () => {
   let component: AdminCinemasComponent;
@@ -8,9 +8,9 @@ describe('AdminCinemasComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminCinemasComponent ]
+      declarations: [AdminCinemasComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

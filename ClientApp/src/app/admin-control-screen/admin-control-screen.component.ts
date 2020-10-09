@@ -37,5 +37,4 @@ export class AdminControlScreenComponent {
     this.activeSettings = this.activeSettings.map(() => false);
     this.activeSettings[select] = true;
   }
-
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
+
 import {EditHallDialogComponent} from './edit-hall-dialog/edit-hall-dialog.component';
 import {Hall} from '../../../Interfaces/hall';
 
@@ -12,26 +13,7 @@ import {Hall} from '../../../Interfaces/hall';
 export class AdminAddCinemaComponent implements OnInit {
 
   addCinemaInput: FormGroup;
-  halls: Hall[] = [
-    {
-      name: 'Hall 1',
-      size: 15,
-      cinemaName: 'SilverScreen',
-      seatsSchema: []
-    },
-    {
-      name: 'Hall 2',
-      size: 120,
-      cinemaName: 'SilverScreen',
-      seatsSchema: []
-    },
-    {
-      name: 'Hall 3',
-      size: 86,
-      cinemaName: 'SilverScreen',
-      seatsSchema: []
-    },
-  ];
+  halls: Hall[];
 
   constructor(private formBuilder: FormBuilder, public dialog: MatDialog) {
   }
@@ -49,7 +31,7 @@ export class AdminAddCinemaComponent implements OnInit {
     this.halls.push({
       name: 'Change the name',
       size: 0,
-      cinemaName: 'Default',
+      cinemaName: '',
       seatsSchema: []
     });
   }
@@ -64,7 +46,6 @@ export class AdminAddCinemaComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.halls = this.halls.filter(h => h.name !== result);
-        console.log(result);
       }
     });
   }

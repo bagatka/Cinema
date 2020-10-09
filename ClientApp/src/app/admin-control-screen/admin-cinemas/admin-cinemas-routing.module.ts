@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+
 import {AdminAddCinemaComponent} from './admin-add-cinema/admin-add-cinema.component';
 import {AdminCinemasComponent} from './admin-cinemas.component';
 
@@ -15,4 +16,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AdminCinemasRoutingModule { }
+export class AdminCinemasRoutingModule {
+}

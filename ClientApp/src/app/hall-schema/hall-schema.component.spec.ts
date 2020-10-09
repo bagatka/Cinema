@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HallSchemaComponent } from './hall-schema.component';
+import {HallSchemaComponent} from './hall-schema.component';
 
 describe('HallSchemaComponent', () => {
   let component: HallSchemaComponent;
@@ -8,9 +8,9 @@ describe('HallSchemaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HallSchemaComponent ]
+      declarations: [HallSchemaComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

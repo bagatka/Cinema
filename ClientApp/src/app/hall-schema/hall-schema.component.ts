@@ -1,4 +1,5 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit, AfterViewInit, EventEmitter, Input, Output} from '@angular/core';
+
 import {SeatPosition} from '../Interfaces/seat-position';
 import {SeatType} from '../Enums/seat-type.enum';
 
@@ -18,7 +19,6 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   columns = Array(32).fill(1).map((x, i) => i);
   rows = Array(18).fill(1).map((x, i) => i);
   activeSeat;
-
 
   public ngOnInit(): void {
     this.enterSeatPosition.emit(null);
@@ -40,11 +40,9 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
 
   private colorizeSeat(index: number, status: boolean, type: SeatType = this.activeSeatType): void {
     const element = document.getElementsByClassName('seat')[index];
+    element.classList.remove(SeatType.Common, SeatType.Sofa, SeatType.VIP);
     if (status) {
-      element.classList.remove(SeatType.Common, SeatType.Sofa, SeatType.VIP);
       element.classList.add(type);
-    } else {
-      element.classList.remove(SeatType.Common, SeatType.Sofa, SeatType.VIP);
     }
   }
 

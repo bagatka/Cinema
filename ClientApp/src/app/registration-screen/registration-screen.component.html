@@ -38,7 +38,8 @@
           </mat-form-field>
           <mat-form-field class="right-filed">
             <mat-label>Confirm Password</mat-label>
-            <input [type]="hideConfirm ? 'password' : 'text'" autocomplete="off" matInput formControlName="confirmPassword">
+            <input [type]="hideConfirm ? 'password' : 'text'" autocomplete="off" matInput
+                   formControlName="confirmPassword">
             <button mat-icon-button matSuffix (click)="hideConfirm = !hideConfirm" [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hideConfirm" tabindex="-1">
               <mat-icon>{{hideConfirm ? 'visibility_off' : 'visibility'}}</mat-icon>

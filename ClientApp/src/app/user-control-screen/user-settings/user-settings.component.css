@@ -6,21 +6,21 @@ mat-tab-group {
   padding-top: 2vh;
 }
 
-.settings-titles{
+.settings-titles {
   font-size: 0.9vw;
   font-weight: 600;
   padding-right: 2vw;
 }
 
-.email-label{
+.email-label {
   padding-right: 3.9vw;
 }
 
-.current-email{
+.current-email {
   padding-right: 2vw;
 }
 
-.change-password{
+.change-password {
   padding-right: 10.7vw;
 }
 
