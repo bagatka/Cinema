@@ -5,7 +5,7 @@
   padding-top: 0.7vh;
 }
 
-mat-form-field{
+mat-form-field {
   width: 20vw;
 }
 
@@ -13,6 +13,6 @@ textarea {
   height: 10vh;
 }
 
-mat-selection-list{
+mat-selection-list {
   width: 22vw;
 }

@@ -3,6 +3,9 @@ import {Component, OnInit, AfterViewInit, EventEmitter, Input, Output} from '@an
 import {SeatPosition} from '../Interfaces/seat-position';
 import {SeatType} from '../Enums/seat-type.enum';
 
+const MAX_COLUMNS = 32;
+const MAX_ROWS = 18;
+
 @Component({
   selector: 'app-hall-schema',
   templateUrl: './hall-schema.component.html',
@@ -16,8 +19,8 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   @Input() schemaData: SeatPosition[];
   @Input() activeSeatType: SeatType;
 
-  columns = Array(32).fill(1).map((x, i) => i);
-  rows = Array(18).fill(1).map((x, i) => i);
+  columns = Array(MAX_COLUMNS).fill(1).map((x, i) => i);
+  rows = Array(MAX_ROWS).fill(1).map((x, i) => i);
   activeSeat;
 
   public ngOnInit(): void {

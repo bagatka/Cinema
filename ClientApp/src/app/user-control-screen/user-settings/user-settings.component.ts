@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
-import {CompareValidator} from '../../Validators/MatchValidator.validator';
+import {MatchValidator} from '../../Validators/MatchValidator.validator';
 
 @Component({
   selector: 'app-user-settings',
@@ -17,6 +17,7 @@ export class UserSettingsComponent implements OnInit {
   hideOld = true;
   hideNew = true;
   hideConfirm = true;
+  currentEmail: string;
 
   constructor(private formBuilder: FormBuilder) {
   }
@@ -27,7 +28,7 @@ export class UserSettingsComponent implements OnInit {
       newEmail: new FormControl('', [Validators.required, Validators.email]),
       confirmEmail: new FormControl('', Validators.required)
     }, {
-      validator: CompareValidator('newEmail', 'confirmEmail')
+      validator: MatchValidator('newEmail', 'confirmEmail')
     });
 
     this.passwordChangeInput = this.formBuilder.group({
@@ -35,8 +36,10 @@ export class UserSettingsComponent implements OnInit {
       newPassword: new FormControl('', Validators.required),
       confirmPassword: new FormControl('', Validators.required)
     }, {
-      validator: CompareValidator('newPassword', 'confirmPassword')
+      validator: MatchValidator('newPassword', 'confirmPassword')
     });
+
+    this.currentEmail = '';
   }
 
   onEmailFormCall(): void {

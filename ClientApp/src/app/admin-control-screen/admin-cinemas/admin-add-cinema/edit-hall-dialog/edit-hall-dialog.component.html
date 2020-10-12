@@ -22,22 +22,12 @@
           / {{addHallInput.value.size}}</mat-hint>
         <mat-error>Incorrect hall size</mat-error>
       </mat-form-field>
-      <mat-label class="option-title">Cinema</mat-label>
-      <mat-form-field>
-        <mat-label>Select the cinema</mat-label>
-        <mat-select formControlName="cinemaName">
-          <mat-option *ngFor="let cinema of cinemas$ | async" [value]="cinema.name">
-            {{cinema.name}}
-          </mat-option>
-        </mat-select>
-        <mat-error>Cinema is required</mat-error>
-      </mat-form-field>
       <div class="buttons" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1vh">
         <button mat-raised-button color="primary" type="submit" class="update-btn"
                 [disabled]="!addHallInput.valid || hallSizeError">
           Update
         </button>
-        <button mat-raised-button color="warn" class="update-btn" [mat-dialog-close]="addHallInput.value.name">
+        <button mat-raised-button color="warn" class="update-btn" [mat-dialog-close]="addHallInput.value">
           Delete
         </button>
       </div>

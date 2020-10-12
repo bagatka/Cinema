@@ -45,7 +45,7 @@ export class AdminAddCinemaComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.halls = this.halls.filter(h => h.name !== result);
+        this.halls = this.halls.filter(h => h.name !== result.name || h.size !== result.size);
       }
     });
   }

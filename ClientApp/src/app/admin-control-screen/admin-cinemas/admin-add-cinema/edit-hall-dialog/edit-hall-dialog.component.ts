@@ -2,13 +2,8 @@ import {Component, Inject, OnInit, AfterContentChecked} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
-import {Observable} from 'rxjs';
-
-import {Cinema} from '../../../../Interfaces/cinema';
 import {SeatPosition} from '../../../../Interfaces/seat-position';
 import {SeatType} from '../../../../Enums/seat-type.enum';
-import {CinemaService} from '../../../../cinema.service';
-
 
 @Component({
   selector: 'app-edit-hall-dialog',
@@ -23,25 +18,21 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
   activeSeatType: SeatType;
   selectedSeatsNumber: number;
   hallSizeError: boolean;
-  cinemas$ = new Observable<Cinema[]>();
 
   constructor(
     public dialogRef: MatDialogRef<EditHallDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
-    private formBuilder: FormBuilder,
-    private cinemaService: CinemaService) {
+    private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this.seatsSchema = JSON.parse(JSON.stringify(this.data.hallData.seatsSchema));
+    this.seatsSchema = [...this.data.hallData.seatsSchema];
     this.selectedSeatsNumber = this.seatsSchema.length;
     this.hallSizeError = this.selectedSeatsNumber !== this.seatsSchema.length;
     this.addHallInput = this.formBuilder.group({
       name: new FormControl(this.data.hallData.name, Validators.required),
-      size: new FormControl(this.data.hallData.size, [Validators.required, Validators.min(1)]),
-      cinemaName: new FormControl(this.data.hallData.cinemaName, Validators.required)
+      size: new FormControl(this.data.hallData.size, [Validators.required, Validators.min(1)])
     });
-    this.cinemas$ = this.cinemaService.getCinemas();
   }
 
   ngAfterContentChecked(): void {
