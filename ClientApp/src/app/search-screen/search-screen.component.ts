@@ -3,8 +3,8 @@ import {Component, OnInit} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {distinctUntilChanged, switchMap} from 'rxjs/operators';
 
-import {Filter} from '../filter';
-import {Film} from '../film';
+import {Filter} from '../Interfaces/filter';
+import {Film} from '../Interfaces/film';
 import {FilmService} from '../film.service';
 
 @Component({

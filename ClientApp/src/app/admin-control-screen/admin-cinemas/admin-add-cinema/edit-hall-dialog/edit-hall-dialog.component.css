@@ -1,0 +1,77 @@
+.option-title {
+  font-weight: 500;
+  font-size: 1.3vw;
+  padding-bottom: 0.8vh;
+  padding-top: 0.7vh;
+}
+
+.header {
+  font-size: 2vw;
+  font-weight: 700;
+  padding-top: 2vh;
+  padding-left: 3vw;
+}
+
+.hall-form {
+  padding-left: 5vw;
+  padding-top: 10vh;
+}
+
+.update-btn {
+  font-size: 1vw;
+  font-weight: 600;
+}
+
+.seatSelector {
+  height: 12px;
+  width: 15px;
+  margin: 3px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.buttons {
+  padding-top: 6vh;
+}
+
+.picker {
+  padding-top: 2vh;
+  width: 35vw;
+}
+
+.single-picker {
+  width: 5vw;
+}
+
+.common {
+  background-color: #444451;
+}
+
+.sofa {
+  background-color: #ff4081;
+}
+
+.vip {
+  background-color: darkorange;
+}
+
+.current-seat {
+  font-size: 1.1vw;
+}
+
+.seatSelector:hover {
+  cursor: pointer;
+  transform: scale(1.4);
+}
+
+.active-seat-type {
+  transform: scale(1.4);
+}
+
+.hall-error {
+  color: red;
+}
+
+app-hall-schema {
+  padding-right: 3vw;
+}

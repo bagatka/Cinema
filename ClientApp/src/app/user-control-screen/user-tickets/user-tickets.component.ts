@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Film} from '../../film';
+import {Film} from '../../Interfaces/film';
 
 @Component({
   selector: 'app-user-tickets',

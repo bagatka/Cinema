@@ -3,8 +3,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 import {Observable} from 'rxjs';
 
-import {Filter} from '../filter';
-import {Cinema} from '../cinema';
+import {Filter} from '../Interfaces/filter';
+import {Cinema} from '../Interfaces/cinema';
 import {CinemaService} from '../cinema.service';
 
 @Component({

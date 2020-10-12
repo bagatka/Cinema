@@ -3,6 +3,7 @@ export interface Film {
   title: string;
   description: string;
   year: number;
+  duration: number;
   posterUrl?: string;
   bannerUrl?: string;
 }

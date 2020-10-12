@@ -20,6 +20,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
+import {MatListModule} from '@angular/material/list';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 import {FlexLayoutModule} from '@angular/flex-layout';
 
@@ -32,15 +34,28 @@ import {HomeScreenComponent} from './home-screen/home-screen.component';
 import {SearchBarComponent} from './search-bar/search-bar.component';
 import {SearchScreenComponent} from './search-screen/search-screen.component';
 import {SearchFiltersComponent} from './search-filters/search-filters.component';
-import { FilmCardComponent } from './film-card/film-card.component';
-import { AccountFormComponent } from './account-form/account-form.component';
-import { RegistrationScreenComponent } from './registration-screen/registration-screen.component';
-import { UserControlScreenComponent } from './user-control-screen/user-control-screen.component';
-import { UserSettingsComponent } from './user-control-screen/user-settings/user-settings.component';
-import { UserBookmarksComponent } from './user-control-screen/user-bookmarks/user-bookmarks.component';
-import { AdminControlScreenComponent } from './admin-control-screen/admin-control-screen.component';
-import { UserTicketsComponent } from './user-control-screen/user-tickets/user-tickets.component';
-import { UserHistoryComponent } from './user-control-screen/user-history/user-history.component';
+import {FilmCardComponent} from './film-card/film-card.component';
+import {AccountFormComponent} from './account-form/account-form.component';
+import {RegistrationScreenComponent} from './registration-screen/registration-screen.component';
+import {UserControlScreenComponent} from './user-control-screen/user-control-screen.component';
+import {UserSettingsComponent} from './user-control-screen/user-settings/user-settings.component';
+import {UserBookmarksComponent} from './user-control-screen/user-bookmarks/user-bookmarks.component';
+import {UserTicketsComponent} from './user-control-screen/user-tickets/user-tickets.component';
+import {UserHistoryComponent} from './user-control-screen/user-history/user-history.component';
+import {AdminControlScreenComponent} from './admin-control-screen/admin-control-screen.component';
+import {AdminSettingsComponent} from './admin-control-screen/admin-settings/admin-settings.component';
+import {AdminFilmsComponent} from './admin-control-screen/admin-films/admin-films.component';
+import {AdminAddFilmComponent} from './admin-control-screen/admin-films/admin-add-film/admin-add-film.component';
+import {AdminAllFilmsComponent} from './admin-control-screen/admin-films/admin-all-films/admin-all-films.component';
+import {AdminCinemasComponent} from './admin-control-screen/admin-cinemas/admin-cinemas.component';
+import {AdminAddCinemaComponent} from './admin-control-screen/admin-cinemas/admin-add-cinema/admin-add-cinema.component';
+import {AdminServicesComponent} from './admin-control-screen/admin-services/admin-services.component';
+import {AdminAddServiceComponent} from './admin-control-screen/admin-services/admin-add-service/admin-add-service.component';
+import {AdminShowsComponent} from './admin-control-screen/admin-shows/admin-shows.component';
+import {AdminAddShowComponent} from './admin-control-screen/admin-shows/admin-add-show/admin-add-show.component';
+import {AdminUsersComponent} from './admin-control-screen/admin-users/admin-users.component';
+import {EditHallDialogComponent} from './admin-control-screen/admin-cinemas/admin-add-cinema/edit-hall-dialog/edit-hall-dialog.component';
+import {HallSchemaComponent} from './hall-schema/hall-schema.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +74,20 @@ import { UserHistoryComponent } from './user-control-screen/user-history/user-hi
     UserBookmarksComponent,
     UserTicketsComponent,
     UserHistoryComponent,
-    AdminControlScreenComponent
+    AdminControlScreenComponent,
+    AdminFilmsComponent,
+    AdminSettingsComponent,
+    AdminCinemasComponent,
+    AdminShowsComponent,
+    AdminServicesComponent,
+    AdminUsersComponent,
+    AdminAddFilmComponent,
+    AdminAddCinemaComponent,
+    AdminAddServiceComponent,
+    AdminAddShowComponent,
+    AdminAllFilmsComponent,
+    EditHallDialogComponent,
+    HallSchemaComponent
   ],
   imports: [
     BrowserModule,
@@ -83,6 +111,8 @@ import { UserHistoryComponent } from './user-control-screen/user-history/user-hi
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatListModule,
+    MatGridListModule,
     FlexLayoutModule,
     HttpClientModule
   ],

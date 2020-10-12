@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy, Input} from '@angular/core';
 import {trigger, transition, style, animate} from '@angular/animations';
 
-import {Film} from '../film';
+import {Film} from '../Interfaces/film';
 
 
 @Component({

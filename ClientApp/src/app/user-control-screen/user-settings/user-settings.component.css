@@ -16,6 +16,14 @@ mat-tab-group {
   padding-right: 3.9vw;
 }
 
+.current-email {
+  padding-right: 2vw;
+}
+
+.change-password {
+  padding-right: 10.7vw;
+}
+
 input {
   height: 2vh;
 }

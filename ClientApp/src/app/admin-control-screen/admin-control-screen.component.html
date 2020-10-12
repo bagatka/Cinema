@@ -2,7 +2,7 @@
   <app-navbar></app-navbar>
 </div>
 <div class="container" fxLayout="row" fxLayoutAlign="center center">
-  <mat-card class="registration-card">
+  <mat-card class="admin-card">
     <mat-card-title class="title">Menu</mat-card-title>
     <div fxLayout="row" fxLayoutGap="4vw">
       <div class="menu-padding" fxLayout="column" fxLayoutGap="1vw">
@@ -10,13 +10,13 @@
           <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Global
+                Settings
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="menu-buttons" fxLayout="column" fxLayoutAlign="center start">
-              <button (click)="setActive(adminMenuSelect.Global)"
-                      [style.color]="activeSettings[adminMenuSelect.Global] ? 'black' : 'grey'"
-                      mat-raised-button routerLink="/admin/settings">Global
+              <button (click)="setActive(adminMenuSelect.Settings)"
+                      [style.color]="activeSettings[adminMenuSelect.Settings] ? 'black' : 'grey'"
+                      mat-raised-button routerLink="/admin/settings">Settings
               </button>
               <button class="log-out-btn" mat-raised-button routerLink="/home">Log out</button>
             </div>

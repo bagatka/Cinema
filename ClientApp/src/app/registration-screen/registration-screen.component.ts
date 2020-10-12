@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
-import {ComparePassword} from '../account-form/passwordMatchValidator.validator';
+import {MatchValidator} from '../Validators/MatchValidator.validator';
 
 @Component({
   selector: 'app-registration-screen',
@@ -17,13 +17,6 @@ export class RegistrationScreenComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {
   }
 
-  confirmPasswordValidator(group: FormGroup): { [key: string]: boolean } | null {
-    const password = group.get('password').value;
-    const confirmPassword = group.get('confirmPassword').value;
-
-    return password === confirmPassword ? null : {isMatch: true};
-  }
-
   ngOnInit(): void {
     this.userInput = this.formBuilder.group({
         firstName: new FormControl('', Validators.required),
@@ -34,7 +27,7 @@ export class RegistrationScreenComponent implements OnInit {
         confirmPassword: new FormControl('', [Validators.required])
       },
       {
-        validator: ComparePassword('password', 'confirmPassword')
+        validator: MatchValidator('password', 'confirmPassword')
       });
   }
 }

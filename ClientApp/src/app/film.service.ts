@@ -3,8 +3,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 
 import {of, Observable} from 'rxjs';
 
-import {Film} from './film';
-import {Filter} from './filter';
+import {Film} from './Interfaces/film';
+import {Filter} from './Interfaces/filter';
 import {ApiPaths, environment} from '../environments/environment';
 
 

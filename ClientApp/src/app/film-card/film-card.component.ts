@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 
-import {Film} from '../film';
+import {Film} from '../Interfaces/film';
 
 @Component({
   selector: 'app-film-card',

@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+
 import {UserControlScreenComponent} from './user-control-screen.component';
 import {UserBookmarksComponent} from './user-bookmarks/user-bookmarks.component';
 import {UserSettingsComponent} from './user-settings/user-settings.component';

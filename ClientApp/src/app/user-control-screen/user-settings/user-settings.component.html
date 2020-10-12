@@ -2,28 +2,74 @@
   <mat-tab label="Account">
     <div class="account-settings" fxLayout="column">
       <div>
-        <mat-label class="settings-titles email-label">Change email</mat-label>
-        <mat-form-field>
-          <mat-label>Enter your new email</mat-label>
-          <input matInput type="email" placeholder="pat@example.com" class="email-form">
-          <mat-error>Invalid email</mat-error>
-        </mat-form-field>
+        <mat-label class="settings-titles email-label">Email</mat-label>
+        <mat-label class="current-email">{{currentEmail.substring(0,3) + '***' + currentEmail.substring(currentEmail.indexOf('@'))}}</mat-label>
+        <button mat-button (click)="onEmailFormCall()">Change email</button>
+      </div>
+      <div [hidden]="changeEmailStatus">
+        <form [formGroup]="emailChangeInput">
+          <div fxLayout="column" fxLayoutAlign="center start">
+            <mat-form-field>
+              <mat-label>Enter your current email</mat-label>
+              <input matInput type="email" placeholder="pat@example.com" class="email-form"
+                     formControlName="currentEmail">
+              <mat-error>Invalid email</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Enter your new email</mat-label>
+              <input matInput type="email" placeholder="pat@example.com" class="email-form" formControlName="newEmail">
+              <mat-error>Invalid email</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Confirm email</mat-label>
+              <input matInput type="email" class="email-form" formControlName="confirmEmail">
+              <mat-error *ngIf="emailChangeInput.get('confirmEmail').invalid">Email must match</mat-error>
+            </mat-form-field>
+          </div>
+        </form>
+        <button mat-button color="primary" (click)="onEmailFormCall()">Change</button>
+        <button mat-button color="warn" (click)="onEmailFormCall()">Cancel</button>
       </div>
       <div>
-        <mat-label class="settings-titles">Change username</mat-label>
-        <mat-form-field>
-          <mat-label>Enter your new username</mat-label>
-          <input matInput type="text">
-          <mat-error>Invalid username</mat-error>
-        </mat-form-field>
+        <mat-label class="settings-titles change-password">Password</mat-label>
+        <button mat-button (click)="onPasswordFormCall()">Change password</button>
       </div>
-      <div>
-        <mat-label class="settings-titles">Change password</mat-label>
-        <mat-form-field>
-          <mat-label>Enter your new password</mat-label>
-          <input matInput type="password">
-          <mat-error>Invalid password</mat-error>
-        </mat-form-field>
+      <div [hidden]="changePasswordStatus">
+        <form [formGroup]="passwordChangeInput">
+          <div fxLayout="column" fxLayoutAlign="center start">
+            <mat-form-field>
+              <mat-label>Enter your current password</mat-label>
+              <input [type]="hideOld? 'password' : 'text'" autocomplete="off" matInput
+                     formControlName="currentPassword">
+              <button mat-icon-button matSuffix (click)="hideOld = !hideOld" [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hideOld" tabindex="-1">
+                <mat-icon>{{hideOld ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error>Invalid password</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Enter your new password</mat-label>
+              <input [type]="hideNew ? 'password' : 'text'" autocomplete="off" matInput formControlName="newPassword">
+              <button mat-icon-button matSuffix (click)="hideNew = !hideNew" [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hideNew" tabindex="-1">
+                <mat-icon>{{hideNew ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error>Invalid password</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Confirm email</mat-label>
+              <input [type]="hideConfirm ? 'password' : 'text'" autocomplete="off" matInput
+                     formControlName="confirmPassword">
+              <button mat-icon-button matSuffix (click)="hideConfirm = !hideConfirm" [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hideConfirm" tabindex="-1">
+                <mat-icon>{{hideConfirm ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="passwordChangeInput.get('confirmPassword').invalid">Password must match</mat-error>
+            </mat-form-field>
+          </div>
+        </form>
+        <button mat-button color="primary" (click)="onPasswordFormCall()">Change</button>
+        <button mat-button color="warn" (click)="onPasswordFormCall()">Cancel</button>
       </div>
     </div>
   </mat-tab>

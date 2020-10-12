@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 
 import {Observable} from 'rxjs';
 
-import {Cinema} from './cinema';
+import {Cinema} from './Interfaces/cinema';
 import {ApiPaths, environment} from '../environments/environment';
 
 @Injectable({

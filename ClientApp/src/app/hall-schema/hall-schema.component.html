@@ -1,0 +1,15 @@
+<div class="schema" fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="column" fxLayoutAlign="start center" class="screen-container">
+    <div class="screen"></div>
+    <mat-label>
+      Screen
+    </mat-label>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center start" class="container" *ngFor="let row of rows; let i = index"
+       (mouseleave)="deleteSelectedHint()">
+    <p align="center">{{i}}</p>
+    <div class="seat" *ngFor="let column of columns; let j = index"
+         (click)="selectSeat(row, column)" (mouseenter)="updateSelectedHint(row, column)">
+    </div>
+  </div>
+</div>
