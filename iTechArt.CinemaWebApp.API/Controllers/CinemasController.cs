@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,12 +28,11 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CinemaDTO>>> GetCinemas()
+        public async Task<ActionResult<IEnumerable<Cinema>>> GetCinemas()
         {
             return await _context.Cinemas
                 .AsNoTracking()
-                .OrderBy(cinema => cinema.Id)
-                .Select(cinema => _mapper.Map<CinemaDTO>(cinema))
+                .OrderBy(cinema => cinema.Name)
                 .ToListAsync();
         }
 
@@ -55,28 +55,33 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return await _context.Cinemas
                 .AsNoTracking()
                 .Select(cinema => cinema.City)
+                .OrderBy(city => city)
                 .ToListAsync();
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CinemaDTO>>> GetCinemasByCity([FromQuery] string city)
+        public async Task<ActionResult<IEnumerable<Cinema>>> GetCinemasByCity([FromQuery] string city)
         {
             var cinemas = _context.Cinemas
                 .AsNoTracking()
-                .Select(cinema => _mapper.Map<CinemaDTO>(cinema))
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(city))
             {
-                cinemas = cinemas.Where(c => c.City == city);
+                cinemas = cinemas.Where(cinema => String.Equals(cinema.City, city));
             }
 
-            return await cinemas.OrderBy(film => film.Name).ToListAsync();
+            return await cinemas.OrderBy(cinema => cinema.Name).ToListAsync();
         }
 
         [HttpPost]
-        public async Task<ActionResult<CinemaDTO>> CreateCinema(CinemaDTO cinemaDto)
+        public async Task<ActionResult<CinemaDTO>> CreateCinema([FromBody] CinemaDTO cinemaDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Incorrect request body.");
+            }
+            
             var cinema = _mapper.Map<Cinema>(cinemaDto);
 
             await _context.Cinemas.AddAsync(cinema);
@@ -103,8 +108,8 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             var updatedCinema = _mapper.Map<Cinema>(cinemaDto);
             updatedCinema.Id = id;
+            
             _context.Entry(updatedCinema).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -118,7 +123,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
                 throw;
             }
 
-            return Ok($"Cinema with id: {id} was successfully updated");
+            return Ok($"Cinema with id: {id} was successfully updated.");
         }
 
         [HttpDelete("{id}")]
@@ -134,7 +139,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             _context.Cinemas.Remove(cinema);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok($"Cinema with id: {id} was successfully deleted.");
         }
 
         private bool CinemaExists(int id) =>
