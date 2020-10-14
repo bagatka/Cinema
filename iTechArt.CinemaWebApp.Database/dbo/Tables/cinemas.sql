@@ -6,4 +6,3 @@
     [ImageUrl]    NVARCHAR (2048) NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-

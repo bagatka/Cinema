@@ -15,6 +15,7 @@ using AutoMapper;
 using iTechArt.CinemaWebApp.API.Data;
 using iTechArt.CinemaWebApp.API.Models;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Account;
+using iTechArt.CinemaWebApp.API.Application.Wrappers;
 
 namespace iTechArt.CinemaWebApp.API.Application.Services
 {
@@ -39,14 +40,14 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
 
             if (user == null)
             {
-                return new Response<LoginResponse>($"No Accounts Registered with {request.Email}.");
+                return new Response<LoginResponse>($"No accounts registered with {request.Email}.");
             }
 
             var validatePassword = BCrypter.EnhancedVerify(request.Password, user.PasswordHash);
 
             if (!validatePassword)
             {
-                return new Response<LoginResponse>($"Invalid Credentials for {request.Email}.");
+                return new Response<LoginResponse>($"Invalid credentials for {request.Email}.");
             }
 
             var jwtSecurityToken = GenerateJwtToken(user);

@@ -8,4 +8,3 @@
     [PasswordHash] NVARCHAR (60)     NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
-
