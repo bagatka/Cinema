@@ -17,7 +17,7 @@ namespace iTechArt.CinemaWebApp.API.Models
         [Required(ErrorMessage = "CinemaId is required.")]
         public int CinemaId { get; set; }
 
-        [ForeignKey("CinemaId")]
+        [ForeignKey(nameof(CinemaId))]
         public Cinema Cinema { get; set; }
     }
 }

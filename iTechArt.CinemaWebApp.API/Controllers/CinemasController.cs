@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using AutoMapper;
-
+using iTechArt.CinemaWebApp.API.Application.Contracts;
 using iTechArt.CinemaWebApp.API.Data;
 using iTechArt.CinemaWebApp.API.Models;
 using iTechArt.CinemaWebApp.API.Application.DTOs;
@@ -18,16 +18,16 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     [ApiController]
     public class CinemasController : ControllerBase
     {
-        private readonly CinemaDbContext _context;
+        private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
 
-        public CinemasController(CinemaDbContext cinemaDbContext, IMapper mapper)
+        public CinemasController(IRepositoryManager repository, IMapper mapper)
         {
-            _context = cinemaDbContext;
+            _repository = repository;
             _mapper = mapper;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public async Task<ActionResult<IEnumerable<Cinema>>> GetCinemas()
         {
             return await _context.Cinemas
@@ -143,6 +143,6 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         }
 
         private bool CinemaExists(int id) =>
-            _context.Cinemas.Any(cinema => cinema.Id == id);
+            _context.Cinemas.Any(cinema => cinema.Id == id);*/
     }
 }

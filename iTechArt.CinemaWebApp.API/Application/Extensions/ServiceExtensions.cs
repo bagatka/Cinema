@@ -7,10 +7,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
+using iTechArt.CinemaWebApp.API.Application.Contracts;
 using iTechArt.CinemaWebApp.API.Data;
 using iTechArt.CinemaWebApp.API.Models;
 
-namespace iTechArt.CinemaWebApp.API.Application.Services
+namespace iTechArt.CinemaWebApp.API.Application.Extensions
 {
     public static class ServiceExtensions
     {
@@ -60,8 +61,13 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<CinemaDbContext>(options =>
+            services.AddDbContext<RepositoryContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("CinemaWebAppDatabase")));
+        }
+
+        public static void ConfigureRepositoryManager(this IServiceCollection services)
+        {
+            services.AddScoped<IRepositoryManager, RepositoryManager>();
         }
     }
 }

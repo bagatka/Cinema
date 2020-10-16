@@ -1,8 +1,13 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
-using iTechArt.CinemaWebApp.API.Application.DTOs;
-using iTechArt.CinemaWebApp.API.Data;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
+
+using AutoMapper;
+
+using iTechArt.CinemaWebApp.API.Application.Contracts;
+using iTechArt.CinemaWebApp.API.Application.DTOs;
+
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
@@ -10,26 +15,38 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     [ApiController]
     public class ShowsController : Controller
     {
-        private readonly CinemaDbContext _context;
+        private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
 
-        public ShowsController(CinemaDbContext cinemaDbContext, IMapper mapper)
+        public ShowsController(IRepositoryManager repository, IMapper mapper)
         {
-            _context = cinemaDbContext;
+            _repository = repository;
             _mapper = mapper;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ShowDTO>> GetShowById(int id)
+        [HttpGet]
+        public async Task<IActionResult> GetShows()
         {
-            var show = await _context.Shows.FindAsync(id);
+            var shows = await _repository.Shows.GetAllShows(trackChanges: false);
 
+            var showsDto = _mapper.Map<IEnumerable<ShowDto>>(shows);
+                
+            return Ok(showsDto);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetShow(int id)
+        {
+            var show = await _repository.Shows.GetShow(id, trackChanges: false);
+            
             if (show == null)
             {
-                return NotFound($"No show found with id: {id}.");
+                return NotFound($"Show with id: {id} doesn't exist in the database.");
             }
 
-            return _mapper.Map<CinemaDTO>(cinema);
+            var showsDto = _mapper.Map<ShowDto>(show);
+            
+            return Ok(showsDto);
         }
     }
 }

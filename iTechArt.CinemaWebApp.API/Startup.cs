@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 
 using AutoMapper;
 
+using iTechArt.CinemaWebApp.API.Application.Extensions;
 using iTechArt.CinemaWebApp.API.Application.Services;
 
 namespace iTechArt.CinemaWebApp.API
@@ -29,7 +30,8 @@ namespace iTechArt.CinemaWebApp.API
 
             services.AddAutoMapper(typeof(Startup));
             services.AddTransient<AccountService>();
-
+            services.ConfigureRepositoryManager();
+            
             services.ConfigureAuthorization();
 
             services.AddControllers();
@@ -44,6 +46,8 @@ namespace iTechArt.CinemaWebApp.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.ConfigureExceptionHandler();
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();

@@ -12,12 +12,15 @@ namespace iTechArt.CinemaWebApp.API.Models
         public int ShowId { get; set; }
         [Required(ErrorMessage = "UserId is required.")]
         public int UserId { get; set; }
+        [Required(ErrorMessage = "SeatId is required.")]
+        public int SeatId { get; set; }
         [Required(ErrorMessage = "Price is required.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Price must be greater than {1}.")]
         public decimal Price { get; set; }
 
-        [ForeignKey("ShowId")]
+        [ForeignKey(nameof(ShowId))]
         public Show Show { get; set; }
-        [ForeignKey("UserId")]
+        [ForeignKey(nameof(UserId))]
         public User User { get; set; }
     }
 }

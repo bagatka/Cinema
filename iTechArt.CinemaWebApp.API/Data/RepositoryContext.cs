@@ -4,7 +4,7 @@ using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Data
 {
-    public class CinemaDbContext : DbContext
+    public class RepositoryContext: DbContext
     {
         public DbSet<Film> Films { get; set; }
         public DbSet<Cinema> Cinemas { get; set; }
@@ -15,7 +15,7 @@ namespace iTechArt.CinemaWebApp.API.Data
         public DbSet<Service> Services { get; set; }
         public DbSet<HallService> HallServices { get; set; }
 
-        public CinemaDbContext(DbContextOptions<CinemaDbContext> options) : base(options)
+        public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
         {
         }
     }
