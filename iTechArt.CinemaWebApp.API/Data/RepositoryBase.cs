@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using iTechArt.CinemaWebApp.API.Application.Contracts;
+
 using Microsoft.EntityFrameworkCore;
+
+using iTechArt.CinemaWebApp.API.Application.Contracts;
 
 namespace iTechArt.CinemaWebApp.API.Data
 {

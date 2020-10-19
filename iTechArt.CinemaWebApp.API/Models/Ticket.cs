@@ -16,6 +16,7 @@ namespace iTechArt.CinemaWebApp.API.Models
         public int SeatId { get; set; }
         [Required(ErrorMessage = "Price is required.")]
         [Range(0, double.MaxValue, ErrorMessage = "Price must be greater than {1}.")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
         [ForeignKey(nameof(ShowId))]
