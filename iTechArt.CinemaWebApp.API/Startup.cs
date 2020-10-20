@@ -10,6 +10,8 @@ using AutoMapper;
 using iTechArt.CinemaWebApp.API.Application.ActionFilters;
 using iTechArt.CinemaWebApp.API.Application.Contracts;
 using iTechArt.CinemaWebApp.API.Application.DataShaping;
+using iTechArt.CinemaWebApp.API.Application.DTOs;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Cinema;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Film;
 using iTechArt.CinemaWebApp.API.Application.Extensions;
 using iTechArt.CinemaWebApp.API.Application.Services;
@@ -36,6 +38,7 @@ namespace iTechArt.CinemaWebApp.API
             services.AddScoped<ValidationFilterAttribute>();
             services.AddScoped<ValidateFilmExistsAttribute>();
             services.AddScoped <IDataShaper<FilmDto>, DataShaper<FilmDto>>();
+            services.AddScoped <IDataShaper<CinemaDto>, DataShaper<CinemaDto>>();
             services.AddTransient<AccountService>();
             services.ConfigureRepositoryManager();
             

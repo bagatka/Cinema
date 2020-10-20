@@ -5,8 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 
 using AutoMapper;
 
+using iTechArt.CinemaWebApp.API.Application.ActionFilters;
 using iTechArt.CinemaWebApp.API.Application.Contracts;
-using iTechArt.CinemaWebApp.API.Application.DTOs;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Show;
+using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
+using iTechArt.CinemaWebApp.API.Models;
 
 
 namespace iTechArt.CinemaWebApp.API.Controllers
@@ -25,9 +28,9 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         }
 
         [HttpGet(Name = "GetShows")]
-        public async Task<IActionResult> GetShows()
+        public async Task<IActionResult> GetShows([FromQuery] ShowParameters showParameters)
         {
-            var shows = await _repository.Shows.GetAllShows(trackChanges: false);
+            var shows = await _repository.Shows.GetAllShowsAsync(showParameters, trackChanges: false);
 
             var showsDto = _mapper.Map<IEnumerable<ShowDto>>(shows);
                 
@@ -37,7 +40,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet("{id}", Name = "GetShowById")]
         public async Task<IActionResult> GetShow(int id)
         {
-            var show = await _repository.Shows.GetShow(id, trackChanges: false);
+            var show = await _repository.Shows.GetShowAsync(id, trackChanges: false);
             
             if (show == null)
             {
@@ -47,6 +50,45 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             var showsDto = _mapper.Map<ShowDto>(show);
             
             return Ok(showsDto);
+        }
+
+        [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> CreateShow([FromBody] ShowForCreationDto show)
+        {
+            var showEntity = _mapper.Map<Show>(show);
+
+            await _repository.Shows.CreateShowAsync(showEntity);
+            await _repository.SaveAsync();
+
+            var showToReturn = _mapper.Map<ShowDto>(showEntity);
+
+            return CreatedAtRoute("GetShowById", new { id = showToReturn.Id }, showToReturn);
+        }
+        
+        [HttpDelete("{id}")]
+        [ServiceFilter(typeof(ValidateShowExistsAttribute))]
+        public async Task<ActionResult> DeleteShow(int id)
+        {
+            var show = HttpContext.Items["show"] as Show;
+
+            _repository.Shows.DeleteShow(show);
+            await _repository.SaveAsync();
+
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [ServiceFilter(typeof(ValidateShowExistsAttribute))]
+        public async Task<IActionResult> UpdateShow(int id, [FromBody] ShowForUpdateDto show)
+        {
+            var showEntity = HttpContext.Items["film"] as Film;
+
+            _mapper.Map(show, showEntity);
+            await _repository.SaveAsync();
+
+            return NoContent();
         }
     }
 }

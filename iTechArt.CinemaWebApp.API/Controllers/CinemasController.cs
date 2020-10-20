@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 using AutoMapper;
+
+using iTechArt.CinemaWebApp.API.Application.ActionFilters;
 using iTechArt.CinemaWebApp.API.Application.Contracts;
-using iTechArt.CinemaWebApp.API.Data;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Cinema;
+using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
-using iTechArt.CinemaWebApp.API.Application.DTOs;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
@@ -20,129 +19,77 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     {
         private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
+        private readonly IDataShaper<CinemaDto> _shaperCinemaDto;
 
-        public CinemasController(IRepositoryManager repository, IMapper mapper)
+        public CinemasController(IRepositoryManager repository, IMapper mapper, IDataShaper<CinemaDto> shaperCinemaDto)
         {
             _repository = repository;
             _mapper = mapper;
+            _shaperCinemaDto = shaperCinemaDto;
         }
 
-        /*[HttpGet]
-        public async Task<ActionResult<IEnumerable<Cinema>>> GetCinemas()
+        [HttpGet(Name = "GetCinemas")]
+        public async Task<IActionResult> GetCinemas([FromQuery] CinemaParameters cinemaParameters)
         {
-            return await _context.Cinemas
-                .AsNoTracking()
-                .OrderBy(cinema => cinema.Name)
-                .ToListAsync();
+            var cinemas = await _repository.Cinemas.GetAllCinemasAsync(cinemaParameters, trackChanges: false);
+
+            var cinemasDto = _mapper.Map<IEnumerable<CinemaDto>>(cinemas);
+                
+            return Ok(_shaperCinemaDto.ShapeData(cinemasDto, cinemaParameters.Fields));
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CinemaDTO>> GetCinemaById(int id)
+        [HttpGet("{id}", Name = "GetCinemaById")]
+        public async Task<IActionResult> GetCinema(int id)
         {
-            var cinema = await _context.Cinemas.FindAsync(id);
-
+            var cinema = await _repository.Cinemas.GetCinemaAsync(id, trackChanges: false);
+            
             if (cinema == null)
             {
-                return NotFound($"No cinema found with id: {id}.");
+                return NotFound($"Cinema with id: {id} doesn't exist in the database.");
             }
 
-            return _mapper.Map<CinemaDTO>(cinema);
-        }
-
-        [HttpGet("cities")]
-        public async Task<ActionResult<IEnumerable<string>>> GetCinemasCities()
-        {
-            return await _context.Cinemas
-                .AsNoTracking()
-                .Select(cinema => cinema.City)
-                .OrderBy(city => city)
-                .ToListAsync();
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cinema>>> GetCinemasByCity([FromQuery] string city)
-        {
-            var cinemas = _context.Cinemas
-                .AsNoTracking()
-                .AsQueryable();
-
-            if (!string.IsNullOrEmpty(city))
-            {
-                cinemas = cinemas.Where(cinema => String.Equals(cinema.City, city));
-            }
-
-            return await cinemas.OrderBy(cinema => cinema.Name).ToListAsync();
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<CinemaDTO>> CreateCinema([FromBody] CinemaDTO cinemaDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest("Incorrect request body.");
-            }
+            var cinemaDto = _mapper.Map<CinemaDto>(cinema);
             
-            var cinema = _mapper.Map<Cinema>(cinemaDto);
-
-            await _context.Cinemas.AddAsync(cinema);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(
-                nameof(GetCinemaById),
-                new { id = cinema.Id },
-                _mapper.Map<CinemaDTO>(cinema));
+            return Ok(cinemaDto);
         }
         
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, [FromBody] CinemaDTO cinemaDto)
+        [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> CreateCinema([FromBody] CinemaForCreationDto cinema)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest("Incorrect request body.");
-            }
+            var cinemaEntity = _mapper.Map<Cinema>(cinema);
 
-            if (!CinemaExists(id))
-            {
-                return NotFound($"No cinema found with id: {id}.");
-            }
+            await _repository.Cinemas.CreateCinemaAsync(cinemaEntity);
+            await _repository.SaveAsync();
 
-            var updatedCinema = _mapper.Map<Cinema>(cinemaDto);
-            updatedCinema.Id = id;
-            
-            _context.Entry(updatedCinema).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CinemaExists(id))
-                {
-                    return NotFound($"No cinema found with id: {id}.");
-                }
-                throw;
-            }
+            var cinemaToReturn = _mapper.Map<CinemaDto>(cinemaEntity);
 
-            return Ok($"Cinema with id: {id} was successfully updated.");
+            return CreatedAtRoute("GetCinemaById", new { id = cinemaToReturn.Id }, cinemaToReturn);
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(ValidateCinemaExistsAttribute))]
         public async Task<ActionResult> DeleteCinema(int id)
         {
-            var cinema = await _context.Cinemas.FindAsync(id);
+            var cinema = HttpContext.Items["cinema"] as Cinema;
 
-            if (cinema == null)
-            {
-                return NotFound($"No cinema found with id: {id}.");
-            }
+            _repository.Cinemas.DeleteCinema(cinema);
+            await _repository.SaveAsync();
 
-            _context.Cinemas.Remove(cinema);
-            await _context.SaveChangesAsync();
-
-            return Ok($"Cinema with id: {id} was successfully deleted.");
+            return NoContent();
         }
 
-        private bool CinemaExists(int id) =>
-            _context.Cinemas.Any(cinema => cinema.Id == id);*/
+        [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [ServiceFilter(typeof(ValidateCinemaExistsAttribute))]
+        public async Task<IActionResult> UpdateCinema(int id, [FromBody] CinemaForUpdateDto cinema)
+        {
+            var cinemaEntity = HttpContext.Items["cinema"] as Cinema;
+
+            _mapper.Map(cinema, cinemaEntity);
+            await _repository.SaveAsync();
+
+            return NoContent();
+        }
     }
 }

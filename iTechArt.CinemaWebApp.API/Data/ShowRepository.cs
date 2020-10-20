@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using iTechArt.CinemaWebApp.API.Application.Contracts;
-using iTechArt.CinemaWebApp.API.Models;
+
 using Microsoft.EntityFrameworkCore;
+
+using iTechArt.CinemaWebApp.API.Application.Contracts;
+using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
+using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Data
 {
@@ -13,18 +16,23 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
         }
 
-
-        public async Task<IEnumerable<Show>> GetAllShows(bool trackChanges)
+        public async Task<IEnumerable<Show>> GetAllShowsAsync(ShowParameters showParameters, bool trackChanges)
         {
-            return await FindAll(trackChanges)
+            var shows = await FindAll(trackChanges)
                 .OrderBy(show => show.Film.Title)
                 .ToListAsync();
+
+            return PagedList<Show>.ToPagedList(shows, showParameters.PageNumber, showParameters.PageSize);
         }
 
-        public async Task<Show> GetShow(int showId, bool trackChanges)
+        public async Task<Show> GetShowAsync(int showId, bool trackChanges)
         {
             return await FindByCondition(show => show.Id.Equals(showId), trackChanges)
                 .SingleOrDefaultAsync();
         }
+        
+        public async Task CreateShowAsync(Show show) => await CreateAsync(show);
+        
+        public void DeleteShow(Show show) => Delete(show);
     }
 }

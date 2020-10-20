@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using iTechArt.CinemaWebApp.API.Application;
 
@@ -24,5 +25,7 @@ namespace iTechArt.CinemaWebApp.API.Models
         public string PosterUrl { get; set; }
         [StringLength(2048, ErrorMessage = "Banner URL length can't be more than 2048.")]
         public string BannerUrl { get; set; }
+        
+        public ICollection<Show> Shows { get; set; }
     }
 }

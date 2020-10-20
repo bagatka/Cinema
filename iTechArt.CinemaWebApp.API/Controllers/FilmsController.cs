@@ -38,7 +38,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(_shaperFilmDto.ShapeData(filmsDto, filmParameters.Fields));
         }
 
-        [HttpGet("{id}", Name = "FilmById")]
+        [HttpGet("{id}", Name = "GetFilmById")]
         public async Task<IActionResult> GetFilm(int id)
         {
             var film = await _repository.Films.GetFilmAsync(id, trackChanges: false);
@@ -59,12 +59,12 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         {
             var filmEntity = _mapper.Map<Film>(film);
 
-            await _repository.Films.CreateFilm(filmEntity);
+            await _repository.Films.CreateFilmAsync(filmEntity);
             await _repository.SaveAsync();
 
             var filmToReturn = _mapper.Map<FilmDto>(filmEntity);
 
-            return CreatedAtRoute("FilmById", new { id = filmToReturn.Id }, filmToReturn);
+            return CreatedAtRoute("GetFilmById", new { id = filmToReturn.Id }, filmToReturn);
         }
 
         [HttpDelete("{id}")]

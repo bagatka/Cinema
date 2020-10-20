@@ -9,7 +9,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Contracts
     {
         Task<PagedList<Film>> GetAllFilmsAsync(FilmParameters filmParameters, bool trackChanges);
         Task<Film> GetFilmAsync(int filmId, bool trackChanges);
-        Task CreateFilm(Film film);
+        Task CreateFilmAsync(Film film);
         void DeleteFilm(Film film);
     }
 }

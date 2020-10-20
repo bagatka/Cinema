@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,7 +14,8 @@ namespace iTechArt.CinemaWebApp.API.Models
         public DateTime StartDateTime { get; set; }
         [Required(ErrorMessage = "Price is required.")]
         [Range(0, double.MaxValue, ErrorMessage = "Price must be greater than {1}.")]
-        public double Price { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Price { get; set; }
         [Required(ErrorMessage = "Free seats is required.")]
         [Range(0, int.MaxValue, ErrorMessage = "Free seats must be greater than {1}.")]
         public int FreeSeats { get; set; }
@@ -26,5 +28,7 @@ namespace iTechArt.CinemaWebApp.API.Models
         public Film Film { get; set; }
         [ForeignKey(nameof(HallId))]
         public Hall Hall { get; set; }
+
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

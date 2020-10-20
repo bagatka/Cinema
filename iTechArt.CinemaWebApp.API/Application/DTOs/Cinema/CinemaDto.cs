@@ -1,4 +1,4 @@
-﻿namespace iTechArt.CinemaWebApp.API.Application.DTOs
+﻿namespace iTechArt.CinemaWebApp.API.Application.DTOs.Cinema
 {
     public class CinemaDto
     {

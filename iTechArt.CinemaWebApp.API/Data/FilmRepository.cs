@@ -30,7 +30,8 @@ namespace iTechArt.CinemaWebApp.API.Data
                 .SingleOrDefaultAsync();
         }
 
-        public async Task CreateFilm(Film film) => await CreateAsync(film);
+        public async Task CreateFilmAsync(Film film) => await CreateAsync(film);
+        
         public void DeleteFilm(Film film) => Delete(film);
     }
 }
