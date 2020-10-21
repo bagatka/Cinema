@@ -7,12 +7,6 @@ using Microsoft.Extensions.Hosting;
 
 using AutoMapper;
 
-using iTechArt.CinemaWebApp.API.Application.ActionFilters;
-using iTechArt.CinemaWebApp.API.Application.Contracts;
-using iTechArt.CinemaWebApp.API.Application.DataShaping;
-using iTechArt.CinemaWebApp.API.Application.DTOs;
-using iTechArt.CinemaWebApp.API.Application.DTOs.Cinema;
-using iTechArt.CinemaWebApp.API.Application.DTOs.Film;
 using iTechArt.CinemaWebApp.API.Application.Extensions;
 using iTechArt.CinemaWebApp.API.Application.Services;
 
@@ -34,12 +28,14 @@ namespace iTechArt.CinemaWebApp.API
 
             services.ConfigureJwtAuthentication(Configuration);
 
+            services.ConfigureValidateAttributes();
+            
             services.AddAutoMapper(typeof(Startup));
-            services.AddScoped<ValidationFilterAttribute>();
-            services.AddScoped<ValidateFilmExistsAttribute>();
-            services.AddScoped <IDataShaper<FilmDto>, DataShaper<FilmDto>>();
-            services.AddScoped <IDataShaper<CinemaDto>, DataShaper<CinemaDto>>();
+
+            services.ConfigureDataShapers();
+            
             services.AddTransient<AccountService>();
+            
             services.ConfigureRepositoryManager();
             
             services.Configure<ApiBehaviorOptions>(options =>

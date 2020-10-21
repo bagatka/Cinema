@@ -11,7 +11,6 @@ using iTechArt.CinemaWebApp.API.Application.DTOs.Show;
 using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
 
-
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
     [Route("api/[controller]")]
@@ -30,7 +29,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet(Name = "GetShows")]
         public async Task<IActionResult> GetShows([FromQuery] ShowParameters showParameters)
         {
-            var shows = await _repository.Shows.GetAllShowsAsync(showParameters, trackChanges: false);
+            var shows = await _repository.Shows.GetShowsAsync(showParameters, trackChanges: false);
 
             var showsDto = _mapper.Map<IEnumerable<ShowDto>>(shows);
                 
@@ -70,7 +69,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [ServiceFilter(typeof(ValidateShowExistsAttribute))]
         public async Task<ActionResult> DeleteShow(int id)
         {
-            var show = HttpContext.Items["show"] as Show;
+            var show = HttpContext.Items["entity"] as Show;
 
             _repository.Shows.DeleteShow(show);
             await _repository.SaveAsync();
@@ -83,7 +82,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [ServiceFilter(typeof(ValidateShowExistsAttribute))]
         public async Task<IActionResult> UpdateShow(int id, [FromBody] ShowForUpdateDto show)
         {
-            var showEntity = HttpContext.Items["film"] as Film;
+            var showEntity = HttpContext.Items["entity"] as Film;
 
             _mapper.Map(show, showEntity);
             await _repository.SaveAsync();

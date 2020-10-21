@@ -4,7 +4,6 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -12,7 +11,6 @@ using BCrypter = BCrypt.Net.BCrypt;
 
 using AutoMapper;
 using iTechArt.CinemaWebApp.API.Application.Contracts;
-using iTechArt.CinemaWebApp.API.Data;
 using iTechArt.CinemaWebApp.API.Models;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Account;
 using iTechArt.CinemaWebApp.API.Application.Wrappers;
@@ -50,9 +48,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
                 return new Response<LoginResponse>($"Invalid credentials for {request.Email}.");
             }
 
-            var jwtSecurityToken = GenerateJwtToken(user);
-            var response = _mapper.Map<LoginResponse>(user);
-            response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            var response = GetReponseWithJWT(user);
 
             return new Response<LoginResponse>(response, $"{request.Email} has been successfully logged in.");
         }
@@ -75,15 +71,15 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             }
 
             var hashedPassword = BCrypter.HashPassword(request.Password);
+            
             var newUser = _mapper.Map<User>(request);
             newUser.PasswordHash = hashedPassword;
             newUser.Role = Policies.User;
+            
             await _repository.Users.CreateUserAsync(newUser);
             await _repository.SaveAsync();
 
-            var jwtSecurityToken = GenerateJwtToken(newUser);
-            var response = _mapper.Map<LoginResponse>(newUser);
-            response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            var response = GetReponseWithJWT(newUser);
 
             return new Response<LoginResponse>(response, $"{request.Email} has been successfully registered.");
         }
@@ -121,6 +117,15 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
                 signingCredentials: credentials
             );
             return token;
+        }
+
+        private LoginResponse GetReponseWithJWT(User user)
+        {
+            var jwtSecurityToken = GenerateJwtToken(user);
+            var response = _mapper.Map<LoginResponse>(user);
+            response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+
+            return response;
         }
     }
 }

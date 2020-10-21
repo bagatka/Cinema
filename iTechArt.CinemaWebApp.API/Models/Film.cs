@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 using iTechArt.CinemaWebApp.API.Application;
 
 namespace iTechArt.CinemaWebApp.API.Models

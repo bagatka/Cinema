@@ -71,7 +71,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [ServiceFilter(typeof(ValidateCinemaExistsAttribute))]
         public async Task<ActionResult> DeleteCinema(int id)
         {
-            var cinema = HttpContext.Items["cinema"] as Cinema;
+            var cinema = HttpContext.Items["entity"] as Cinema;
 
             _repository.Cinemas.DeleteCinema(cinema);
             await _repository.SaveAsync();
@@ -84,7 +84,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [ServiceFilter(typeof(ValidateCinemaExistsAttribute))]
         public async Task<IActionResult> UpdateCinema(int id, [FromBody] CinemaForUpdateDto cinema)
         {
-            var cinemaEntity = HttpContext.Items["cinema"] as Cinema;
+            var cinemaEntity = HttpContext.Items["entity"] as Cinema;
 
             _mapper.Map(cinema, cinemaEntity);
             await _repository.SaveAsync();

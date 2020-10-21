@@ -16,7 +16,7 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
         }
 
-        public async Task<IEnumerable<Show>> GetAllShowsAsync(ShowParameters showParameters, bool trackChanges)
+        public async Task<IEnumerable<Show>> GetShowsAsync(ShowParameters showParameters, bool trackChanges)
         {
             var shows = await FindAll(trackChanges)
                 .OrderBy(show => show.Film.Title)

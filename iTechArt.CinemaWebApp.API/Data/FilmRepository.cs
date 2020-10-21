@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,11 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
         }
 
-        public async Task<PagedList<Film>> GetAllFilmsAsync(FilmParameters filmParameters, bool trackChanges)
+        public async Task<PagedList<Film>> GetFilmsAsync(FilmParameters filmParameters, bool trackChanges)
         {
             var films = await FindAll(trackChanges)
                 .OrderBy(film => film.Title)
+                .Where(film => !String.IsNullOrEmpty(film.BannerUrl) == filmParameters.WithBanner || !filmParameters.WithBanner)
                 .ToListAsync();
             
             return PagedList<Film>.ToPagedList(films, filmParameters.PageNumber, filmParameters.PageSize);

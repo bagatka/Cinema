@@ -31,7 +31,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet(Name = "GetFilms")]
         public async Task<IActionResult> GetFilms([FromQuery] FilmParameters filmParameters)
         {
-            var films = await _repository.Films.GetAllFilmsAsync(filmParameters, trackChanges: false);
+            var films = await _repository.Films.GetFilmsAsync(filmParameters, trackChanges: false);
 
             var filmsDto = _mapper.Map<IEnumerable<FilmDto>>(films);
                 
@@ -71,7 +71,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [ServiceFilter(typeof(ValidateFilmExistsAttribute))]
         public async Task<ActionResult> DeleteFilm(int id)
         {
-            var film = HttpContext.Items["film"] as Film;
+            var film = HttpContext.Items["entity"] as Film;
 
             _repository.Films.DeleteFilm(film);
             await _repository.SaveAsync();
@@ -84,7 +84,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [ServiceFilter(typeof(ValidateFilmExistsAttribute))]
         public async Task<IActionResult> UpdateFilm(int id, [FromBody] FilmForUpdateDto film)
         {
-            var filmEntity = HttpContext.Items["film"] as Film;
+            var filmEntity = HttpContext.Items["entity"] as Film;
 
             _mapper.Map(film, filmEntity);
             await _repository.SaveAsync();

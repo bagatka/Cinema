@@ -1,8 +1,10 @@
 ﻿using System.Net;
-using iTechArt.CinemaWebApp.API.Models.ErrorModel;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+
+using iTechArt.CinemaWebApp.API.Models.ErrorModel;
 
 namespace iTechArt.CinemaWebApp.API.Application.Extensions
 {

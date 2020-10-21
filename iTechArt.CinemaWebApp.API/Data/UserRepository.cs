@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 
 using iTechArt.CinemaWebApp.API.Application.Contracts;
+using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Data
@@ -15,11 +15,13 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync(bool trackChanges)
+        public async Task<PagedList<User>> GetUsersAsync(UserParameters userParameters, bool trackChanges)
         {
-            return await FindAll(trackChanges)
+            var users = await FindAll(trackChanges)
                 .OrderBy(user => user.UserName)
                 .ToListAsync();
+
+            return PagedList<User>.ToPagedList(users, userParameters.PageNumber, userParameters.PageSize);
         }
 
         public async Task<User> GetUserByEmailAsync(string userEmail, bool trackChanges)

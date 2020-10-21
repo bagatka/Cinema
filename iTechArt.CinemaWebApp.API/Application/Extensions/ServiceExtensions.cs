@@ -8,6 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
 using iTechArt.CinemaWebApp.API.Application.Contracts;
+using iTechArt.CinemaWebApp.API.Application.ActionFilters;
+using iTechArt.CinemaWebApp.API.Application.DataShaping;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Cinema;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Film;
 using iTechArt.CinemaWebApp.API.Data;
 using iTechArt.CinemaWebApp.API.Models;
 
@@ -68,6 +72,21 @@ namespace iTechArt.CinemaWebApp.API.Application.Extensions
         public static void ConfigureRepositoryManager(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryManager, RepositoryManager>();
+        }
+
+        public static void ConfigureValidateAttributes(this IServiceCollection services)
+        {
+            services.AddScoped<ValidationFilterAttribute>();
+            services.AddScoped<ValidateFilmExistsAttribute>();
+            services.AddScoped<ValidateCinemaExistsAttribute>();
+            services.AddScoped<ValidateShowExistsAttribute>();
+            services.AddScoped<ValidateServiceExistsAttribute>();
+        }
+
+        public static void ConfigureDataShapers(this IServiceCollection services)
+        {
+            services.AddScoped<IDataShaper<FilmDto>, DataShaper<FilmDto>>();
+            services.AddScoped<IDataShaper<CinemaDto>, DataShaper<CinemaDto>>();
         }
     }
 }

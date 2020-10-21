@@ -1,36 +1,19 @@
 ﻿using System.Threading.Tasks;
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-
 using iTechArt.CinemaWebApp.API.Application.Contracts;
+using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Application.ActionFilters
 {
-    public class ValidateCinemaExistsAttribute : IAsyncActionFilter
+    public class ValidateCinemaExistsAttribute : ValidateEntityExistsAttribute<Cinema>
     {
-        private readonly IRepositoryManager _repository;
-
-        public ValidateCinemaExistsAttribute(IRepositoryManager repository)
+        public ValidateCinemaExistsAttribute(IRepositoryManager repository) : base(repository)
         {
-            _repository = repository;
         }
-
-        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        
+        protected override async Task<Cinema> GetEntityById(int id, bool trackChanges)
         {
-            var trackChanges = context.HttpContext.Request.Method.Equals("PUT");
-            var id = (int) context.ActionArguments["id"];
-            var cinema = await _repository.Cinemas.GetCinemaAsync(id, trackChanges);
-
-            if (cinema == null)
-            {
-                context.Result = new NotFoundResult();
-            }
-            else
-            {
-                context.HttpContext.Items.Add("cinema", cinema);
-                await next();
-            }
+            return await Repository.Cinemas.GetCinemaAsync(id, trackChanges);
         }
     }
 }

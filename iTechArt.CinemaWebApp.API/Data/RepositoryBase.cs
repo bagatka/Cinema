@@ -9,7 +9,7 @@ using iTechArt.CinemaWebApp.API.Application.Contracts;
 
 namespace iTechArt.CinemaWebApp.API.Data
 {
-    public class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class
     {
         protected RepositoryContext RepositoryContext;
 
@@ -18,28 +18,28 @@ namespace iTechArt.CinemaWebApp.API.Data
             RepositoryContext = repositoryContext;
         }
 
-        public IQueryable<T> FindAll(bool trackChanges)
+        public IQueryable<TEntity> FindAll(bool trackChanges)
         {
             return !trackChanges
-                ? RepositoryContext.Set<T>()
+                ? RepositoryContext.Set<TEntity>()
                     .AsNoTracking()
-                : RepositoryContext.Set<T>();
+                : RepositoryContext.Set<TEntity>();
         }
 
-        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges)
+        public IQueryable<TEntity> FindByCondition(Expression<Func<TEntity, bool>> expression, bool trackChanges)
         {
             return !trackChanges
-                ? RepositoryContext.Set<T>()
+                ? RepositoryContext.Set<TEntity>()
                     .Where(expression)
                     .AsNoTracking()
-                : RepositoryContext.Set<T>()
+                : RepositoryContext.Set<TEntity>()
                     .Where(expression);
         }
 
-        public async Task CreateAsync(T entity) => await RepositoryContext.Set<T>().AddAsync(entity);
+        public async Task CreateAsync(TEntity entity) => await RepositoryContext.Set<TEntity>().AddAsync(entity);
 
-        public void Update(T entity) => RepositoryContext.Set<T>().Update(entity);
+        public void Update(TEntity entity) => RepositoryContext.Set<TEntity>().Update(entity);
 
-        public void Delete(T entity) => RepositoryContext.Set<T>().Remove(entity);
+        public void Delete(TEntity entity) => RepositoryContext.Set<TEntity>().Remove(entity);
     }
 }
