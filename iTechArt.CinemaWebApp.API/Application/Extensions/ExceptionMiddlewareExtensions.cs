@@ -10,7 +10,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Extensions
 {
     public static class ExceptionMiddlewareExtensions
     {
-        public static void ConfigureExceptionHandler(this IApplicationBuilder app)
+        public static void UseGlobalExceptionHandler(this IApplicationBuilder app)
         {
             app.UseExceptionHandler(appError =>
             {

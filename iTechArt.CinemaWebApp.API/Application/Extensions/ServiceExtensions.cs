@@ -19,7 +19,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Extensions
 {
     public static class ServiceExtensions
     {
-        public static void ConfigureCors(this IServiceCollection services, IConfiguration configuration, string allowedSpecificOrigins)
+        public static void AddCorsPolicy(this IServiceCollection services, IConfiguration configuration, string allowedSpecificOrigins)
         {
             services.AddCors(options =>
                 {
@@ -35,7 +35,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Extensions
             );
         }
 
-        public static void ConfigureJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+        public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -58,7 +58,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Extensions
                 );
         }
 
-        public static void ConfigureAuthorization(this IServiceCollection services)
+        public static void AddAuthorizationPolicy(this IServiceCollection services)
         {
             services.AddAuthorization(config =>
                 {
@@ -68,19 +68,19 @@ namespace iTechArt.CinemaWebApp.API.Application.Extensions
             );
         }
 
-        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
+        public static void AddSqlContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<RepositoryContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("CinemaWebAppDatabase"))
             );
         }
 
-        public static void ConfigureRepositoryManager(this IServiceCollection services)
+        public static void AddRepositoryManager(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryManager, RepositoryManager>();
         }
 
-        public static void ConfigureValidateAttributes(this IServiceCollection services)
+        public static void AddValidateAttributes(this IServiceCollection services)
         {
             services.AddScoped<ValidationFilterAttribute>();
             services.AddScoped<ValidateFilmExistsAttribute>();
@@ -89,7 +89,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Extensions
             services.AddScoped<ValidateServiceExistsAttribute>();
         }
 
-        public static void ConfigureDataShapers(this IServiceCollection services)
+        public static void AddDataShapers(this IServiceCollection services)
         {
             services.AddScoped<IDataShaper<FilmDto>, DataShaper<FilmDto>>();
             services.AddScoped<IDataShaper<CinemaDto>, DataShaper<CinemaDto>>();

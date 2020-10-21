@@ -20,10 +20,10 @@ namespace iTechArt.CinemaWebApp.API.Data
 
         public IQueryable<TEntity> FindAll(bool trackChanges)
         {
-            return !trackChanges
+            return trackChanges
                 ? RepositoryContext.Set<TEntity>()
-                    .AsNoTracking()
-                : RepositoryContext.Set<TEntity>();
+                : RepositoryContext.Set<TEntity>()
+                    .AsNoTracking();
         }
 
         public IQueryable<TEntity> FindByCondition(Expression<Func<TEntity, bool>> expression, bool trackChanges)

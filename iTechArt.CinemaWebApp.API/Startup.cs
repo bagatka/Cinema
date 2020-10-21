@@ -24,19 +24,19 @@ namespace iTechArt.CinemaWebApp.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureCors(Configuration, AllowedSpecificOrigins);
+            services.AddCorsPolicy(Configuration, AllowedSpecificOrigins);
 
-            services.ConfigureJwtAuthentication(Configuration);
+            services.AddJwtAuthentication(Configuration);
 
-            services.ConfigureValidateAttributes();
+            services.AddValidateAttributes();
             
             services.AddAutoMapper(typeof(Startup));
 
-            services.ConfigureDataShapers();
+            services.AddDataShapers();
             
             services.AddTransient<AccountService>();
             
-            services.ConfigureRepositoryManager();
+            services.AddRepositoryManager();
 
             services.Configure<ApiBehaviorOptions>(options =>
                 {
@@ -44,11 +44,11 @@ namespace iTechArt.CinemaWebApp.API
                 }
             );
             
-            services.ConfigureAuthorization();
+            services.AddAuthorizationPolicy();
 
             services.AddControllers();
 
-            services.ConfigureSqlContext(Configuration);
+            services.AddSqlContext(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -58,7 +58,7 @@ namespace iTechArt.CinemaWebApp.API
                 app.UseDeveloperExceptionPage();
             }
 
-            app.ConfigureExceptionHandler();
+            app.UseGlobalExceptionHandler();
             
             app.UseHttpsRedirection();
 
