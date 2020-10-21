@@ -36,7 +36,8 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
             CreateMap<Show, ShowDto>()
                 .ForMember(
                     showDto => showDto.FilmTitle,
-                    src => src.MapFrom(show => show.Film.Title))
+                    src => src.MapFrom(show => show.Film.Title)
+                )
                 .ForMember(
                     showDto => showDto.CinemaName,
                     src => src.MapFrom(show => show.Hall.Cinema.Name)

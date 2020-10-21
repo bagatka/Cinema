@@ -26,7 +26,8 @@ namespace iTechArt.CinemaWebApp.API.Application.Extensions
                             {
                                 StatusCode = context.Response.StatusCode,
                                 Message = "Internal Server Error."
-                            }.ToString());
+                            }.ToString()
+                        );
                     }
                 });
             });

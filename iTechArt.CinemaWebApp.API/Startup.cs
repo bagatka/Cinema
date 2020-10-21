@@ -37,11 +37,12 @@ namespace iTechArt.CinemaWebApp.API
             services.AddTransient<AccountService>();
             
             services.ConfigureRepositoryManager();
-            
+
             services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.SuppressModelStateInvalidFilter = true;
-            });
+                {
+                    options.SuppressModelStateInvalidFilter = true;
+                }
+            );
             
             services.ConfigureAuthorization();
 
@@ -70,9 +71,10 @@ namespace iTechArt.CinemaWebApp.API
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+                {
+                    endpoints.MapControllers();
+                }
+            );
         }
     }
 }
