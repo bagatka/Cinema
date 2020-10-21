@@ -5,7 +5,7 @@ import {distinctUntilChanged, switchMap} from 'rxjs/operators';
 
 import {Filter} from '../Interfaces/filter';
 import {Film} from '../Interfaces/film';
-import {FilmService} from '../film.service';
+import {FilmService} from '../Services/film.service';
 
 @Component({
   selector: 'app-search-screen',
@@ -42,5 +42,6 @@ export class SearchScreenComponent implements OnInit {
       distinctUntilChanged(),
       switchMap((filter: Filter) => this.filmService.searchFilmsByFilter(filter))
     );
+    console.log(this.films$);
   }
 }

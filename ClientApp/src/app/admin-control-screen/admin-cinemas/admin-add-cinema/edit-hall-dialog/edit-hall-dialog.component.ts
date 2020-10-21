@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 import {Cinema} from '../../../../Interfaces/cinema';
 import {SeatPosition} from '../../../../Interfaces/seat-position';
 import {SeatType} from '../../../../Enums/seat-type.enum';
-import {CinemaService} from '../../../../cinema.service';
+import {CinemaService} from '../../../../Services/cinema.service';
 
 
 @Component({
