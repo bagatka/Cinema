@@ -32,8 +32,6 @@ namespace iTechArt.CinemaWebApp.API
             
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddDataShapers();
-            
             services.AddTransient<AccountService>();
             
             services.AddRepositoryManager();

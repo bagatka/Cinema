@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace iTechArt.CinemaWebApp.API.Application.DTOs.HallService
 {
-    public abstract class HallServiceForManipulationDto
+    public class HallServiceForManipulationDto
     {
         [Required(ErrorMessage = "Price is required.")]
         [Range(0.0, Double.MaxValue, ErrorMessage = "Price must be greater than {1}.")]

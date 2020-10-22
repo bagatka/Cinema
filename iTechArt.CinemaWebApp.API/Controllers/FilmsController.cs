@@ -19,13 +19,11 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     {
         private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
-        private readonly IDataShaper<FilmDto> _shaperFilmDto;
         
-        public FilmsController(IRepositoryManager repository, IMapper mapper, IDataShaper<FilmDto> shaperFilmDto)
+        public FilmsController(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _shaperFilmDto = shaperFilmDto;
         }
 
         [HttpGet(Name = "GetFilms")]
@@ -35,7 +33,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             var filmsDto = _mapper.Map<IEnumerable<FilmDto>>(films);
                 
-            return Ok(_shaperFilmDto.ShapeData(filmsDto, filmParameters.Fields));
+            return Ok(filmsDto);
         }
 
         [HttpGet("{id}", Name = "GetFilmById")]
@@ -55,7 +53,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateFilm([FromBody] FilmForCreationDto film)
+        public async Task<IActionResult> CreateFilm([FromBody] FilmForManipulationDto film)
         {
             var filmEntity = _mapper.Map<Film>(film);
 
@@ -82,7 +80,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateFilmExistsAttribute))]
-        public async Task<IActionResult> UpdateFilm(int id, [FromBody] FilmForUpdateDto film)
+        public async Task<IActionResult> UpdateFilm(int id, [FromBody] FilmForManipulationDto film)
         {
             var filmEntity = HttpContext.Items["entity"] as Film;
 

@@ -6,11 +6,11 @@ namespace iTechArt.CinemaWebApp.API.Application.RequestFeatures
 {
     public class PagedList<T> : List<T>
     {
-        public MetaData MetaData { get; set; }
+        public PagingMetaData PagingMetaData { get; set; }
 
         public PagedList(List<T> items, int count, int pageNumber, int pageSize)
         {
-            MetaData = new MetaData()
+            PagingMetaData = new PagingMetaData()
             {
                 TotalCount = count,
                 PageSize = pageSize,

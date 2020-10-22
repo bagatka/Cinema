@@ -53,7 +53,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateShow([FromBody] ShowForCreationDto show)
+        public async Task<IActionResult> CreateShow([FromBody] ShowForManipulationDto show)
         {
             var showEntity = _mapper.Map<Show>(show);
 
@@ -80,7 +80,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateShowExistsAttribute))]
-        public async Task<IActionResult> UpdateShow(int id, [FromBody] ShowForUpdateDto show)
+        public async Task<IActionResult> UpdateShow(int id, [FromBody] ShowForManipulationDto show)
         {
             var showEntity = HttpContext.Items["entity"] as Film;
 

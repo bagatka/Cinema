@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace iTechArt.CinemaWebApp.API.Application.DTOs.Show
 {
-    public abstract class ShowForManipulationDto
+    public class ShowForManipulationDto
     {
         [Required(ErrorMessage = "Date and time is required.")]
         public DateTime StartDateTime { get; set; }
