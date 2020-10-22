@@ -1,11 +1,14 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-using iTechArt.CinemaWebApp.API.Data;
+using AutoMapper;
+
+using iTechArt.CinemaWebApp.API.Application.ActionFilters;
+using iTechArt.CinemaWebApp.API.Application.Contracts;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Film;
+using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
@@ -14,112 +17,77 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     [ApiController]
     public class FilmsController : ControllerBase
     {
-        private readonly CinemaDbContext _context;
-
-
-        public FilmsController(CinemaDbContext cinemaDbContext)
+        private readonly IRepositoryManager _repository;
+        private readonly IMapper _mapper;
+        
+        public FilmsController(IRepositoryManager repository, IMapper mapper)
         {
-            _context = cinemaDbContext;
+            _repository = repository;
+            _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Film>>> GetFilmsByFilter([FromQuery] Filter filter)
+        [HttpGet(Name = "GetFilms")]
+        public async Task<IActionResult> GetFilms([FromQuery] FilmParameters filmParameters)
         {
-            var films = _context.Films
-                .AsNoTracking()
-                .AsQueryable();
+            var films = await _repository.Films.GetFilmsAsync(filmParameters, trackChanges: false);
 
-            if (filter == null)
-            {
-                return BadRequest();
-            }
-
-            if (!string.IsNullOrEmpty(filter.FilmTitle))
-            {
-                films = films.Where(film => film.Title.Contains(filter.FilmTitle));
-            }
-
-            return await films.OrderBy(film => film.Id).ToListAsync();
+            var filmsDto = _mapper.Map<IEnumerable<FilmDto>>(films);
+                
+            return Ok(filmsDto);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Film>> GetFilmById(int id)
+        [HttpGet("{id}", Name = "GetFilmById")]
+        public async Task<IActionResult> GetFilm(int id)
         {
-            var result = await _context.Films.FindAsync(id);
-
-            if (result == null)
+            var film = await _repository.Films.GetFilmAsync(id, trackChanges: false);
+            
+            if (film == null)
             {
-                return NotFound();
+                return NotFound($"Film with id: {id} doesn't exist in the database.");
             }
 
-            return result;
+            var filmDto = _mapper.Map<FilmDto>(film);
+            
+            return Ok(filmDto);
         }
-
+        
         [HttpPost]
-        public async Task<ActionResult<Film>> CreateFilm(Film film)
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> CreateFilm([FromBody] FilmForManipulationDto film)
         {
-            if (film == null || !ModelState.IsValid)
-            {
-                return BadRequest();
-            }
+            var filmEntity = _mapper.Map<Film>(film);
 
-            var newFilm = new Film
-            {
-                Title = film.Title,
-                Description = film.Description,
-                PosterUrl = !string.IsNullOrEmpty(film.PosterUrl) ? film.PosterUrl : string.Empty,
-                BannerUrl = !string.IsNullOrEmpty(film.BannerUrl) ? film.BannerUrl : string.Empty
-            };
-            await _context.Films.AddAsync(newFilm);
-            await _context.SaveChangesAsync();
+            await _repository.Films.CreateFilmAsync(filmEntity);
+            await _repository.SaveAsync();
 
-            return CreatedAtAction(nameof(GetFilmById), new { id = newFilm.Id }, newFilm);
+            var filmToReturn = _mapper.Map<FilmDto>(filmEntity);
+
+            return CreatedAtRoute("GetFilmById", new { id = filmToReturn.Id }, filmToReturn);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateFilm(int id, [FromBody] Film film)
+        [HttpDelete("{id}")]
+        [ServiceFilter(typeof(ValidateFilmExistsAttribute))]
+        public async Task<ActionResult> DeleteFilm(int id)
         {
-            if (id != film?.Id || !ModelState.IsValid)
-            {
-                return BadRequest();
-            }
+            var film = HttpContext.Items["entity"] as Film;
 
-            _context.Entry(film).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FilmExists(id))
-                {
-                    return NotFound();
-                }
-                throw;
-            }
+            _repository.Films.DeleteFilm(film);
+            await _repository.SaveAsync();
 
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Film>> DeleteFilm(int id)
+        [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [ServiceFilter(typeof(ValidateFilmExistsAttribute))]
+        public async Task<IActionResult> UpdateFilm(int id, [FromBody] FilmForManipulationDto film)
         {
-            var resultFilm = await _context.Films.FindAsync(id);
+            var filmEntity = HttpContext.Items["entity"] as Film;
 
-            if (resultFilm == null)
-            {
-                return NotFound();
-            }
-            _context.Films.Remove(resultFilm);
-            await _context.SaveChangesAsync();
+            _mapper.Map(film, filmEntity);
+            await _repository.SaveAsync();
 
-            return resultFilm;
-        }
-
-        private bool FilmExists(int id)
-        {
-            return _context.Films.Any(film => film.Id == id);
+            return NoContent();
         }
     }
 }

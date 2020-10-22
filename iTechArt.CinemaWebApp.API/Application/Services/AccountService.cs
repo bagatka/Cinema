@@ -4,17 +4,16 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 using BCrypter = BCrypt.Net.BCrypt;
 
 using AutoMapper;
-
-using iTechArt.CinemaWebApp.API.Data;
+using iTechArt.CinemaWebApp.API.Application.Contracts;
 using iTechArt.CinemaWebApp.API.Models;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Account;
+using iTechArt.CinemaWebApp.API.Application.Wrappers;
 
 namespace iTechArt.CinemaWebApp.API.Application.Services
 {
@@ -22,36 +21,34 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
     {
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
-        private readonly CinemaDbContext _context;
+        private readonly IRepositoryManager _repository;
 
         public AccountService(IConfiguration configuration,
             IMapper mapper,
-            CinemaDbContext cinemaDbContext)
+            IRepositoryManager repository)
         {
-            _context = cinemaDbContext;
+            _repository = repository;
             _mapper = mapper;
             _config = configuration;
         }
 
         public async Task<Response<LoginResponse>> LoginAsync(LoginRequest request)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(user => user.Email == request.Email);
+            var user = await _repository.Users.GetUserByEmailAsync(request.Email, trackChanges: false);
 
             if (user == null)
             {
-                return new Response<LoginResponse>($"No Accounts Registered with {request.Email}.");
+                return new Response<LoginResponse>($"No accounts registered with {request.Email}.");
             }
 
             var validatePassword = BCrypter.EnhancedVerify(request.Password, user.PasswordHash);
 
             if (!validatePassword)
             {
-                return new Response<LoginResponse>($"Invalid Credentials for {request.Email}.");
+                return new Response<LoginResponse>($"Invalid credentials for {request.Email}.");
             }
 
-            var jwtSecurityToken = GenerateJwtToken(user);
-            var response = _mapper.Map<LoginResponse>(user);
-            response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            var response = GetReponseWithJWT(user);
 
             return new Response<LoginResponse>(response, $"{request.Email} has been successfully logged in.");
         }
@@ -59,14 +56,14 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
         public async Task<Response<LoginResponse>> RegisterAsync(RegisterRequest request)
         {
             var userWithSameUserName =
-                await _context.Users.FirstOrDefaultAsync(user => user.UserName.ToLower() == request.UserName.ToLower());
+                await _repository.Users.GetUserByUsernameAsync(request.UserName, trackChanges: false);
 
             if (userWithSameUserName != null)
             {
                 return new Response<LoginResponse>($"A user with {request.UserName} username already exists.");
             }
 
-            var userWithSameEmail = await _context.Users.FirstOrDefaultAsync(user => user.Email == request.Email);
+            var userWithSameEmail = await _repository.Users.GetUserByEmailAsync(request.Email, trackChanges: false);
 
             if (userWithSameEmail != null)
             {
@@ -74,15 +71,15 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             }
 
             var hashedPassword = BCrypter.HashPassword(request.Password);
+            
             var newUser = _mapper.Map<User>(request);
             newUser.PasswordHash = hashedPassword;
             newUser.Role = Policies.User;
-            await _context.AddAsync(newUser);
-            await _context.SaveChangesAsync();
+            
+            await _repository.Users.CreateUserAsync(newUser);
+            await _repository.SaveAsync();
 
-            var jwtSecurityToken = GenerateJwtToken(newUser);
-            var response = _mapper.Map<LoginResponse>(newUser);
-            response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            var response = GetReponseWithJWT(newUser);
 
             return new Response<LoginResponse>(response, $"{request.Email} has been successfully registered.");
         }
@@ -120,6 +117,15 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
                 signingCredentials: credentials
             );
             return token;
+        }
+
+        private LoginResponse GetReponseWithJWT(User user)
+        {
+            var jwtSecurityToken = GenerateJwtToken(user);
+            var response = _mapper.Map<LoginResponse>(user);
+            response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+
+            return response;
         }
     }
 }

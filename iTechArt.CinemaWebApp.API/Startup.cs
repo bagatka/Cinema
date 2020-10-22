@@ -1,23 +1,14 @@
-using System;
-using System.Text;
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-
-using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using Microsoft.IdentityModel.Tokens;
-
 using AutoMapper;
 
+using iTechArt.CinemaWebApp.API.Application.Extensions;
 using iTechArt.CinemaWebApp.API.Application.Services;
-using iTechArt.CinemaWebApp.API.Data;
-using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API
 {
@@ -33,48 +24,29 @@ namespace iTechArt.CinemaWebApp.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy(AllowedSpecificOrigins,
-                    builder =>
-                    {
-                        builder.WithOrigins(Configuration.GetSection("AllowedOrigins").Get<string[]>())
-                            .AllowAnyHeader()
-                            .AllowAnyMethod();
-                    });
-            });
+            services.AddCorsPolicy(Configuration, AllowedSpecificOrigins);
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.SaveToken = true;
-                    options.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.Unicode.GetBytes(Configuration["Jwt:SecretKey"])),
-                        ClockSkew = TimeSpan.Zero
-                    };
-                });
+            services.AddJwtAuthentication(Configuration);
 
+            services.AddValidateAttributes();
+            
             services.AddAutoMapper(typeof(Startup));
-            services.AddTransient<AccountService>();
 
-            services.AddAuthorization(config =>
-            {
-                config.AddPolicy(Policies.Admin, Policies.AdminPolicy());
-                config.AddPolicy(Policies.User, Policies.UserPolicy());
-            });
+            services.AddTransient<AccountService>();
+            
+            services.AddRepositoryManager();
+
+            services.Configure<ApiBehaviorOptions>(options =>
+                {
+                    options.SuppressModelStateInvalidFilter = true;
+                }
+            );
+            
+            services.AddAuthorizationPolicy();
 
             services.AddControllers();
 
-            services.AddDbContext<CinemaDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("CinemaWebAppDatabase")));
+            services.AddSqlContext(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -84,6 +56,8 @@ namespace iTechArt.CinemaWebApp.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseGlobalExceptionHandler();
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -95,9 +69,10 @@ namespace iTechArt.CinemaWebApp.API
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+                {
+                    endpoints.MapControllers();
+                }
+            );
         }
     }
 }
