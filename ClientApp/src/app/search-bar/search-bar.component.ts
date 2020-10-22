@@ -4,7 +4,7 @@ import {FormControl} from '@angular/forms';
 import {Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 
-import {FilmService} from '../film.service';
+import {FilmService} from '../Services/film.service';
 import {Film} from '../Interfaces/film';
 
 @Component({

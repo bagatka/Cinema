@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 
 import {Filter} from '../Interfaces/filter';
 import {Cinema} from '../Interfaces/cinema';
-import {CinemaService} from '../cinema.service';
+import {CinemaService} from '../Services/cinema.service';
 
 @Component({
   selector: 'app-search-filters',

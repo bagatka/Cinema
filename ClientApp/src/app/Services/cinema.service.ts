@@ -3,8 +3,8 @@ import {HttpClient} from '@angular/common/http';
 
 import {Observable} from 'rxjs';
 
-import {Cinema} from './Interfaces/cinema';
-import {ApiPaths, environment} from '../environments/environment';
+import {Cinema} from '../Interfaces/cinema';
+import {ApiPaths, environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
