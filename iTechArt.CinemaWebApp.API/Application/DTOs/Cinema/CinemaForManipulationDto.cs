@@ -1,8 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+using iTechArt.CinemaWebApp.API.Application.DTOs.Hall;
 
 namespace iTechArt.CinemaWebApp.API.Application.DTOs.Cinema
 {
-    public abstract class CinemaForManipulationDto
+    public class CinemaForManipulationDto
     {
         [Required(ErrorMessage = "Name is required.")]
         [StringLength(50, ErrorMessage = "Name length can't be more than 50.")]
@@ -15,5 +18,7 @@ namespace iTechArt.CinemaWebApp.API.Application.DTOs.Cinema
         public string City { get; set; }
         [StringLength(2048, ErrorMessage = "Image URL length can't be more than 2048.")]
         public string ImageUrl { get; set; }
+        
+        public IEnumerable<HallForManipulationDto> Halls { get; set; }
     }
 }

@@ -18,12 +18,15 @@ namespace iTechArt.CinemaWebApp.API.Data
 
         public async Task<PagedList<Film>> GetFilmsAsync(FilmParameters filmParameters, bool trackChanges)
         {
-            var films = await FindAll(trackChanges)
-                .OrderBy(film => film.Title)
-                .Where(film => !String.IsNullOrEmpty(film.BannerUrl) == filmParameters.WithBanner || !filmParameters.WithBanner)
-                .ToListAsync();
-            
-            return PagedList<Film>.ToPagedList(films, filmParameters.PageNumber, filmParameters.PageSize);
+            var films = FindAll(trackChanges)
+                .Where(film => !String.IsNullOrEmpty(film.BannerUrl) == filmParameters.WithBanner || !filmParameters.WithBanner);
+
+            if (!string.IsNullOrEmpty(filmParameters.Title))
+            {
+                films = films.Where(film => film.Title.ToLower().Contains(filmParameters.Title.ToLower()));
+            }
+
+            return PagedList<Film>.ToPagedList(await films.ToListAsync(), filmParameters.PageNumber, filmParameters.PageSize);
         }
 
         public async Task<Film> GetFilmAsync(int filmId, bool trackChanges)

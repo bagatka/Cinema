@@ -23,15 +23,11 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
 
             CreateMap<Film, FilmDto>();
 
-            CreateMap<FilmForCreationDto, Film>();
-
-            CreateMap<FilmForUpdateDto, Film>();
+            CreateMap<FilmForManipulationDto, Film>();
 
             CreateMap<Cinema, CinemaDto>();
 
-            CreateMap<CinemaForCreationDto, Cinema>();
-
-            CreateMap<CinemaForUpdateDto, Cinema>();
+            CreateMap<CinemaForManipulationDto, Cinema>();
 
             CreateMap<Show, ShowDto>()
                 .ForMember(
@@ -47,19 +43,15 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
                     src => src.MapFrom(show => show.Film.PosterUrl)
                 );
 
-            CreateMap<ShowForCreationDto, Show>();
+            CreateMap<ShowForManipulationDto, Show>();
 
-            CreateMap<ShowForUpdateDto, Show>();
-            
             CreateMap<Hall, HallDto>()
                 .ForMember(
                     hallDto => hallDto.CinemaName,
                     src => src.MapFrom(hall => hall.Cinema.Name)
                 );
 
-            CreateMap<HallForCreationDto, Hall>();
-
-            CreateMap<HallForUpdateDto, Hall>();
+            CreateMap<HallForManipulationDto, Hall>();
 
             CreateMap<HallService, HallServiceDto>()
                 .ForMember(
@@ -73,9 +65,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
                     src => src.MapFrom(serviceHall => serviceHall.Service.IconUrl)
                 );
 
-            CreateMap<HallServiceForCreationDto, HallService>();
-
-            CreateMap<HallServiceForUpdateDto, HallService>();
+            CreateMap<HallServiceForManipulationDto, HallService>();
 
             CreateMap<Seat, SeatDto>()
                 .ForMember(
@@ -83,15 +73,11 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
                     src => src.MapFrom(seat => seat.Hall.Name)
                 );
 
-            CreateMap<SeatForCreationDto, Seat>();
-
-            CreateMap<SeatForUpdateDto, Seat>();
+            CreateMap<SeatForManipulationDto, Seat>();
 
             CreateMap<Service, ServiceDto>();
 
-            CreateMap<ServiceForCreationDto, Service>();
-
-            CreateMap<ServiceForUpdateDto, Service>();
+            CreateMap<ServiceForManipulationDto, Service>();
 
             CreateMap<Ticket, TicketDto>()
                 .ForMember(
@@ -123,9 +109,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
                     src => src.MapFrom(ticket => ticket.Seat.Row)
                 );
 
-            CreateMap<TicketForCreationDto, Ticket>();
-
-            CreateMap<TicketForUpdateDto, Ticket>();
+            CreateMap<TicketForManipulationDto, Ticket>();
         }
     }
 }

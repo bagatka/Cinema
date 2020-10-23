@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
-import {CompareValidator} from '../Validators/MatchValidator.validator';
+import {MatchValidator} from '../Validators/MatchValidator.validator';
 
 @Component({
   selector: 'app-registration-screen',
@@ -27,7 +27,7 @@ export class RegistrationScreenComponent implements OnInit {
         confirmPassword: new FormControl('', [Validators.required])
       },
       {
-        validator: CompareValidator('password', 'confirmPassword')
+        validator: MatchValidator('password', 'confirmPassword')
       });
   }
 }

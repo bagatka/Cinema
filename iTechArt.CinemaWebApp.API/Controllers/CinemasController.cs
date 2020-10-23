@@ -19,13 +19,11 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     {
         private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
-        private readonly IDataShaper<CinemaDto> _shaperCinemaDto;
 
-        public CinemasController(IRepositoryManager repository, IMapper mapper, IDataShaper<CinemaDto> shaperCinemaDto)
+        public CinemasController(IRepositoryManager repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _shaperCinemaDto = shaperCinemaDto;
         }
 
         [HttpGet(Name = "GetCinemas")]
@@ -35,7 +33,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             var cinemasDto = _mapper.Map<IEnumerable<CinemaDto>>(cinemas);
                 
-            return Ok(_shaperCinemaDto.ShapeData(cinemasDto, cinemaParameters.Fields));
+            return Ok(cinemasDto);
         }
 
         [HttpGet("{id}", Name = "GetCinemaById")]
@@ -55,7 +53,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateCinema([FromBody] CinemaForCreationDto cinema)
+        public async Task<IActionResult> CreateCinema([FromBody] CinemaForManipulationDto cinema)
         {
             var cinemaEntity = _mapper.Map<Cinema>(cinema);
 
@@ -82,7 +80,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateCinemaExistsAttribute))]
-        public async Task<IActionResult> UpdateCinema(int id, [FromBody] CinemaForUpdateDto cinema)
+        public async Task<IActionResult> UpdateCinema(int id, [FromBody] CinemaForManipulationDto cinema)
         {
             var cinemaEntity = HttpContext.Items["entity"] as Cinema;
 

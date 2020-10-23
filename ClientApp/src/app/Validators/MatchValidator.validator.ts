@@ -1,6 +1,6 @@
 import {FormGroup} from '@angular/forms';
 
-export function CompareValidator(
+export function MatchValidator(
   controlName: string,
   matchingControlName: string
 ): object {

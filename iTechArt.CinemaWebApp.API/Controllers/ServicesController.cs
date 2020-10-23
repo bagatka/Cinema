@@ -53,7 +53,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateService([FromBody] ServiceForCreationDto service)
+        public async Task<IActionResult> CreateService([FromBody] ServiceForManipulationDto service)
         {
             var serviceEntity = _mapper.Map<Service>(service);
 
@@ -80,7 +80,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateServiceExistsAttribute))]
-        public async Task<IActionResult> UpdateService(int id, [FromBody] ServiceForUpdateDto service)
+        public async Task<IActionResult> UpdateService(int id, [FromBody] ServiceForManipulationDto service)
         {
             var serviceEntity = HttpContext.Items["entity"] as Service;
 

@@ -2,7 +2,7 @@
 
 namespace iTechArt.CinemaWebApp.API.Application.DTOs.Film
 {
-    public abstract class FilmForManipulationDto
+    public class FilmForManipulationDto
     {
         [Required(ErrorMessage = "Title is required.")]
         [StringLength(200, ErrorMessage = "Title length can't be more than {1}.")]

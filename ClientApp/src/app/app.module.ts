@@ -22,6 +22,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import {FlexLayoutModule} from '@angular/flex-layout';
 
@@ -56,6 +57,7 @@ import {AdminAddShowComponent} from './admin-control-screen/admin-shows/admin-ad
 import {AdminUsersComponent} from './admin-control-screen/admin-users/admin-users.component';
 import {EditHallDialogComponent} from './admin-control-screen/admin-cinemas/admin-add-cinema/edit-hall-dialog/edit-hall-dialog.component';
 import {HallSchemaComponent} from './hall-schema/hall-schema.component';
+import { AdminEditFimComponent } from './admin-control-screen/admin-films/admin-edit-fim/admin-edit-fim.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +89,8 @@ import {HallSchemaComponent} from './hall-schema/hall-schema.component';
     AdminAddShowComponent,
     AdminAllFilmsComponent,
     EditHallDialogComponent,
-    HallSchemaComponent
+    HallSchemaComponent,
+    AdminEditFimComponent
   ],
   imports: [
     BrowserModule,
@@ -113,6 +116,7 @@ import {HallSchemaComponent} from './hall-schema/hall-schema.component';
     MatSortModule,
     MatListModule,
     MatGridListModule,
+    MatSnackBarModule,
     FlexLayoutModule,
     HttpClientModule
   ],

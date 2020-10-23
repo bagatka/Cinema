@@ -12,7 +12,3 @@ mat-form-field {
 textarea {
   height: 10vh;
 }
-
-mat-selection-list {
-  width: 22vw;
-}

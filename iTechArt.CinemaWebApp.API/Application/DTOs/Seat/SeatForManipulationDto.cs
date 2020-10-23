@@ -2,7 +2,7 @@
 
 namespace iTechArt.CinemaWebApp.API.Application.DTOs.Seat
 {
-    public abstract class SeatForManipulationDto
+    public class SeatForManipulationDto
     {
         [Required(ErrorMessage = "Seat is required.")]
         [Range(0, int.MaxValue)]
