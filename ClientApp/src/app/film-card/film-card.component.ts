@@ -12,7 +12,5 @@ export class FilmCardComponent {
   @Input() filmData: Film;
 
   buttonPress(): void {
-    console.log(this.filmData);
-    console.log(this.filmData.title);
   }
 }
