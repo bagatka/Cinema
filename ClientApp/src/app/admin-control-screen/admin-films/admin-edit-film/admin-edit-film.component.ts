@@ -4,15 +4,16 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {FilmService} from '../../../Services/film.service';
 import {SnackbarService} from '../../../Services/snackbar.service';
 import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
-import {Film} from '../../../Interfaces/film';
 import {Location} from '@angular/common';
+
+import {Film} from '../../../Interfaces/film';
 
 @Component({
   selector: 'app-admin-edit-fim',
-  templateUrl: './admin-edit-fim.component.html',
-  styleUrls: ['./admin-edit-fim.component.css']
+  templateUrl: './admin-edit-film.component.html',
+  styleUrls: ['./admin-edit-film.component.css']
 })
-export class AdminEditFimComponent implements OnInit {
+export class AdminEditFilmComponent implements OnInit {
 
   editFilmInput: FormGroup;
   filmId: string;
@@ -37,8 +38,8 @@ export class AdminEditFimComponent implements OnInit {
   private loadFilm(): void {
     this.filmService.getFilmById(this.id).subscribe(film => {
       this.film = film;
-      this.isFormReady = true;
       this.createForm();
+      this.isFormReady = true;
     });
   }
 

@@ -34,7 +34,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
 
         public async Task<Response<LoginResponse>> LoginAsync(LoginRequest request)
         {
-            var user = await _repository.Users.GetUserByEmailAsync(request.Email, trackChanges: false);
+            var user = await _repository.Users.GetUserByEmailAsync(request.Email);
 
             if (user == null)
             {
@@ -56,14 +56,14 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
         public async Task<Response<LoginResponse>> RegisterAsync(RegisterRequest request)
         {
             var userWithSameUserName =
-                await _repository.Users.GetUserByUsernameAsync(request.UserName, trackChanges: false);
+                await _repository.Users.GetUserByUsernameAsync(request.UserName);
 
             if (userWithSameUserName != null)
             {
                 return new Response<LoginResponse>($"A user with {request.UserName} username already exists.");
             }
 
-            var userWithSameEmail = await _repository.Users.GetUserByEmailAsync(request.Email, trackChanges: false);
+            var userWithSameEmail = await _repository.Users.GetUserByEmailAsync(request.Email);
 
             if (userWithSameEmail != null)
             {

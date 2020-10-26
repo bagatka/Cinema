@@ -16,7 +16,7 @@ namespace iTechArt.CinemaWebApp.API.Application.DTOs.Hall
         public int SeatsNumber { get; set; }
         
         [Required(ErrorMessage = "Seat schema is required.")]
-        public IEnumerable<SeatForManipulationDto> Seats { get; set; }
+        public IEnumerable<SeatsSchemaForManipulationDto> SeatsSchemas { get; set; }
         public IEnumerable<HallServiceForManipulationDto> HallServices { get; set; }
     }
 }

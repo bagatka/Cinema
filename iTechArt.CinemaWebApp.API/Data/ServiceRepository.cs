@@ -15,18 +15,20 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
         }
 
-        public async Task<PagedList<Service>> GetAllServicesAsync(ServiceParameters serviceParameters, bool trackChanges)
+        public async Task<PagedList<Service>> GetAllServicesAsync(ServiceParameters serviceParameters)
         {
-            var services = await FindAll(trackChanges)
+            var services = await FindAll()
+                .AsNoTracking()
                 .OrderBy(service => service.Name)
                 .ToListAsync();
             
             return PagedList<Service>.ToPagedList(services, serviceParameters.PageNumber, serviceParameters.PageSize);
         }
 
-        public async Task<Service> GetServiceAsync(int serviceId, bool trackChanges)
+        public async Task<Service> GetServiceAsync(int serviceId)
         {
-            return await FindByCondition(service => service.Id.Equals(serviceId), trackChanges)
+            return await FindByCondition(service => service.Id.Equals(serviceId))
+                .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
 

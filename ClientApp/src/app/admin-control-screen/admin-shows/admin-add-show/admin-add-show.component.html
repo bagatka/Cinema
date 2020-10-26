@@ -4,28 +4,57 @@
       <div fxLayout="column">
         <mat-label class="option-title">Film</mat-label>
         <mat-form-field>
-          <mat-label>Select the film</mat-label>
+          <!--<mat-label>Select the film</mat-label>
           <mat-select formControlName="film">
             <mat-option *ngFor="let film of films$ | async" [value]="film.title">
               {{film.title}}
             </mat-option>
-          </mat-select>
+          </mat-select>-->
+
+          <input type="text"
+                 placeholder="Select the film"
+                 aria-label="Number"
+                 matInput
+                 #filmTitle
+                 formControlName="film"
+                 [matAutocomplete]="autoFilm"
+                 (input)="startFilmSearch(filmTitle.value)">
+          <mat-autocomplete #autoFilm="matAutocomplete">
+            <mat-option *ngFor="let film of films$ | async" [value]="film.title">
+              {{film.title}}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
+
         <mat-label class="option-title">Cinema</mat-label>
         <mat-form-field>
-          <mat-label>Select the cinema</mat-label>
+          <!--<mat-label>Select the cinema</mat-label>
           <mat-select formControlName="cinema">
             <mat-option *ngFor="let cinema of cinemas$ | async" [value]="cinema.name">
               {{cinema.name}}
             </mat-option>
-          </mat-select>
+          </mat-select>-->
+
+          <input type="text"
+                 placeholder="Select the cinema"
+                 aria-label="Number"
+                 matInput
+                 #cinemaName
+                 formControlName="film"
+                 [matAutocomplete]="autoCinema"
+                 (input)="startCinemaSearch(cinemaName.value)">
+          <mat-autocomplete #autoCinema="matAutocomplete">
+            <mat-option *ngFor="let cinema of cinemas$ | async" [value]="cinema.name">
+              {{cinema.name}}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
         <mat-label class="option-title">Hall</mat-label>
         <mat-form-field>
           <mat-label>Select the hall</mat-label>
           <mat-select formControlName="hall">
             <mat-option *ngFor="let hall of halls$ | async" [value]="hall.name">
-              {{hall.name + '(' + hall.size + ')'}}
+              {{hall.name + '(' + hall.seatsNumber + ')'}}
             </mat-option>
           </mat-select>
         </mat-form-field>

@@ -1,0 +1,19 @@
+<mat-card-title>Search</mat-card-title>
+<mat-form-field class="search-field">
+  <mat-label>Enter film title</mat-label>
+  <input matInput type="text" [(ngModel)]="searchName" (input)="search(searchName)">
+  <button mat-button *ngIf="searchName" matSuffix mat-icon-button aria-label="Clear" (click)="searchName=''">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+<mat-list role="list" *ngFor="let cinema of cinemas$ | async">
+  <mat-list-item role="listitem">
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="list-item">
+      <mat-label>{{cinema.name}}</mat-label>
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1vw">
+        <button mat-raised-button color="primary" routerLink="{{cinema.id}}">Edit</button>
+        <button mat-raised-button color="warn" (click)="delete(cinema.id)">Delete</button>
+      </div>
+    </div>
+  </mat-list-item>
+</mat-list>

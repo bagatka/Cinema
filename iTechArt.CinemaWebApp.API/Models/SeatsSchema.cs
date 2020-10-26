@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace iTechArt.CinemaWebApp.API.Models
 {
-    public class Seat
+    public class SeatsSchema
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -11,9 +11,8 @@ namespace iTechArt.CinemaWebApp.API.Models
         [Required(ErrorMessage = "HallId is required.")]
         public int HallId { get; set; }
         [Required(ErrorMessage = "Seat is required.")]
-        [Column("Seat")]
         [Range(0, int.MaxValue)]
-        public int SeatNumber { get; set; }
+        public int Seat { get; set; }
         [Required(ErrorMessage = "Row is required.")]
         [Range(0, int.MaxValue)]
         public int Row { get; set; }

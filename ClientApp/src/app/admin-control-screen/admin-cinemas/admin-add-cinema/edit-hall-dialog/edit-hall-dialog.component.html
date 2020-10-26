@@ -15,11 +15,11 @@
       <mat-label class="option-title">Size</mat-label>
       <mat-form-field>
         <mat-label>Enter hall size</mat-label>
-        <input formControlName="size" matInput placeholder="56"
+        <input formControlName="seatsNumber" matInput placeholder="56"
                type="number" (ngModelChange)="checkHallSize()">
         <mat-hint align="end" [class]="hallSizeError? 'hall-error': ''">
           {{selectedSeatsNumber ? selectedSeatsNumber : 0 }}
-          / {{addHallInput.value.size}}</mat-hint>
+          / {{addHallInput.value.seatsNumber}}</mat-hint>
         <mat-error>Incorrect hall size</mat-error>
       </mat-form-field>
       <div class="buttons" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1vh">
@@ -37,7 +37,7 @@
     <h1
       class="current-seat">{{(onCurrentSeatPosition) ? 'Current seat: Row ' + onCurrentSeatPosition.row + ', Seat ' + onCurrentSeatPosition.seat : 'Current seat: '}} </h1>
     <app-hall-schema (enterSeatPosition)="displayCurrentSeatPosition($event)"
-                     [(schemaData)]="seatsSchema" [activeSeatType]="activeSeatType"
+                     [(schemaData)]="seatsSchemas" [activeSeatType]="activeSeatType"
                      (hallSize)="setSelectedSeatsNumber($event)"></app-hall-schema>
     <ng-container>
       <div class="picker" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1vw">

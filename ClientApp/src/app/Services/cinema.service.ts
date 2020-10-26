@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 import {Cinema} from '../Interfaces/cinema';
 import {ApiPaths, environment} from '../../environments/environment';
@@ -12,6 +12,12 @@ import {ApiPaths, environment} from '../../environments/environment';
 export class CinemaService {
 
   private baseUrl = environment.baseUrl + ApiPaths.cinemas;
+  httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
+  };
+
+  constructor(private http: HttpClient) {
+  }
 
   getCinemas(): Observable<Cinema[]> {
     return this.http.get<Cinema[]>(this.baseUrl);
@@ -28,6 +34,22 @@ export class CinemaService {
     return this.http.get<Cinema[]>(`${this.baseUrl}/?city=${city}`);
   }
 
-  constructor(private http: HttpClient) {
+  searchCinemasByName(name: string): Observable<Cinema[]> {
+    if (!name.trim()) {
+      return of([]);
+    }
+    return this.http.get<Cinema[]>(`${this.baseUrl}/?name=${name}`);
+  }
+
+  createCinema(cinema: Cinema): Observable<Cinema> {
+    return this.http.post<Cinema>(this.baseUrl, cinema, this.httpOptions);
+  }
+
+  deleteCinema(id: number): Observable<Cinema> {
+    return this.http.delete<Cinema>(this.baseUrl + `/${id}`);
+  }
+
+  updateCinema(cinema: Cinema, id: number): Observable<Cinema> {
+    return this.http.put<Cinema>(this.baseUrl + `/${id}`, cinema, this.httpOptions);
   }
 }

@@ -4,6 +4,10 @@ import {MatDialog} from '@angular/material/dialog';
 
 import {EditHallDialogComponent} from './edit-hall-dialog/edit-hall-dialog.component';
 import {Hall} from '../../../Interfaces/hall';
+import {SnackbarService} from '../../../Services/snackbar.service';
+import {CinemaService} from '../../../Services/cinema.service';
+import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
+import {Cinema} from '../../../Interfaces/cinema';
 
 @Component({
   selector: 'app-admin-add-cinema',
@@ -14,8 +18,14 @@ export class AdminAddCinemaComponent implements OnInit {
 
   addCinemaInput: FormGroup;
   halls: Hall[] = [];
+  cinemaData: Cinema;
 
-  constructor(private formBuilder: FormBuilder, public dialog: MatDialog) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private snackbarService: SnackbarService,
+    private cinemaService: CinemaService,
+    public dialog: MatDialog,
+  ) {
   }
 
   ngOnInit(): void {
@@ -29,11 +39,19 @@ export class AdminAddCinemaComponent implements OnInit {
 
   onAddCinemaClick(): void {
     this.halls.push({
+      id: null,
       name: 'Change the name',
-      size: 0,
+      seatsNumber: 0,
       cinemaName: '',
-      seatsSchema: []
+      seatsSchemas: []
     });
+  }
+
+  createCinema(): void {
+    this.cinemaData = this.addCinemaInput.value;
+    this.cinemaData.halls = this.halls;
+    this.cinemaService.createCinema(this.cinemaData).subscribe();
+    this.snackbarService.displaySnackbar(SnackbarMessages.created);
   }
 
   openEditHallDialog(hall): void {
@@ -45,7 +63,7 @@ export class AdminAddCinemaComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.halls = this.halls.filter(h => h.name !== result.name || h.size !== result.size);
+        this.halls = this.halls.filter(h => h.name !== result.name || h.seatsNumber !== result.seatsNumber);
       }
     });
   }

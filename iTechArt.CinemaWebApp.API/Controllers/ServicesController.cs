@@ -29,7 +29,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet(Name = "GetServices")]
         public async Task<IActionResult> GetServices([FromQuery] ServiceParameters serviceParameters)
         {
-            var services = await _repository.Services.GetAllServicesAsync(serviceParameters, trackChanges: false);
+            var services = await _repository.Services.GetAllServicesAsync(serviceParameters);
 
             var servicesDto = _mapper.Map<IEnumerable<ServiceDto>>(services);
                 
@@ -39,7 +39,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet("{id}", Name = "GetServiceById")]
         public async Task<IActionResult> GetService(int id)
         {
-            var service = await _repository.Services.GetServiceAsync(id, trackChanges: false);
+            var service = await _repository.Services.GetServiceAsync(id);
             
             if (service == null)
             {

@@ -14,8 +14,7 @@ namespace iTechArt.CinemaWebApp.API.Models
         public string Name { get; set; }
         [Required(ErrorMessage = "Size is required.")]
         [Range(1, int.MaxValue)]
-        [Column("Seats")]
-        public int SeatsNumber { get; set; }
+        public int Seats { get; set; }
         [Required(ErrorMessage = "CinemaId is required.")]
         public int CinemaId { get; set; }
 
@@ -23,7 +22,7 @@ namespace iTechArt.CinemaWebApp.API.Models
         public Cinema Cinema { get; set; }
         
         public ICollection<Show> Shows { get; set; }
-        public ICollection<Seat> Seats { get; set; }
+        public ICollection<SeatsSchema> SeatsSchemas { get; set; }
         public ICollection<HallService> HallServices { get; set; }
     }
 }

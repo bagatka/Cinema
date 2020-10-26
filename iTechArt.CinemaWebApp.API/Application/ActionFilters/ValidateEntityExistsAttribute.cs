@@ -18,9 +18,8 @@ namespace iTechArt.CinemaWebApp.API.Application.ActionFilters
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var trackChanges = context.HttpContext.Request.Method.Equals("PUT");
             var id = (int)context.ActionArguments["id"];
-            var entity = await GetEntityById(id, trackChanges);
+            var entity = await GetEntityById(id);
 
             if (entity == null)
             {
@@ -33,6 +32,6 @@ namespace iTechArt.CinemaWebApp.API.Application.ActionFilters
             }
         }
 
-        protected abstract Task<TEntity> GetEntityById(int id, bool trackChanges);
+        protected abstract Task<TEntity> GetEntityById(int id);
     }
 }

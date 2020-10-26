@@ -29,7 +29,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet(Name = "GetShows")]
         public async Task<IActionResult> GetShows([FromQuery] ShowParameters showParameters)
         {
-            var shows = await _repository.Shows.GetShowsAsync(showParameters, trackChanges: false);
+            var shows = await _repository.Shows.GetShowsAsync(showParameters);
 
             var showsDto = _mapper.Map<IEnumerable<ShowDto>>(shows);
                 
@@ -39,7 +39,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet("{id}", Name = "GetShowById")]
         public async Task<IActionResult> GetShow(int id)
         {
-            var show = await _repository.Shows.GetShowAsync(id, trackChanges: false);
+            var show = await _repository.Shows.GetShowAsync(id);
             
             if (show == null)
             {

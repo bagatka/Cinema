@@ -5,7 +5,7 @@
     [ShowId] INT               NOT NULL,
     [UserId] INT               NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
-    FOREIGN KEY ([SeatId]) REFERENCES [dbo].[Seats] ([Id]),
+    FOREIGN KEY ([SeatId]) REFERENCES [dbo].[SeatsSchemas] ([Id]),
     FOREIGN KEY ([ShowId]) REFERENCES [dbo].[Shows] ([Id]),
     FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users] ([Id])
 );

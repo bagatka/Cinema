@@ -16,18 +16,20 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
         }
 
-        public async Task<IEnumerable<Show>> GetShowsAsync(ShowParameters showParameters, bool trackChanges)
+        public async Task<IEnumerable<Show>> GetShowsAsync(ShowParameters showParameters)
         {
-            var shows = await FindAll(trackChanges)
+            var shows = await FindAll()
+                .AsNoTracking()
                 .OrderBy(show => show.Film.Title)
                 .ToListAsync();
 
             return PagedList<Show>.ToPagedList(shows, showParameters.PageNumber, showParameters.PageSize);
         }
 
-        public async Task<Show> GetShowAsync(int showId, bool trackChanges)
+        public async Task<Show> GetShowAsync(int showId)
         {
-            return await FindByCondition(show => show.Id.Equals(showId), trackChanges)
+            return await FindByCondition(show => show.Id.Equals(showId))
+                .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
         

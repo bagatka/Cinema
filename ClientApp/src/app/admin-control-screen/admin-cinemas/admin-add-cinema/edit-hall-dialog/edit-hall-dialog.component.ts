@@ -14,7 +14,7 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
 
   addHallInput: FormGroup;
   onCurrentSeatPosition: SeatPosition;
-  seatsSchema: SeatPosition[];
+  seatsSchemas: SeatPosition[];
   activeSeatType: SeatType;
   selectedSeatsNumber: number;
   hallSizeError: boolean;
@@ -26,12 +26,12 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
   }
 
   ngOnInit(): void {
-    this.seatsSchema = [...this.data.hallData.seatsSchema];
-    this.selectedSeatsNumber = this.seatsSchema.length;
-    this.hallSizeError = this.selectedSeatsNumber !== this.seatsSchema.length;
+    this.seatsSchemas = [...this.data.hallData.seatsSchemas];
+    this.selectedSeatsNumber = this.seatsSchemas.length;
+    this.hallSizeError = this.selectedSeatsNumber !== this.seatsSchemas.length;
     this.addHallInput = this.formBuilder.group({
       name: new FormControl(this.data.hallData.name, Validators.required),
-      size: new FormControl(this.data.hallData.size, [Validators.required, Validators.min(1)])
+      seatsNumber: new FormControl(this.data.hallData.seatsNumber, [Validators.required, Validators.min(1)])
     });
   }
 
@@ -46,11 +46,10 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
   updateHall(): void {
     if (this.addHallInput.dirty && this.addHallInput.valid) {
       this.data.hallData.name = this.addHallInput.value.name;
-      this.data.hallData.size = this.addHallInput.value.size;
-      this.data.hallData.cinemaName = this.addHallInput.value.cinemaName;
+      this.data.hallData.seatsNumber = this.addHallInput.value.seatsNumber;
     }
-    if (!this.schemasCompare(this.data.hallData.seatsSchema, this.seatsSchema) && this.addHallInput.valid) {
-      this.data.hallData.seatsSchema = this.seatsSchema;
+    if (!this.schemasCompare(this.data.hallData.seatsSchemas, this.seatsSchemas) && this.addHallInput.valid) {
+      this.data.hallData.seatsSchemas = this.seatsSchemas;
     }
     this.dialogRef.close();
   }
@@ -69,12 +68,12 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
 
   setSelectedSeatsNumber(value): void {
     this.selectedSeatsNumber = value;
-    const hallSizeErrorStatus = value !== this.addHallInput.value.size;
+    const hallSizeErrorStatus = value !== this.addHallInput.value.seatsNumber;
     this.setHallSizeError(hallSizeErrorStatus);
   }
 
   checkHallSize(): void {
-    const hallSizeErrorStatus = this.selectedSeatsNumber !== this.addHallInput.value.size;
+    const hallSizeErrorStatus = this.selectedSeatsNumber !== this.addHallInput.value.seatsNumber;
     this.setHallSizeError(hallSizeErrorStatus);
   }
 

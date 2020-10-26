@@ -2,11 +2,11 @@
 
 namespace iTechArt.CinemaWebApp.API.Application.DTOs.Seat
 {
-    public class SeatForManipulationDto
+    public class SeatsSchemaForManipulationDto
     {
         [Required(ErrorMessage = "Seat is required.")]
         [Range(0, int.MaxValue)]
-        public int SeatNumber { get; set; }
+        public int Seat { get; set; }
         [Required(ErrorMessage = "Row is required.")]
         [Range(0, int.MaxValue)]
         public int Row { get; set; }

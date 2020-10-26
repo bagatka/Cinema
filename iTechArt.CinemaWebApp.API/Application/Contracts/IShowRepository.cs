@@ -8,8 +8,8 @@ namespace iTechArt.CinemaWebApp.API.Application.Contracts
 {
     public interface IShowRepository
     {
-        Task<IEnumerable<Show>> GetShowsAsync(ShowParameters showParameters, bool trackChanges);
-        Task<Show> GetShowAsync(int showId, bool trackChanges);
+        Task<IEnumerable<Show>> GetShowsAsync(ShowParameters showParameters);
+        Task<Show> GetShowAsync(int showId);
         Task CreateShowAsync(Show show);
         void DeleteShow(Show show);
     }

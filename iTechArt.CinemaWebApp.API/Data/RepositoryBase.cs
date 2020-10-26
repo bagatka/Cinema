@@ -3,8 +3,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-using Microsoft.EntityFrameworkCore;
-
 using iTechArt.CinemaWebApp.API.Application.Contracts;
 
 namespace iTechArt.CinemaWebApp.API.Data
@@ -18,22 +16,15 @@ namespace iTechArt.CinemaWebApp.API.Data
             RepositoryContext = repositoryContext;
         }
 
-        public IQueryable<TEntity> FindAll(bool trackChanges)
+        public IQueryable<TEntity> FindAll()
         {
-            return trackChanges
-                ? RepositoryContext.Set<TEntity>()
-                : RepositoryContext.Set<TEntity>()
-                    .AsNoTracking();
+            return RepositoryContext.Set<TEntity>();
         }
 
-        public IQueryable<TEntity> FindByCondition(Expression<Func<TEntity, bool>> expression, bool trackChanges)
+        public IQueryable<TEntity> FindByCondition(Expression<Func<TEntity, bool>> expression)
         {
-            return !trackChanges
-                ? RepositoryContext.Set<TEntity>()
-                    .Where(expression)
-                    .AsNoTracking()
-                : RepositoryContext.Set<TEntity>()
-                    .Where(expression);
+            return RepositoryContext.Set<TEntity>()
+                .Where(expression);
         }
 
         public async Task CreateAsync(TEntity entity) => await RepositoryContext.Set<TEntity>().AddAsync(entity);

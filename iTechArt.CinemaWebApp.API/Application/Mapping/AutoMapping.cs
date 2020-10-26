@@ -67,13 +67,13 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
 
             CreateMap<HallServiceForManipulationDto, HallService>();
 
-            CreateMap<Seat, SeatDto>()
+            CreateMap<SeatsSchema, SeatsSchemaDto>()
                 .ForMember(
-                    seatDto => seatDto.HallName,
-                    src => src.MapFrom(seat => seat.Hall.Name)
+                    seatsSchemaDto => seatsSchemaDto.HallName,
+                    src => src.MapFrom(seatsSchema => seatsSchema.Hall.Name)
                 );
 
-            CreateMap<SeatForManipulationDto, Seat>();
+            CreateMap<SeatsSchemaForManipulationDto, SeatsSchema>();
 
             CreateMap<Service, ServiceDto>();
 
@@ -82,11 +82,11 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
             CreateMap<Ticket, TicketDto>()
                 .ForMember(
                     ticketDto => ticketDto.HallName,
-                    src => src.MapFrom(ticket => ticket.Seat.Hall.Name)
+                    src => src.MapFrom(ticket => ticket.SeatsSchema.Hall.Name)
                 )
                 .ForMember(
                     ticketDto => ticketDto.CinemaName,
-                    src => src.MapFrom(ticket => ticket.Seat.Hall.Cinema.Name)
+                    src => src.MapFrom(ticket => ticket.SeatsSchema.Hall.Cinema.Name)
                 )
                 .ForMember(
                     ticketDto => ticketDto.FilmTitle,
@@ -102,11 +102,11 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
                 )
                 .ForMember(
                     ticketDto => ticketDto.Seat,
-                    src => src.MapFrom(ticket => ticket.Seat.SeatNumber)
+                    src => src.MapFrom(ticket => ticket.SeatsSchema.Seat)
                 )
                 .ForMember(
                     ticketDto => ticketDto.Row,
-                    src => src.MapFrom(ticket => ticket.Seat.Row)
+                    src => src.MapFrom(ticket => ticket.SeatsSchema.Row)
                 );
 
             CreateMap<TicketForManipulationDto, Ticket>();

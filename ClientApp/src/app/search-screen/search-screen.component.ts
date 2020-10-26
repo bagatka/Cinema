@@ -42,6 +42,5 @@ export class SearchScreenComponent implements OnInit {
       distinctUntilChanged(),
       switchMap((filter: Filter) => this.filmService.searchFilmsByFilter(filter))
     );
-    console.log(this.films$);
   }
 }
