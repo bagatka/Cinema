@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable, Subject} from 'rxjs';
 import {Film} from '../../../Interfaces/film';
@@ -23,6 +23,7 @@ export class AdminAddShowComponent implements OnInit {
   hallTimeTable$ = new Observable();
   private searchFilms = new Subject<string>();
   private searchCinemas = new Subject<string>();
+  private searchHalls = new Subject<number>();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,13 +44,18 @@ export class AdminAddShowComponent implements OnInit {
     this.films$ = this.searchFilms.pipe(
       debounceTime(300),
       switchMap((title: string) => {
-        return this.filmService.searchFilmsByName(title);
+        return this.filmService.getFilmsByName(title);
       }),
     );
     this.cinemas$ = this.searchCinemas.pipe(
       debounceTime(300),
       switchMap((title: string) => {
-        return this.cinemaService.searchCinemasByName(title);
+        return this.cinemaService.getCinemasByName(title);
+      }),
+    );
+    this.halls$ = this.searchHalls.pipe(
+      switchMap((id: number) => {
+        return this.cinemaService.getHallsByCinemaId(id);
       }),
     );
   }
@@ -60,5 +66,9 @@ export class AdminAddShowComponent implements OnInit {
 
   startCinemaSearch(name: string): void {
     this.searchCinemas.next(name);
+  }
+
+  startHallSearch(id: number): void {
+    this.searchHalls.next(id);
   }
 }

@@ -5,7 +5,7 @@ using iTechArt.CinemaWebApp.API.Application.DTOs.Cinema;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Film;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Hall;
 using iTechArt.CinemaWebApp.API.Application.DTOs.HallService;
-using iTechArt.CinemaWebApp.API.Application.DTOs.Seat;
+using iTechArt.CinemaWebApp.API.Application.DTOs.SeatsSchema;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Services;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Show;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Ticket;
@@ -28,6 +28,8 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
             CreateMap<Cinema, CinemaDto>();
 
             CreateMap<CinemaForManipulationDto, Cinema>();
+
+            CreateMap<Cinema, CinemaFullDto>();
 
             CreateMap<Show, ShowDto>()
                 .ForMember(
@@ -52,6 +54,12 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
                 );
 
             CreateMap<HallForManipulationDto, Hall>();
+
+            CreateMap<Hall, HallFullDto>()
+                .ForMember(
+                    hallFullDto => hallFullDto.CinemaName,
+                    src => src.MapFrom(hall => hall.Cinema.Name)
+                );
 
             CreateMap<HallService, HallServiceDto>()
                 .ForMember(

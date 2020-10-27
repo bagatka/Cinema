@@ -15,7 +15,7 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
         }
 
-        public async Task<PagedList<Service>> GetAllServicesAsync(ServiceParameters serviceParameters)
+        public async Task<PagedList<Service>> GetServicesAsync(ServiceParameters serviceParameters)
         {
             var services = await FindAll()
                 .AsNoTracking()

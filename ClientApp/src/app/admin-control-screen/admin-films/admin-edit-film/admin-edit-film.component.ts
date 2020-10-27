@@ -43,7 +43,7 @@ export class AdminEditFilmComponent implements OnInit {
     });
   }
 
-  createForm(): void {
+  private createForm(): void {
     this.editFilmInput = this.formBuilder.group({
       title: new FormControl(this.film.title, Validators.required),
       description: new FormControl(this.film.description, Validators.required),

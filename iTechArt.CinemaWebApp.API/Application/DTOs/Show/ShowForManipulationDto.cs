@@ -6,6 +6,7 @@ namespace iTechArt.CinemaWebApp.API.Application.DTOs.Show
 {
     public class ShowForManipulationDto
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "Date and time is required.")]
         public DateTime StartDateTime { get; set; }
         [Required(ErrorMessage = "Price is required.")]

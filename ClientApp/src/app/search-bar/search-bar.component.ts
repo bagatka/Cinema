@@ -29,7 +29,7 @@ export class SearchBarComponent implements OnInit {
     this.results$ = this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((value: string) => this.filmService.searchFilmsByName(value))
+      switchMap((value: string) => this.filmService.getFilmsByName(value))
     );
   }
 }

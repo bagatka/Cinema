@@ -1,7 +1,6 @@
-<!--
-<div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="2vw">
+<div *ngIf="isFormReady" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="2vw">
   <div fxLayout="column">
-    <form [formGroup]="addCinemaInput">
+    <form [formGroup]="editCinemaInput">
       <div fxLayout="column">
         <mat-label class="option-title">Name</mat-label>
         <mat-form-field>
@@ -31,8 +30,8 @@
                  type="text">
         </mat-form-field>
         <div fxLayout="row" fxLayoutAlign="end center">
-          <button mat-button color="primary" [disabled]="!addCinemaInput.valid">Add</button>
-          <button mat-button color="warn">Cancel</button>
+          <button mat-button color="primary" [disabled]="!editCinemaInput.valid" (click)="updateCinema()">Update</button>
+          <button mat-button color="warn" (click)="cancel()">Cancel</button>
         </div>
       </div>
     </form>
@@ -51,4 +50,3 @@
   </div>
 </div>
 
--->

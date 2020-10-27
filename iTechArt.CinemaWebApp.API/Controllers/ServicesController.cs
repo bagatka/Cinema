@@ -29,7 +29,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet(Name = "GetServices")]
         public async Task<IActionResult> GetServices([FromQuery] ServiceParameters serviceParameters)
         {
-            var services = await _repository.Services.GetAllServicesAsync(serviceParameters);
+            var services = await _repository.Services.GetServicesAsync(serviceParameters);
 
             var servicesDto = _mapper.Map<IEnumerable<ServiceDto>>(services);
                 

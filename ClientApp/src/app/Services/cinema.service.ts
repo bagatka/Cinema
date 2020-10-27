@@ -5,6 +5,7 @@ import {Observable, of} from 'rxjs';
 
 import {Cinema} from '../Interfaces/cinema';
 import {ApiPaths, environment} from '../../environments/environment';
+import {Hall} from '../Interfaces/hall';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,10 @@ export class CinemaService {
     return this.http.get<Cinema[]>(this.baseUrl);
   }
 
+  getCinemaById(id: number): Observable<Cinema> {
+    return this.http.get<Cinema>(`${this.baseUrl}/${id}`);
+  }
+
   getCinemasCities(): Observable<string[]> {
     return this.http.get<string[]>(`${this.baseUrl}/cities`);
   }
@@ -34,11 +39,15 @@ export class CinemaService {
     return this.http.get<Cinema[]>(`${this.baseUrl}/?city=${city}`);
   }
 
-  searchCinemasByName(name: string): Observable<Cinema[]> {
+  getCinemasByName(name: string): Observable<Cinema[]> {
     if (!name.trim()) {
       return of([]);
     }
     return this.http.get<Cinema[]>(`${this.baseUrl}/?name=${name}`);
+  }
+
+  getHallsByCinemaId(id: number): Observable<Hall[]> {
+    return  this.http.get<Hall[]>(`${this.baseUrl}/${id}/halls`);
   }
 
   createCinema(cinema: Cinema): Observable<Cinema> {

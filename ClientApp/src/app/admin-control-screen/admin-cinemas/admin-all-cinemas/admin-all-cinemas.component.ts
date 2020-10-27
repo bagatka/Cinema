@@ -30,7 +30,7 @@ export class AdminAllCinemasComponent implements OnInit, AfterViewInit {
       debounceTime(300),
       switchMap((title: string) => {
         this.updateQuery();
-        return this.cinemaService.searchCinemasByName(title);
+        return this.cinemaService.getCinemasByName(title);
       }),
     );
   }
@@ -42,7 +42,7 @@ export class AdminAllCinemasComponent implements OnInit, AfterViewInit {
   }
 
   private searchFromQuery(): void {
-    this.searchName = this.route.snapshot.queryParamMap.get('title');
+    this.searchName = this.route.snapshot.queryParamMap.get('name');
     if (this.searchName) {
       this.search(this.searchName);
     }
@@ -70,7 +70,7 @@ export class AdminAllCinemasComponent implements OnInit, AfterViewInit {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
-        title: this.searchName
+        name: this.searchName
       },
       skipLocationChange: false
     });

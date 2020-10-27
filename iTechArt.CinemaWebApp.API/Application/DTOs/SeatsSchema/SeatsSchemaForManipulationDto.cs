@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace iTechArt.CinemaWebApp.API.Application.DTOs.Seat
+namespace iTechArt.CinemaWebApp.API.Application.DTOs.SeatsSchema
 {
     public class SeatsSchemaForManipulationDto
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "Seat is required.")]
         [Range(0, int.MaxValue)]
         public int Seat { get; set; }

@@ -39,9 +39,8 @@ export class AdminAddCinemaComponent implements OnInit {
 
   onAddCinemaClick(): void {
     this.halls.push({
-      id: null,
       name: 'Change the name',
-      seatsNumber: 0,
+      seats: 0,
       cinemaName: '',
       seatsSchemas: []
     });
@@ -63,7 +62,7 @@ export class AdminAddCinemaComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.halls = this.halls.filter(h => h.name !== result.name || h.seatsNumber !== result.seatsNumber);
+        this.halls = this.halls.filter(h => h.name !== result.name || h.seats !== result.seats);
       }
     });
   }

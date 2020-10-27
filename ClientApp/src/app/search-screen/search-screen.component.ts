@@ -40,7 +40,7 @@ export class SearchScreenComponent implements OnInit {
   ngOnInit(): void {
     this.films$ = this.searchTerms.pipe(
       distinctUntilChanged(),
-      switchMap((filter: Filter) => this.filmService.searchFilmsByFilter(filter))
+      switchMap((filter: Filter) => this.filmService.getFilmsByFilter(filter))
     );
   }
 }

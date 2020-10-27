@@ -15,7 +15,7 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
         }
 
-        public async Task<PagedList<Cinema>> GetAllCinemasAsync(CinemaParameters cinemaParameters)
+        public async Task<PagedList<Cinema>> GetCinemasAsync(CinemaParameters cinemaParameters)
         {
             var cinemas = FindAll().AsNoTracking();
             
@@ -34,11 +34,15 @@ namespace iTechArt.CinemaWebApp.API.Data
         public async Task<Cinema> GetCinemaAsync(int cinemaId)
         {
             return await FindByCondition(cinema => cinema.Id.Equals(cinemaId))
+                .Include(cinema => cinema.Halls)
+                    .ThenInclude(hall => hall.SeatsSchemas)
                 .SingleOrDefaultAsync();
         }
 
         public async Task CreateCinemaAsync(Cinema cinema) => await CreateAsync(cinema);
 
+        public void UpdateCinema(Cinema cinema) => Update(cinema);
+        
         public void DeleteCinema(Cinema cinema) => Delete(cinema);
     }
 }

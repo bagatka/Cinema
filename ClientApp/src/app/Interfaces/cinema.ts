@@ -1,7 +1,7 @@
 import {Hall} from './hall';
 
 export interface Cinema {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   city: string;

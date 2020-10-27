@@ -30,7 +30,7 @@ export class AdminAllFilmsComponent implements OnInit, AfterViewInit {
       debounceTime(300),
       switchMap((title: string) => {
         this.updateQuery();
-        return this.filmService.searchFilmsByName(title);
+        return this.filmService.getFilmsByName(title);
       }),
     );
   }

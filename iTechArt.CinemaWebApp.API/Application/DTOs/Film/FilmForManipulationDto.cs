@@ -4,6 +4,7 @@ namespace iTechArt.CinemaWebApp.API.Application.DTOs.Film
 {
     public class FilmForManipulationDto
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "Title is required.")]
         [StringLength(200, ErrorMessage = "Title length can't be more than {1}.")]
         public string Title { get; set; }

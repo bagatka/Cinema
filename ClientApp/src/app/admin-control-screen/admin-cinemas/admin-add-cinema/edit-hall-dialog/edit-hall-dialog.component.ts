@@ -16,7 +16,7 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
   onCurrentSeatPosition: SeatPosition;
   seatsSchemas: SeatPosition[];
   activeSeatType: SeatType;
-  selectedSeatsNumber: number;
+  selectedSeats: number;
   hallSizeError: boolean;
 
   constructor(
@@ -27,11 +27,11 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
 
   ngOnInit(): void {
     this.seatsSchemas = [...this.data.hallData.seatsSchemas];
-    this.selectedSeatsNumber = this.seatsSchemas.length;
-    this.hallSizeError = this.selectedSeatsNumber !== this.seatsSchemas.length;
+    this.selectedSeats = this.seatsSchemas.length;
+    this.hallSizeError = this.selectedSeats !== this.seatsSchemas.length;
     this.addHallInput = this.formBuilder.group({
       name: new FormControl(this.data.hallData.name, Validators.required),
-      seatsNumber: new FormControl(this.data.hallData.seatsNumber, [Validators.required, Validators.min(1)])
+      seats: new FormControl(this.data.hallData.seats, [Validators.required, Validators.min(1)])
     });
   }
 
@@ -46,7 +46,7 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
   updateHall(): void {
     if (this.addHallInput.dirty && this.addHallInput.valid) {
       this.data.hallData.name = this.addHallInput.value.name;
-      this.data.hallData.seatsNumber = this.addHallInput.value.seatsNumber;
+      this.data.hallData.seats = this.addHallInput.value.seats;
     }
     if (!this.schemasCompare(this.data.hallData.seatsSchemas, this.seatsSchemas) && this.addHallInput.valid) {
       this.data.hallData.seatsSchemas = this.seatsSchemas;
@@ -66,14 +66,14 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
     element.classList.add('active-seat-type');
   }
 
-  setSelectedSeatsNumber(value): void {
-    this.selectedSeatsNumber = value;
-    const hallSizeErrorStatus = value !== this.addHallInput.value.seatsNumber;
+  setSelectedSeats(value): void {
+    this.selectedSeats = value;
+    const hallSizeErrorStatus = value !== this.addHallInput.value.seats;
     this.setHallSizeError(hallSizeErrorStatus);
   }
 
   checkHallSize(): void {
-    const hallSizeErrorStatus = this.selectedSeatsNumber !== this.addHallInput.value.seatsNumber;
+    const hallSizeErrorStatus = this.selectedSeats !== this.addHallInput.value.seats;
     this.setHallSizeError(hallSizeErrorStatus);
   }
 

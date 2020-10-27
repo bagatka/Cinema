@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +10,7 @@ using AutoMapper;
 using iTechArt.CinemaWebApp.API.Application.ActionFilters;
 using iTechArt.CinemaWebApp.API.Application.Contracts;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Cinema;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Hall;
 using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
 
@@ -29,7 +32,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet(Name = "GetCinemas")]
         public async Task<IActionResult> GetCinemas([FromQuery] CinemaParameters cinemaParameters)
         {
-            var cinemas = await _repository.Cinemas.GetAllCinemasAsync(cinemaParameters);
+            var cinemas = await _repository.Cinemas.GetCinemasAsync(cinemaParameters);
 
             var cinemasDto = _mapper.Map<IEnumerable<CinemaDto>>(cinemas);
                 
@@ -37,7 +40,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetCinemaById")]
-        public async Task<IActionResult> GetCinema(int id)
+        public async Task<IActionResult> GetCinema(int id, [FromQuery] HallParameters hallParameters)
         {
             var cinema = await _repository.Cinemas.GetCinemaAsync(id);
             
@@ -46,9 +49,33 @@ namespace iTechArt.CinemaWebApp.API.Controllers
                 return NotFound($"Cinema with id: {id} doesn't exist in the database.");
             }
 
-            var cinemaDto = _mapper.Map<CinemaDto>(cinema);
+            var cinemaDto = _mapper.Map<CinemaFullDto>(cinema);
             
             return Ok(cinemaDto);
+        }
+        
+        [HttpGet("{id}/halls", Name = "GetHallsByCinemaId")]
+        public async Task<IActionResult> GetHalls(int id, [FromQuery] HallParameters hallParameters)
+        {
+            var cinema = await _repository.Cinemas.GetCinemaAsync(id);
+            
+            if (cinema == null)
+            {
+                return NotFound($"Cinema with id: {id} doesn't exist in the database.");
+            }
+
+            if (!string.IsNullOrEmpty(hallParameters.CinemaName) && !string.Equals(cinema.Name, hallParameters.CinemaName))
+            {
+                return BadRequest("Incorrect cinema name or cinema id.");
+            }
+
+            hallParameters.CinemaId = id;
+
+            var halls = await _repository.Halls.GetHallsAsync(hallParameters);
+
+            var hallsDto = _mapper.Map<IEnumerable<HallDto>>(halls);
+
+            return Ok(hallsDto);
         }
         
         [HttpPost]
@@ -83,7 +110,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         public async Task<IActionResult> UpdateCinema(int id, [FromBody] CinemaForManipulationDto cinema)
         {
             var cinemaEntity = HttpContext.Items["entity"] as Cinema;
-
+            
             _mapper.Map(cinema, cinemaEntity);
             await _repository.SaveAsync();
 

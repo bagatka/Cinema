@@ -5,5 +5,7 @@ export const environment = {
 
 export enum ApiPaths {
   films = '/films',
-  cinemas = '/cinemas'
+  cinemas = '/cinemas',
+  shows = '/shows',
+  halls = '/halls'
 }

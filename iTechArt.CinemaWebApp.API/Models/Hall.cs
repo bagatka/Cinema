@@ -12,7 +12,7 @@ namespace iTechArt.CinemaWebApp.API.Models
         [Required(ErrorMessage = "Name is required.")]
         [StringLength(200, ErrorMessage = "Name length can't be more than 200.")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "Size is required.")]
+        [Required(ErrorMessage = "Seats is required.")]
         [Range(1, int.MaxValue)]
         public int Seats { get; set; }
         [Required(ErrorMessage = "CinemaId is required.")]

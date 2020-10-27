@@ -29,14 +29,14 @@ export class FilmService {
     return this.http.get<Film>(this.baseUrl + `/${id}`);
   }
 
-  searchFilmsByName(term: string): Observable<Film[]> {
+  getFilmsByName(term: string): Observable<Film[]> {
     if (!term.trim()) {
       return of([]);
     }
     return this.http.get<Film[]>(`${this.baseUrl}/?title=${term}`);
   }
 
-  searchFilmsByFilter(filter: Filter): Observable<Film[]> {
+  getFilmsByFilter(filter: Filter): Observable<Film[]> {
     if (!filter) {
       return this.getFilms();
     }
