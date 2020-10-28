@@ -110,7 +110,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         public async Task<IActionResult> UpdateCinema(int id, [FromBody] CinemaForManipulationDto cinema)
         {
             var cinemaEntity = HttpContext.Items["entity"] as Cinema;
-            
+
             _mapper.Map(cinema, cinemaEntity);
             await _repository.SaveAsync();
 

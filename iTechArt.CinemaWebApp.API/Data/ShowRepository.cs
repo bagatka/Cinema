@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -18,12 +20,31 @@ namespace iTechArt.CinemaWebApp.API.Data
 
         public async Task<IEnumerable<Show>> GetShowsAsync(ShowParameters showParameters)
         {
-            var shows = await FindAll()
-                .AsNoTracking()
-                .OrderBy(show => show.Film.Title)
-                .ToListAsync();
+            var shows = FindAll()
+                .Include(show => show.Film)
+                .Include(show => show.Hall)
+                    .ThenInclude(hall => hall.Cinema)
+                .AsNoTracking();
 
-            return PagedList<Show>.ToPagedList(shows, showParameters.PageNumber, showParameters.PageSize);
+            if (showParameters.HallId != -1)
+            {
+                shows = shows.Where(show => show.HallId == showParameters.HallId);
+            }
+
+            Console.WriteLine(showParameters.Date);
+            
+            if (!string.IsNullOrEmpty(showParameters.Date))
+            {
+                var date = DateTime.Parse(showParameters.Date);
+                shows = shows.Where(show => show.StartDateTime.Date == date.Date);
+                Console.WriteLine(date.Date);
+            }
+
+            return PagedList<Show>.ToPagedList(
+                await shows.OrderBy(show => show.StartDateTime).ToListAsync(),
+                showParameters.PageNumber,
+                showParameters.PageSize
+            );
         }
 
         public async Task<Show> GetShowAsync(int showId)

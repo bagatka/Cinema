@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ApiPaths, environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {Filter} from '../Interfaces/filter';
 import {Show} from '../Interfaces/show';
+import {ShowForManipulation} from '../Interfaces/show-for-manipulation';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,11 @@ export class ShowService {
     }
     return this.http.get<Show[]>(`${this.baseUrl}/?filmTitle=${term}`);
   }
+
+  getShowsByHallId(id: number, date: Date): Observable<Show[]> {
+    return this.http.get<Show[]>(`${this.baseUrl}?hallId=${id}&date=${this.getFormattedDate(date)}`);
+  }
+
   /*searchShowsByFilter(filter: Filter): Observable<Show[]> {
     if (!filter) {
       return this.getShows();
@@ -46,7 +52,7 @@ export class ShowService {
     return this.http.get<Show[]>(this.baseUrl, options);
   }*/
 
-  createShow(show: Show): Observable<Show> {
+  createShow(show: ShowForManipulation): Observable<Show> {
     return this.http.post<Show>(this.baseUrl, show, this.httpOptions);
   }
 
@@ -56,5 +62,13 @@ export class ShowService {
 
   updateShow(show: Show, id: number): Observable<Show> {
     return this.http.put<Show>(this.baseUrl + `/${id}`, show, this.httpOptions);
+  }
+
+  private getFormattedDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = (1 + date.getMonth()).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+
+    return month + '/' + day + '/' + year;
   }
 }
