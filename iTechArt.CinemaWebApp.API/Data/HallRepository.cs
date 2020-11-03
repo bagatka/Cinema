@@ -38,7 +38,14 @@ namespace iTechArt.CinemaWebApp.API.Data
                 hallParameters.PageSize
             );
         }
-        
+
+        public Task<Hall> GetHallAsync(int id)
+        {
+            return FindByCondition(hall => hall.Id.Equals(id))
+                .AsNoTracking()
+                .SingleOrDefaultAsync();;
+        }
+
         public async Task CreateHallAsync(Hall hall) => await CreateAsync(hall);
         
         public void DeleteHall(Hall hall) => Delete(hall);

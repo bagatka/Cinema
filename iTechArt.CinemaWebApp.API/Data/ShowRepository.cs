@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -31,13 +30,42 @@ namespace iTechArt.CinemaWebApp.API.Data
                 shows = shows.Where(show => show.HallId == showParameters.HallId);
             }
 
-            Console.WriteLine(showParameters.Date);
+            if (!string.IsNullOrEmpty(showParameters.FilmTitle))
+            {
+                shows = shows.Where(show => show.Film.Title.Equals(showParameters.FilmTitle));
+            }
+
+            if (!string.IsNullOrEmpty(showParameters.City))
+            {
+                shows = shows.Where(show => show.Hall.Cinema.City.Equals(showParameters.City));
+            }
+
+            if (!string.IsNullOrEmpty(showParameters.CinemaName))
+            {
+                shows = shows.Where(show => show.Hall.Cinema.Name.Equals(showParameters.CinemaName));
+            }
+
+            if (!string.IsNullOrEmpty(showParameters.StartDate))
+            {
+                var startDate = DateTime.Parse(showParameters.StartDate);
+                shows = shows.Where(show => show.StartDateTime.Date >= startDate.Date);
+            }
             
+            if (!string.IsNullOrEmpty(showParameters.EndDate))
+            {
+                var endDate = DateTime.Parse(showParameters.EndDate);
+                shows = shows.Where(show => show.StartDateTime.Date <= endDate.Date);
+            }
+
             if (!string.IsNullOrEmpty(showParameters.Date))
             {
                 var date = DateTime.Parse(showParameters.Date);
                 shows = shows.Where(show => show.StartDateTime.Date == date.Date);
-                Console.WriteLine(date.Date);
+            }
+
+            if (showParameters.Seats != -1)
+            {
+                shows = shows.Where(show => show.FreeSeats > showParameters.Seats);
             }
 
             return PagedList<Show>.ToPagedList(

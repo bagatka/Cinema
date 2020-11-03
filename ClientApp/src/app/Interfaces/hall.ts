@@ -1,4 +1,5 @@
 import {SeatPosition} from './seat-position';
+import {HallService} from './hall-service';
 
 export interface Hall {
   id?: number;
@@ -6,4 +7,5 @@ export interface Hall {
   seats: number;
   cinemaName: string;
   seatsSchemas: SeatPosition[];
+  hallServices: HallService[];
 }

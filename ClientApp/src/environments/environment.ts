@@ -7,5 +7,6 @@ export enum ApiPaths {
   films = '/films',
   cinemas = '/cinemas',
   shows = '/shows',
-  halls = '/halls'
+  halls = '/halls',
+  services = '/services'
 }

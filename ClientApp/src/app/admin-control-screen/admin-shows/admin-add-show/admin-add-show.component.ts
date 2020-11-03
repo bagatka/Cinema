@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable, Subject} from 'rxjs';
 import {Film} from '../../../Interfaces/film';
@@ -13,7 +13,6 @@ import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
 import {SnackbarService} from '../../../Services/snackbar.service';
 import {ShowForManipulation} from '../../../Interfaces/show-for-manipulation';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
-import {Console} from 'inspector';
 
 @Component({
   selector: 'app-admin-add-show',
@@ -101,6 +100,7 @@ export class AdminAddShowComponent implements OnInit {
     this.showData.price = this.addShowInput.value.price;
     this.showService.createShow(this.showData).subscribe();
     this.snackbarService.displaySnackbar(SnackbarMessages.created);
+    this.startHallTimeTableSearch(this.showData.hallId - 1);
     this.startHallTimeTableSearch(this.showData.hallId);
   }
 

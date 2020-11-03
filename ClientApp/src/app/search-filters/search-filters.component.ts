@@ -54,7 +54,7 @@ export class SearchFiltersComponent implements OnInit {
   }
 
   onSitsChange(value): void {
-    this.filter.sits = value;
+    this.filter.seats = value;
     if (value >= 1) {
       this.addNewFilter(this.filter);
     }

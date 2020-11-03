@@ -34,3 +34,7 @@ mat-list-option {
   margin-bottom: 2vh;
   height: auto !important;
 }
+
+mat-selection-list {
+  outline: none;
+}

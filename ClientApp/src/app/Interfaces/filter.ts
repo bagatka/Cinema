@@ -4,5 +4,5 @@ export interface Filter{
   cinemaName?: string;
   startDate?: Date;
   endDate?: Date;
-  sits?: number;
+  seats?: number;
 }

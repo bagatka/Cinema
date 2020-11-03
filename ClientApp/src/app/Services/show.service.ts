@@ -39,7 +39,7 @@ export class ShowService {
     return this.http.get<Show[]>(`${this.baseUrl}?hallId=${id}&date=${this.getFormattedDate(date)}`);
   }
 
-  /*searchShowsByFilter(filter: Filter): Observable<Show[]> {
+  searchShowsByFilter(filter: Filter): Observable<Show[]> {
     if (!filter) {
       return this.getShows();
     }
@@ -50,7 +50,7 @@ export class ShowService {
       options.params = options.params.set(key, filter[key]);
     });
     return this.http.get<Show[]>(this.baseUrl, options);
-  }*/
+  }
 
   createShow(show: ShowForManipulation): Observable<Show> {
     return this.http.post<Show>(this.baseUrl, show, this.httpOptions);

@@ -7,6 +7,7 @@ using AutoMapper;
 
 using iTechArt.CinemaWebApp.API.Application.ActionFilters;
 using iTechArt.CinemaWebApp.API.Application.Contracts;
+using iTechArt.CinemaWebApp.API.Application.DTOs.HallService;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Services;
 using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
@@ -85,6 +86,70 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             var serviceEntity = HttpContext.Items["entity"] as Service;
 
             _mapper.Map(service, serviceEntity);
+            await _repository.SaveAsync();
+
+            return NoContent();
+        }
+
+        [HttpGet("/hall/", Name = "GetHallServices")]
+        public async Task<IActionResult> GetHallServices([FromQuery] HallServiceParameters hallServiceParameters)
+        {
+            var hallServices = await _repository.HallServices.GetHallServicesAsync(hallServiceParameters);
+
+            var hallServiceDto = _mapper.Map<IEnumerable<HallServiceDto>>(hallServices);
+                
+            return Ok(hallServiceDto);
+        }
+
+        [HttpGet("/hall/{id}", Name = "GetHallServiceById")]
+        public async Task<IActionResult> GetHallService(int id)
+        {
+            var hallService = await _repository.HallServices.GetHallServiceAsync(id);
+            
+            if (hallService == null)
+            {
+                return NotFound($"HallService with id: {id} doesn't exist in the database.");
+            }
+
+            var hallServiceDto = _mapper.Map<HallServiceDto>(hallService);
+            
+            return Ok(hallServiceDto);
+        }
+        
+        [HttpPost("/hall")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> CreateService([FromBody] HallServiceForManipulationDto hallService)
+        {
+            var hallServiceEntity = _mapper.Map<HallService>(hallService);
+
+            await _repository.HallServices.CreateHallServiceAsync(hallServiceEntity);
+            await _repository.SaveAsync();
+
+            var hallServiceToReturn = _mapper.Map<HallServiceDto>(hallServiceEntity);
+
+            return CreatedAtRoute("GetHallServiceById", new { id = hallServiceToReturn.Id }, hallServiceToReturn);
+        }
+
+        [HttpDelete("/hall/{id}")]
+        [ServiceFilter(typeof(ValidateHallServiceExistsAttribute))]
+        public async Task<ActionResult> DeleteHallService(int id)
+        {
+            var hallService = HttpContext.Items["entity"] as HallService;
+
+            _repository.HallServices.DeleteHallService(hallService);
+            await _repository.SaveAsync();
+
+            return NoContent();
+        }
+
+        [HttpPut("/hall/{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [ServiceFilter(typeof(ValidateHallServiceExistsAttribute))]
+        public async Task<IActionResult> UpdateHallService(int id, [FromBody] HallServiceForManipulationDto hallService)
+        {
+            var hallServiceEntity = HttpContext.Items["entity"] as HallService;
+
+            _mapper.Map(hallService, hallServiceEntity);
             await _repository.SaveAsync();
 
             return NoContent();

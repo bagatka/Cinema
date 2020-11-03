@@ -62,7 +62,8 @@ export class AdminEditCinemaComponent implements OnInit {
       name: 'Change the name',
       seats: 0,
       cinemaName: '',
-      seatsSchemas: []
+      seatsSchemas: [],
+      hallServices: []
     });
   }
 
