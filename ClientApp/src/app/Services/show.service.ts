@@ -39,7 +39,7 @@ export class ShowService {
   }
 
   getShowsByHallId(id: number, date: Date): Observable<Show[]> {
-    return this.http.get<Show[]>(`${this.baseUrl}?hallId=${id}&date=${this.getFormattedDate(date)}`);
+    return this.http.get<Show[]>(`${this.baseUrl}?hallId=${id}&date=${this.formateDate(date)}`);
   }
 
   searchShowsByFilter(filter: Filter): Observable<Show[]> {
@@ -67,7 +67,7 @@ export class ShowService {
     return this.http.put<Show>(this.baseUrl + `/${id}`, show, this.httpOptions);
   }
 
-  private getFormattedDate(date: Date): string {
+  private formateDate(date: Date): string {
     const year = date.getFullYear();
     const month = (1 + date.getMonth()).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
