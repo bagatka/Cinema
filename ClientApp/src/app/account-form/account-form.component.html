@@ -1,6 +1,6 @@
 <h1 mat-dialog-title class="header">Account</h1>
 <div mat-dialog-content>
-  <form [formGroup]="userInput" fxLayout="column" fxLayoutAlign="center center">
+  <form [formGroup]="userInput" fxLayout="column" fxLayoutAlign="center center" (submit)="login()">
     <mat-form-field appearance="fill" class="email-form">
       <mat-label>Enter your email</mat-label>
       <input matInput type="email" placeholder="pat@example.com" formControlName="email">

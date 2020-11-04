@@ -41,7 +41,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
                 return new Response<LoginResponse>($"No accounts registered with {request.Email}.");
             }
 
-            var validatePassword = BCrypter.EnhancedVerify(request.Password, user.PasswordHash);
+            var validatePassword = BCrypter.Verify(request.Password, user.PasswordHash);
 
             if (!validatePassword)
             {
@@ -93,20 +93,17 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             {
                 new Claim(
                     JwtRegisteredClaimNames.Sub,
+                    userInfo.Id.ToString()),
+                new Claim(
+                    "userName",
                     userInfo.UserName),
-                new Claim(
-                    "firstName",
-                    userInfo.FirstName),
-                new Claim(
-                    "lastName",
-                    userInfo.LastName),
                 new Claim(
                     "role",
                     userInfo.Role),
                 new Claim(
-                    JwtRegisteredClaimNames.Jti,
-                    Guid.NewGuid()
-                        .ToString())
+                    "email",
+                    userInfo.Email
+                )
             };
 
             var token = new JwtSecurityToken(
@@ -114,8 +111,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
                 _config["Jwt:Audience"],
                 claims,
                 expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: credentials
-            );
+                signingCredentials: credentials);
             return token;
         }
 
