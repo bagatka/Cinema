@@ -12,7 +12,7 @@ namespace iTechArt.CinemaWebApp.API.Application.ActionFilters
         
         protected override async Task<HallService> GetEntityById(int id)
         {
-            return await Repository.HallServices.GetServiceAsync(id);
+            return await Repository.HallServices.GetHallServiceAsync(id);
         }
     }
 }

@@ -2,58 +2,89 @@
   <h1 class="header">Hall</h1>
   <button mat-button color="warn" (click)="onNoClick()">Close</button>
 </div>
-<div class="hall-form" fxLayout="row" fxLayoutAlign="space-between start">
-  <form [formGroup]="addHallInput" (submit)="updateHall()">
-    <div fxLayout="column" fxLayoutAlign="start start">
-      <mat-label class="option-title">Name</mat-label>
-      <mat-form-field>
-        <mat-label>Enter hall name</mat-label>
-        <input formControlName="name" matInput placeholder="Hall 1"
-               type="text">
-        <mat-error>Hall name is required</mat-error>
-      </mat-form-field>
-      <mat-label class="option-title">Size</mat-label>
-      <mat-form-field>
-        <mat-label>Enter hall size</mat-label>
-        <input formControlName="seats" matInput placeholder="56"
-               type="number" (ngModelChange)="checkHallSize()">
-        <mat-hint align="end" [class]="hallSizeError? 'hall-error': ''">
-          {{selectedSeats ? selectedSeats : 0 }}
-          / {{addHallInput.value.seats}}</mat-hint>
-        <mat-error>Incorrect hall size</mat-error>
-      </mat-form-field>
-      <div class="buttons" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1vh">
-        <button mat-raised-button color="primary" type="submit" class="update-btn"
-                [disabled]="!addHallInput.valid || hallSizeError">
-          Update
-        </button>
-        <button mat-raised-button color="warn" class="update-btn" [mat-dialog-close]="addHallInput.value">
-          Delete
-        </button>
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="Details">
+    <div class="hall-form" fxLayout="row" fxLayoutAlign="space-between start">
+      <form [formGroup]="addHallInput" (submit)="updateHall()">
+        <div fxLayout="column" fxLayoutAlign="start start">
+          <mat-label class="option-title">Name</mat-label>
+          <mat-form-field>
+            <mat-label>Enter hall name</mat-label>
+            <input formControlName="name" matInput placeholder="Hall 1"
+                   type="text">
+            <mat-error>Hall name is required</mat-error>
+          </mat-form-field>
+          <mat-label class="option-title">Size</mat-label>
+          <mat-form-field>
+            <mat-label>Enter hall size</mat-label>
+            <input formControlName="seats" matInput placeholder="56"
+                   type="number" (ngModelChange)="checkHallSize()">
+            <mat-hint align="end" [class]="hallSizeError? 'hall-error': ''">
+              {{selectedSeats ? selectedSeats : 0 }}
+              / {{addHallInput.value.seats}}</mat-hint>
+            <mat-error>Incorrect hall size</mat-error>
+          </mat-form-field>
+          <div class="buttons" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1vh">
+            <button mat-raised-button color="primary" type="submit" class="update-btn"
+                    [disabled]="!addHallInput.valid || hallSizeError">
+              Update
+            </button>
+            <button mat-raised-button color="warn" class="update-btn" [mat-dialog-close]="addHallInput.value">
+              Delete
+            </button>
+          </div>
+        </div>
+      </form>
+      <div fxLayout="column" fxLayoutAlign="center start">
+        <h1
+          class="current-seat">{{(onCurrentSeatPosition) ? 'Current seat: Row ' + onCurrentSeatPosition.row + ', Seat ' + onCurrentSeatPosition.seat : 'Current seat: '}} </h1>
+        <app-hall-schema (enterSeatPosition)="displayCurrentSeatPosition($event)"
+                         [(schemaData)]="seatsSchemas" [activeSeatType]="activeSeatType"
+                         (hallSize)="setSelectedSeats($event)"></app-hall-schema>
+        <ng-container>
+          <div class="picker" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1vw">
+            <div class="single-picker" fxLayout="column" fxLayoutAlign="center center">
+              <div class="seatSelector common" (click)="setActiveSeatType(SeatType.Common, $event)"></div>
+              <mat-label>Common</mat-label>
+            </div>
+            <div class="single-picker" fxLayout="column" fxLayoutAlign="center center">
+              <div class="seatSelector sofa" (click)="setActiveSeatType(SeatType.Sofa, $event)"></div>
+              <mat-label>Sofa</mat-label>
+            </div>
+            <div class="single-picker" fxLayout="column" fxLayoutAlign="center center">
+              <div class="seatSelector vip" (click)="setActiveSeatType(SeatType.VIP, $event)"></div>
+              <mat-label>VIP</mat-label>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
-  </form>
-  <div fxLayout="column" fxLayoutAlign="center start">
-    <h1
-      class="current-seat">{{(onCurrentSeatPosition) ? 'Current seat: Row ' + onCurrentSeatPosition.row + ', Seat ' + onCurrentSeatPosition.seat : 'Current seat: '}} </h1>
-    <app-hall-schema (enterSeatPosition)="displayCurrentSeatPosition($event)"
-                     [(schemaData)]="seatsSchemas" [activeSeatType]="activeSeatType"
-                     (hallSize)="setSelectedSeats($event)"></app-hall-schema>
-    <ng-container>
-      <div class="picker" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1vw">
-        <div class="single-picker" fxLayout="column" fxLayoutAlign="center center">
-          <div class="seatSelector common" (click)="setActiveSeatType(SeatType.Common, $event)"></div>
-          <mat-label>Common</mat-label>
-        </div>
-        <div class="single-picker" fxLayout="column" fxLayoutAlign="center center">
-          <div class="seatSelector sofa" (click)="setActiveSeatType(SeatType.Sofa, $event)"></div>
-          <mat-label>Sofa</mat-label>
-        </div>
-        <div class="single-picker" fxLayout="column" fxLayoutAlign="center center">
-          <div class="seatSelector vip" (click)="setActiveSeatType(SeatType.VIP, $event)"></div>
-          <mat-label>VIP</mat-label>
-        </div>
+  </mat-tab>
+  <mat-tab label="Services">
+    <div class="hall-form" fxLayout="row" fxLayoutAlign="space-between start">
+      <div fxLayout="column" fxLayoutAlign="start start">
+        <mat-label class="option-title">Services</mat-label>
+        <mat-form-field>
+          <mat-label>Select the hall</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let service of services$ | async" [value]="service.id"
+                        (onSelectionChange)="selectedServiceId = service.id; selectedServiceName = service.name">
+              {{service.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="selectedServiceId">
+          <mat-label>Set the service price</mat-label>
+          <input matInput placeholder="Price" type="number" #price (change)="selectedServicePrice = price.value">
+        </mat-form-field>
+        <button mat-button color="accent" (click)="addHallService()" *ngIf="selectedServicePrice">Add service</button>
       </div>
-    </ng-container>
-  </div>
-</div>
+      <div class="services-list" fxLayout="column" fxLayoutAlign="start start">
+        <mat-card-title *ngFor="let service of hallServices">
+          {{service.name + ' – ' + service.price + '$'}}
+          <hr>
+        </mat-card-title>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>

@@ -57,9 +57,9 @@ import {AdminAddShowComponent} from './admin-control-screen/admin-shows/admin-ad
 import {AdminUsersComponent} from './admin-control-screen/admin-users/admin-users.component';
 import {EditHallDialogComponent} from './admin-control-screen/admin-cinemas/admin-add-cinema/edit-hall-dialog/edit-hall-dialog.component';
 import {HallSchemaComponent} from './hall-schema/hall-schema.component';
-import { AdminEditFilmComponent } from './admin-control-screen/admin-films/admin-edit-film/admin-edit-film.component';
-import { AdminAllCinemasComponent } from './admin-control-screen/admin-cinemas/admin-all-cinemas/admin-all-cinemas.component';
-import { AdminEditCinemaComponent } from './admin-control-screen/admin-cinemas/admin-edit-cinema/admin-edit-cinema.component';
+import {AdminEditFilmComponent} from './admin-control-screen/admin-films/admin-edit-film/admin-edit-film.component';
+import {AdminAllCinemasComponent} from './admin-control-screen/admin-cinemas/admin-all-cinemas/admin-all-cinemas.component';
+import {AdminEditCinemaComponent} from './admin-control-screen/admin-cinemas/admin-edit-cinema/admin-edit-cinema.component';
 
 @NgModule({
   declarations: [

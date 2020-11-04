@@ -3,11 +3,15 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 
 import {EditHallDialogComponent} from './edit-hall-dialog/edit-hall-dialog.component';
+
 import {Hall} from '../../../Interfaces/hall';
+import {Cinema} from '../../../Interfaces/cinema';
+
+import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
+
 import {SnackbarService} from '../../../Services/snackbar.service';
 import {CinemaService} from '../../../Services/cinema.service';
-import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
-import {Cinema} from '../../../Interfaces/cinema';
+import {HallService} from '../../../Interfaces/hall-service';
 
 @Component({
   selector: 'app-admin-add-cinema',
@@ -24,7 +28,7 @@ export class AdminAddCinemaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private snackbarService: SnackbarService,
     private cinemaService: CinemaService,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {
   }
 
