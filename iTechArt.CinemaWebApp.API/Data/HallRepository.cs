@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+
+using Microsoft.EntityFrameworkCore;
+
 using iTechArt.CinemaWebApp.API.Application.Contracts;
 using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace iTechArt.CinemaWebApp.API.Data
 {
@@ -32,8 +34,8 @@ namespace iTechArt.CinemaWebApp.API.Data
                 halls = halls.Where(hall => hall.CinemaId == hallParameters.CinemaId);
             }
 
-            return PagedList<Hall>.ToPagedList(
-                await halls.OrderBy(hall => hall.Name).ToListAsync(),
+            return await PagedList<Hall>.ToPagedList(
+                halls.OrderBy(hall => hall.Name),
                 hallParameters.PageNumber,
                 hallParameters.PageSize
             );

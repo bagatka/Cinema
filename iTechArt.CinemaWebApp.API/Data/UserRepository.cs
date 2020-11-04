@@ -17,12 +17,11 @@ namespace iTechArt.CinemaWebApp.API.Data
 
         public async Task<PagedList<User>> GetUsersAsync(UserParameters userParameters)
         {
-            var users = await FindAll()
+            var users = FindAll()
                 .AsNoTracking()
-                .OrderBy(user => user.UserName)
-                .ToListAsync();
+                .OrderBy(user => user.UserName);
 
-            return PagedList<User>.ToPagedList(users, userParameters.PageNumber, userParameters.PageSize);
+            return await PagedList<User>.ToPagedList(users, userParameters.PageNumber, userParameters.PageSize);
         }
 
         public async Task<User> GetUserByEmailAsync(string userEmail)

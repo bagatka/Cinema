@@ -68,8 +68,8 @@ namespace iTechArt.CinemaWebApp.API.Data
                 shows = shows.Where(show => show.FreeSeats > showParameters.Seats);
             }
 
-            return PagedList<Show>.ToPagedList(
-                await shows.OrderBy(show => show.StartDateTime).ToListAsync(),
+            return await PagedList<Show>.ToPagedList(
+                shows.OrderBy(show => show.StartDateTime),
                 showParameters.PageNumber,
                 showParameters.PageSize
             );

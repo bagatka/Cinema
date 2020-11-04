@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+
 using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Application.Contracts

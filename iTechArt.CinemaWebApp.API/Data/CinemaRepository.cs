@@ -24,8 +24,8 @@ namespace iTechArt.CinemaWebApp.API.Data
                 cinemas = cinemas.Where(cinema => cinema.Name.ToLower().Contains(cinemaParameters.Name.ToLower()));
             }
 
-            return PagedList<Cinema>.ToPagedList(
-                await cinemas.OrderBy(cinema => cinema.Name).ToListAsync(),
+            return await PagedList<Cinema>.ToPagedList(
+                cinemas.OrderBy(cinema => cinema.Name),
                 cinemaParameters.PageNumber,
                 cinemaParameters.PageSize
             );
