@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import {ApiPaths, environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+
 import {Observable, of} from 'rxjs';
+
 import {Service} from '../Interfaces/service';
 import {HallService} from '../Interfaces/hall-service';
+
+import {ApiPaths, environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

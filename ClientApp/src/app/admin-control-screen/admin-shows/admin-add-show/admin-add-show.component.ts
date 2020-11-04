@@ -1,18 +1,22 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+
 import {Observable, Subject} from 'rxjs';
+import {debounceTime, switchMap} from 'rxjs/operators';
+
 import {Film} from '../../../Interfaces/film';
 import {Cinema} from '../../../Interfaces/cinema';
 import {Hall} from '../../../Interfaces/hall';
+import {Show} from '../../../Interfaces/show';
+import {ShowForManipulation} from '../../../Interfaces/show-for-manipulation';
+
+import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
+
 import {FilmService} from '../../../Services/film.service';
 import {CinemaService} from '../../../Services/cinema.service';
-import {debounceTime, switchMap} from 'rxjs/operators';
-import {Show} from '../../../Interfaces/show';
 import {ShowService} from '../../../Services/show.service';
-import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
 import {SnackbarService} from '../../../Services/snackbar.service';
-import {ShowForManipulation} from '../../../Interfaces/show-for-manipulation';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-admin-add-show',

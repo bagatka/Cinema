@@ -42,7 +42,9 @@
                type="text">
       </mat-form-field>
       <div fxLayout="row" fxLayoutAlign="end center">
-        <button mat-button color="primary" [disabled]="!editFilmInput.valid" type="submit" (click)="updateFilm()">Update</button>
+        <button mat-button color="primary" [disabled]="!editFilmInput.valid" type="submit" (click)="updateFilm()">
+          Update
+        </button>
         <button mat-button color="warn" (click)="cancel()">Cancel</button>
       </div>
     </div>

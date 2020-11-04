@@ -5,6 +5,7 @@ import {of, Observable} from 'rxjs';
 
 import {Film} from '../Interfaces/film';
 import {Filter} from '../Interfaces/filter';
+
 import {ApiPaths, environment} from '../../environments/environment';
 
 @Injectable({

@@ -11,7 +11,6 @@ import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
 
 import {SnackbarService} from '../../../Services/snackbar.service';
 import {CinemaService} from '../../../Services/cinema.service';
-import {HallService} from '../../../Interfaces/hall-service';
 
 @Component({
   selector: 'app-admin-add-cinema',

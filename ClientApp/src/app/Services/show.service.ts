@@ -1,10 +1,13 @@
 import {Injectable} from '@angular/core';
-import {ApiPaths, environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+
 import {Observable, of} from 'rxjs';
+
 import {Filter} from '../Interfaces/filter';
 import {Show} from '../Interfaces/show';
 import {ShowForManipulation} from '../Interfaces/show-for-manipulation';
+
+import {ApiPaths, environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

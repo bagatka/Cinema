@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Hall} from '../../../Interfaces/hall';
-import {Cinema} from '../../../Interfaces/cinema';
-import {SnackbarService} from '../../../Services/snackbar.service';
-import {CinemaService} from '../../../Services/cinema.service';
-import {MatDialog} from '@angular/material/dialog';
-import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
-import {EditHallDialogComponent} from '../admin-add-cinema/edit-hall-dialog/edit-hall-dialog.component';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
+import {MatDialog} from '@angular/material/dialog';
+
+import {EditHallDialogComponent} from '../admin-add-cinema/edit-hall-dialog/edit-hall-dialog.component';
+
+import {Hall} from '../../../Interfaces/hall';
+import {Cinema} from '../../../Interfaces/cinema';
+
+import {SnackbarService} from '../../../Services/snackbar.service';
+import {CinemaService} from '../../../Services/cinema.service';
+
+import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
+
 
 @Component({
   selector: 'app-admin-edit-cinema',

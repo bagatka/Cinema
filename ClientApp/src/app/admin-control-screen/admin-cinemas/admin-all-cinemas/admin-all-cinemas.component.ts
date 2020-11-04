@@ -1,10 +1,14 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
-import {SnackbarService} from '../../../Services/snackbar.service';
 import {ActivatedRoute, Router} from '@angular/router';
+
+import {Observable, Subject} from 'rxjs';
 import {debounceTime, switchMap} from 'rxjs/operators';
-import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
+
 import {Cinema} from '../../../Interfaces/cinema';
+
+import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
+
+import {SnackbarService} from '../../../Services/snackbar.service';
 import {CinemaService} from '../../../Services/cinema.service';
 
 @Component({

@@ -1,11 +1,15 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
-import {Film} from '../../../Interfaces/film';
-import {FilmService} from '../../../Services/film.service';
-import {debounceTime, switchMap} from 'rxjs/operators';
-import {SnackbarService} from '../../../Services/snackbar.service';
-import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
 import {ActivatedRoute, Router} from '@angular/router';
+
+import {Observable, Subject} from 'rxjs';
+import {debounceTime, switchMap} from 'rxjs/operators';
+
+import {Film} from '../../../Interfaces/film';
+
+import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
+
+import {FilmService} from '../../../Services/film.service';
+import {SnackbarService} from '../../../Services/snackbar.service';
 
 @Component({
   selector: 'app-admin-all-films',

@@ -2,13 +2,15 @@ import {Component, Inject, AfterContentInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
+import {Observable} from 'rxjs';
+
 import {SeatPosition} from '../../../../Interfaces/seat-position';
+import {Service} from '../../../../Interfaces/service';
+import {HallService} from '../../../../Interfaces/hall-service';
 
 import {SeatType} from '../../../../Enums/seat-type.enum';
-import {Observable} from 'rxjs';
-import {Service} from '../../../../Interfaces/service';
+
 import {HallServiceService} from '../../../../Services/hall-service.service';
-import {HallService} from '../../../../Interfaces/hall-service';
 
 @Component({
   selector: 'app-edit-hall-dialog',
