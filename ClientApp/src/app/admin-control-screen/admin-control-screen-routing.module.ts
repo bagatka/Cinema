@@ -6,7 +6,9 @@ import {AdminControlScreenComponent} from './admin-control-screen.component';
 
 const routes: Routes = [
   {
-    path: '', component: AdminControlScreenComponent, children: [
+    path: '',
+    component: AdminControlScreenComponent,
+    children: [
       {
         path: 'films',
         loadChildren: () => import(`./admin-films/admin-films-routing.module`).then(m => m.AdminFilmsRoutingModule)

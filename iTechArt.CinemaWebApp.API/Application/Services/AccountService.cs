@@ -41,14 +41,14 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
                 return new Response<LoginResponse>($"No accounts registered with {request.Email}.");
             }
 
-            var validatePassword = BCrypter.EnhancedVerify(request.Password, user.PasswordHash);
+            var validatePassword = BCrypter.Verify(request.Password, user.PasswordHash);
 
             if (!validatePassword)
             {
                 return new Response<LoginResponse>($"Invalid credentials for {request.Email}.");
             }
 
-            var response = GetReponseWithJWT(user);
+            var response = GetResponseWithJwt(user);
 
             return new Response<LoginResponse>(response, $"{request.Email} has been successfully logged in.");
         }
@@ -79,7 +79,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             await _repository.Users.CreateUserAsync(newUser);
             await _repository.SaveAsync();
 
-            var response = GetReponseWithJWT(newUser);
+            var response = GetResponseWithJwt(newUser);
 
             return new Response<LoginResponse>(response, $"{request.Email} has been successfully registered.");
         }
@@ -93,20 +93,17 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             {
                 new Claim(
                     JwtRegisteredClaimNames.Sub,
+                    userInfo.Id.ToString()),
+                new Claim(
+                    "userName",
                     userInfo.UserName),
-                new Claim(
-                    "firstName",
-                    userInfo.FirstName),
-                new Claim(
-                    "lastName",
-                    userInfo.LastName),
                 new Claim(
                     "role",
                     userInfo.Role),
                 new Claim(
-                    JwtRegisteredClaimNames.Jti,
-                    Guid.NewGuid()
-                        .ToString())
+                    "email",
+                    userInfo.Email
+                )
             };
 
             var token = new JwtSecurityToken(
@@ -119,7 +116,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             return token;
         }
 
-        private LoginResponse GetReponseWithJWT(User user)
+        private LoginResponse GetResponseWithJwt(User user)
         {
             var jwtSecurityToken = GenerateJwtToken(user);
             var response = _mapper.Map<LoginResponse>(user);

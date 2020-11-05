@@ -1,6 +1,3 @@
-<div class="navbar-container" fxLayout="row" fxLayoutAlign="center">
-  <app-navbar></app-navbar>
-</div>
 <div class="container" fxLayout="row" fxLayoutAlign="center center">
   <mat-card class="admin-card">
     <mat-card-title class="title">Menu</mat-card-title>
@@ -18,7 +15,7 @@
                       [style.color]="activeSettings[adminMenuSelect.Settings] ? 'black' : 'grey'"
                       mat-raised-button routerLink="/admin/settings">Settings
               </button>
-              <button class="log-out-btn" mat-raised-button routerLink="/home">Log out</button>
+              <button class="log-out-btn" mat-raised-button (click)="logout()">Log out</button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>

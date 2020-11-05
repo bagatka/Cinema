@@ -1,6 +1,6 @@
 <h1 mat-dialog-title class="header">Account</h1>
 <div mat-dialog-content>
-  <form [formGroup]="userInput" fxLayout="column" fxLayoutAlign="center center">
+  <form [formGroup]="userInput" fxLayout="column" fxLayoutAlign="center center" (submit)="login()">
     <mat-form-field appearance="fill" class="email-form">
       <mat-label>Enter your email</mat-label>
       <input matInput type="email" placeholder="pat@example.com" formControlName="email">
@@ -14,8 +14,8 @@
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit" [disabled]="userInput.invalid" (click)="closeDialog()"
-            routerLink="/profile" class="login-btn">Log in
+    <button mat-raised-button color="primary" type="submit" [disabled]="userInput.invalid"
+            class="login-btn">Log in
     </button>
     <a mat-card-subtitle routerLink="" class="reset-password">Forgot your password?</a>
     <mat-divider></mat-divider>

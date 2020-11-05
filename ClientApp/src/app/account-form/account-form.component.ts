@@ -1,7 +1,8 @@
 import {Component, Inject} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+import {AccountService} from '../Services/account.service';
 
 @Component({
   selector: 'app-account-form',
@@ -10,15 +11,22 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class AccountFormComponent {
 
+  constructor(
+    public dialogRef: MatDialogRef<AccountFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data,
+    private accountService: AccountService
+  ) {
+  }
+
   userInput = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, Validators.required)
   });
   hide = true;
 
-  constructor(
-    public dialogRef: MatDialogRef<AccountFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data) {
+  login(): void {
+    this.accountService.login(this.userInput.value);
+    this.dialogRef.close();
   }
 
   closeDialog(): void {

@@ -8,7 +8,8 @@ export enum ApiPaths {
   cinemas = '/cinemas',
   shows = '/shows',
   halls = '/halls',
-  services = '/services'
+  services = '/services',
+  account = '/account'
 }
 
 export enum Constants {

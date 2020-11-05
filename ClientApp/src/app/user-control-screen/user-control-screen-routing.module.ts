@@ -9,11 +9,25 @@ import {UserHistoryComponent} from './user-history/user-history.component';
 
 const routes: Routes = [
   {
-    path: '', component: UserControlScreenComponent, children: [
-      {path: 'bookmarks', component: UserBookmarksComponent},
-      {path: 'settings', component: UserSettingsComponent},
-      {path: 'tickets', component: UserTicketsComponent},
-      {path: 'history', component: UserHistoryComponent}
+    path: '',
+    component: UserControlScreenComponent,
+    children: [
+      {
+        path: 'bookmarks',
+        component: UserBookmarksComponent
+      },
+      {
+        path: 'settings',
+        component: UserSettingsComponent
+      },
+      {
+        path: 'tickets',
+        component: UserTicketsComponent
+      },
+      {
+        path: 'history',
+        component: UserHistoryComponent
+      }
     ]
   }
 ];

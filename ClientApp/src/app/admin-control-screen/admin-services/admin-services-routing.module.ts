@@ -6,8 +6,13 @@ import {AdminAddServiceComponent} from './admin-add-service/admin-add-service.co
 
 const routes: Routes = [
   {
-    path: '', component: AdminServicesComponent, children: [
-      {path: 'add', component: AdminAddServiceComponent},
+    path: '',
+    component: AdminServicesComponent,
+    children: [
+      {
+        path: 'add',
+        component: AdminAddServiceComponent
+      },
     ]
   }
 ];

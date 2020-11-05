@@ -6,8 +6,12 @@ import {AdminAddShowComponent} from './admin-add-show/admin-add-show.component';
 
 const routes: Routes = [
   {
-    path: '', component: AdminShowsComponent, children: [
-      {path: 'add', component: AdminAddShowComponent},
+    path: '',
+    component: AdminShowsComponent,
+    children: [
+      {
+        path: 'add',
+        component: AdminAddShowComponent},
     ]
   }
 ];

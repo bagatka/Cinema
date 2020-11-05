@@ -1,7 +1,7 @@
 .container {
   display: grid;
   grid-template-columns: 2fr 4fr 4fr 4fr 4fr 2fr;
-  grid-template-rows: 8vh 50vh 15vh 30vh;
+  grid-template-rows: 2vh 50vh 15vh 30vh;
 }
 
 .navbar {

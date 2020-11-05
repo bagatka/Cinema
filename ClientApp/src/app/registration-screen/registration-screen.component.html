@@ -1,19 +1,16 @@
-<div class="navbar-container" fxLayout="row" fxLayoutAlign="center">
-  <app-navbar></app-navbar>
-</div>
 <div fxLayout="row" fxLayoutAlign="center center" class="container">
   <mat-card class="registration-card">
     <mat-card-title class="title">Registration</mat-card-title>
     <div fxLayout="column" class="form">
-      <form [formGroup]="userInput">
+      <form [formGroup]="userInput" (ngSubmit)="register()">
         <div fxLayout="row">
           <mat-form-field>
             <mat-label>First Name</mat-label>
             <input autocomplete="off" matInput type="text" formControlName="firstName">
           </mat-form-field>
           <mat-form-field class="right-filed">
-            <mat-label>Surname</mat-label>
-            <input autocomplete="off" matInput type="text" formControlName="surname">
+            <mat-label>Last Name</mat-label>
+            <input autocomplete="off" matInput type="text" formControlName="lastName">
           </mat-form-field>
         </div>
         <div fxLayout="row">
@@ -48,7 +45,7 @@
           </mat-form-field>
         </div>
         <div class="confirm-btn">
-          <button mat-raised-button color="primary" [disabled]="!userInput.valid">Create an account</button>
+          <button mat-raised-button color="primary" [disabled]="!userInput.valid" type="submit">Create an account</button>
         </div>
       </form>
     </div>

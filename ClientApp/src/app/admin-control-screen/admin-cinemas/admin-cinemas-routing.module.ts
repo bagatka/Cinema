@@ -8,10 +8,18 @@ import {AdminEditCinemaComponent} from './admin-edit-cinema/admin-edit-cinema.co
 
 const routes: Routes = [
   {
-    path: '', component: AdminCinemasComponent, children: [
+    path: '',
+    component: AdminCinemasComponent,
+    children: [
       {path: '', component: AdminAllCinemasComponent},
-      {path: 'add', component: AdminAddCinemaComponent},
-      {path: ':id', component: AdminEditCinemaComponent}
+      {
+        path: 'add',
+        component: AdminAddCinemaComponent
+      },
+      {
+        path: ':id',
+        component: AdminEditCinemaComponent
+      }
     ]
   }
 ];

@@ -28,6 +28,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {AppRoutingModule} from './app-routing.module';
 
+import {AuthGuard} from './Guards/auth.guard';
+
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {CarouselComponent} from './carousel/carousel.component';
@@ -60,6 +62,7 @@ import {HallSchemaComponent} from './hall-schema/hall-schema.component';
 import {AdminEditFilmComponent} from './admin-control-screen/admin-films/admin-edit-film/admin-edit-film.component';
 import {AdminAllCinemasComponent} from './admin-control-screen/admin-cinemas/admin-all-cinemas/admin-all-cinemas.component';
 import {AdminEditCinemaComponent} from './admin-control-screen/admin-cinemas/admin-edit-cinema/admin-edit-cinema.component';
+import {httpInterceptorProviders} from './http-interceptors';
 
 @NgModule({
   declarations: [
@@ -124,7 +127,9 @@ import {AdminEditCinemaComponent} from './admin-control-screen/admin-cinemas/adm
     FlexLayoutModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {
