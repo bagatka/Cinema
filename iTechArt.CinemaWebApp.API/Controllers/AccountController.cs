@@ -37,11 +37,5 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             }
             return Ok(await _accountService.RegisterAsync(request));
         }
-
-        /*[HttpPut("password")]
-        public async Task<IActionResult> ChangePasswordAsync(string password)
-        {
-            
-        }*/
     }
 }

@@ -111,7 +111,8 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
                 _config["Jwt:Audience"],
                 claims,
                 expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: credentials);
+                signingCredentials: credentials
+            );
             return token;
         }
 
