@@ -12,7 +12,7 @@ import {AccountService} from '../Services/account.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent{
 
   userName: string;
 

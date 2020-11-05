@@ -1,6 +1,6 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {AccountFormComponent} from './account-form.component';
+import { AccountFormComponent } from './account-form.component';
 
 describe('AccountFormComponent', () => {
   let component: AccountFormComponent;
@@ -8,9 +8,9 @@ describe('AccountFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AccountFormComponent]
+      declarations: [ AccountFormComponent ]
     })
-      .compileComponents();
+    .compileComponents();
   });
 
   beforeEach(() => {

@@ -48,7 +48,7 @@ export class CinemaService {
   }
 
   getHallsByCinemaId(id: number): Observable<Hall[]> {
-    return this.http.get<Hall[]>(`${this.baseUrl}/${id}/halls`);
+    return  this.http.get<Hall[]>(`${this.baseUrl}/${id}/halls`);
   }
 
   createCinema(cinema: Cinema): Observable<Cinema> {
