@@ -15,4 +15,5 @@ textarea {
 
 mat-selection-list {
   width: 22vw;
+  outline: none;
 }

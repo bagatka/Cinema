@@ -11,9 +11,9 @@ namespace iTechArt.CinemaWebApp.API.Application.ActionFilters
         {
         }
         
-        protected override async Task<Service> GetEntityById(int id, bool trackChanges)
+        protected override async Task<Service> GetEntityById(int id)
         {
-            return await Repository.Services.GetServiceAsync(id, trackChanges);
+            return await Repository.Services.GetServiceAsync(id);
         }
     }
 }

@@ -7,8 +7,8 @@ namespace iTechArt.CinemaWebApp.API.Application.Contracts
 {
     public interface IRepositoryBase<TEntity>
     {
-        IQueryable<TEntity> FindAll(bool trackChanges);
-        IQueryable<TEntity> FindByCondition(Expression<Func<TEntity, bool>> expression, bool trackChanges);
+        IQueryable<TEntity> FindAll();
+        IQueryable<TEntity> FindByCondition(Expression<Func<TEntity, bool>> expression);
         Task CreateAsync(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);

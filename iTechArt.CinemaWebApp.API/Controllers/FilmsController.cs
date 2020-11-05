@@ -29,7 +29,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet(Name = "GetFilms")]
         public async Task<IActionResult> GetFilms([FromQuery] FilmParameters filmParameters)
         {
-            var films = await _repository.Films.GetFilmsAsync(filmParameters, trackChanges: false);
+            var films = await _repository.Films.GetFilmsAsync(filmParameters);
 
             var filmsDto = _mapper.Map<IEnumerable<FilmDto>>(films);
                 
@@ -39,7 +39,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet("{id}", Name = "GetFilmById")]
         public async Task<IActionResult> GetFilm(int id)
         {
-            var film = await _repository.Films.GetFilmAsync(id, trackChanges: false);
+            var film = await _repository.Films.GetFilmAsync(id);
             
             if (film == null)
             {

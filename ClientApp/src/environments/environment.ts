@@ -5,5 +5,12 @@ export const environment = {
 
 export enum ApiPaths {
   films = '/films',
-  cinemas = '/cinemas'
+  cinemas = '/cinemas',
+  shows = '/shows',
+  halls = '/halls',
+  services = '/services'
+}
+
+export enum Constants {
+  FIRST_FILM_YEAR = 1878
 }

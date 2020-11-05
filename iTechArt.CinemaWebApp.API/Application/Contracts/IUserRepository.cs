@@ -7,9 +7,9 @@ namespace iTechArt.CinemaWebApp.API.Application.Contracts
 {
     public interface IUserRepository
     {
-        Task<PagedList<User>> GetUsersAsync(UserParameters userParameters, bool trackChanges);
-        Task<User> GetUserByEmailAsync(string userEmail, bool trackChanges);
-        Task<User> GetUserByUsernameAsync(string username, bool trackChanges);
+        Task<PagedList<User>> GetUsersAsync(UserParameters userParameters);
+        Task<User> GetUserByEmailAsync(string userEmail);
+        Task<User> GetUserByUsernameAsync(string username);
         Task CreateUserAsync(User user);
     }
 }

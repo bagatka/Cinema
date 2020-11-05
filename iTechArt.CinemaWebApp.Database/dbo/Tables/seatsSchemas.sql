@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Seats] (
+﻿CREATE TABLE [dbo].[SeatsSchemas] (
     [Id]     INT IDENTITY(1,1) NOT NULL,
     [Seat]   INT               NOT NULL,
     [Row]    INT               NOT NULL,

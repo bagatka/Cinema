@@ -15,24 +15,26 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
         }
 
-        public async Task<PagedList<User>> GetUsersAsync(UserParameters userParameters, bool trackChanges)
+        public async Task<PagedList<User>> GetUsersAsync(UserParameters userParameters)
         {
-            var users = await FindAll(trackChanges)
-                .OrderBy(user => user.UserName)
-                .ToListAsync();
+            var users = FindAll()
+                .AsNoTracking()
+                .OrderBy(user => user.UserName);
 
-            return PagedList<User>.ToPagedList(users, userParameters.PageNumber, userParameters.PageSize);
+            return await PagedList<User>.ToPagedList(users, userParameters.PageNumber, userParameters.PageSize);
         }
 
-        public async Task<User> GetUserByEmailAsync(string userEmail, bool trackChanges)
+        public async Task<User> GetUserByEmailAsync(string userEmail)
         {
-            return await FindByCondition(user => user.Email.Equals(userEmail), trackChanges)
+            return await FindByCondition(user => user.Email.Equals(userEmail))
+                .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<User> GetUserByUsernameAsync(string username, bool trackChanges)
+        public async Task<User> GetUserByUsernameAsync(string username)
         {
-            return await FindByCondition(user => user.UserName.Equals(username), trackChanges)
+            return await FindByCondition(user => user.UserName.Equals(username))
+                .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
 

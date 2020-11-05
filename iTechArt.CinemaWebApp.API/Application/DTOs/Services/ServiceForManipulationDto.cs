@@ -4,6 +4,7 @@ namespace iTechArt.CinemaWebApp.API.Application.DTOs.Services
 {
     public class ServiceForManipulationDto
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "Name is required.")]
         [StringLength(64, ErrorMessage = "Name length can't be more than 64.")]
         public string Name { get; set; }

@@ -24,6 +24,6 @@ namespace iTechArt.CinemaWebApp.API.Models
         [ForeignKey(nameof(UserId))]
         public User User { get; set; }
         [ForeignKey(nameof(SeatId))]
-        public Seat Seat { get; set; }
+        public SeatsSchema SeatsSchema { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 <div fxLayout="column">
-  <form [formGroup]="addFilmInput">
+  <form [formGroup]="addFilmInput" (ngSubmit)="createFilm()">
     <div fxLayout="column">
       <mat-label class="option-title">Title</mat-label>
       <mat-form-field>
@@ -42,8 +42,7 @@
                type="text">
       </mat-form-field>
       <div fxLayout="row" fxLayoutAlign="end center">
-        <button mat-button color="primary">Add</button>
-        <button mat-button color="warn">Cancel</button>
+        <button mat-button color="primary" [disabled]="!addFilmInput.valid" type="submit">Add</button>
       </div>
     </div>
   </form>

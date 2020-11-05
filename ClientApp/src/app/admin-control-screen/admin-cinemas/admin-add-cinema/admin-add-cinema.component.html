@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="2vw">
   <div fxLayout="column">
-    <form [formGroup]="addCinemaInput">
+    <form [formGroup]="addCinemaInput" (ngSubmit)="createCinema()">
       <div fxLayout="column">
         <mat-label class="option-title">Name</mat-label>
         <mat-form-field>
           <mat-label>Enter cinema name</mat-label>
-          <input formControlName="name" matInput placeholder="Green Mile"
+          <input formControlName="name" matInput placeholder="Super Cinema 3D"
                  type="text">
           <mat-error>Name is required</mat-error>
         </mat-form-field>
@@ -30,8 +30,7 @@
                  type="text">
         </mat-form-field>
         <div fxLayout="row" fxLayoutAlign="end center">
-          <button mat-button color="primary">Add</button>
-          <button mat-button color="warn">Cancel</button>
+          <button mat-button color="primary" [disabled]="!addCinemaInput.valid">Add</button>
         </div>
       </div>
     </form>

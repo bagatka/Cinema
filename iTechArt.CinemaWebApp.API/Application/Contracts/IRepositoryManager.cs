@@ -7,7 +7,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Contracts
         IFilmRepository Films { get; }
         ICinemaRepository Cinemas { get; }
         IHallRepository Halls { get; }
-        ISeatRepository Seats { get; }
+        ISeatsSchemaRepository SeatsSchemas { get; }
         IServiceRepository Services { get; }
         IHallServiceRepository HallServices { get; }
         IShowRepository Shows { get; }

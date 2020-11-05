@@ -7,8 +7,8 @@ namespace iTechArt.CinemaWebApp.API.Application.Contracts
 {
     public interface IServiceRepository
     {
-        Task<PagedList<Service>> GetAllServicesAsync(ServiceParameters serviceParameters, bool trackChanges);
-        Task<Service> GetServiceAsync(int serviceId, bool trackChanges);
+        Task<PagedList<Service>> GetServicesAsync(ServiceParameters serviceParameters);
+        Task<Service> GetServiceAsync(int serviceId);
         Task CreateServiceAsync(Service service);
         void DeleteService(Service service);
     }

@@ -15,23 +15,34 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
         }
 
-        public async Task<PagedList<Cinema>> GetAllCinemasAsync(CinemaParameters cinemaParameters, bool trackChanges)
+        public async Task<PagedList<Cinema>> GetCinemasAsync(CinemaParameters cinemaParameters)
         {
-            var cinemas = await FindAll(trackChanges)
-                .OrderBy(cinema => cinema.Name)
-                .ToListAsync();
+            var cinemas = FindAll().AsNoTracking();
             
-            return PagedList<Cinema>.ToPagedList(cinemas, cinemaParameters.PageNumber, cinemaParameters.PageSize);
+            if (!string.IsNullOrEmpty(cinemaParameters.Name))
+            {
+                cinemas = cinemas.Where(cinema => cinema.Name.ToLower().Contains(cinemaParameters.Name.ToLower()));
+            }
+
+            return await PagedList<Cinema>.ToPagedList(
+                cinemas.OrderBy(cinema => cinema.Name),
+                cinemaParameters.PageNumber,
+                cinemaParameters.PageSize
+            );
         }
 
-        public async Task<Cinema> GetCinemaAsync(int cinemaId, bool trackChanges)
+        public async Task<Cinema> GetCinemaAsync(int cinemaId)
         {
-            return await FindByCondition(cinema => cinema.Id.Equals(cinemaId), trackChanges)
+            return await FindByCondition(cinema => cinema.Id.Equals(cinemaId))
+                .Include(cinema => cinema.Halls)
+                    .ThenInclude(hall => hall.SeatsSchemas)
                 .SingleOrDefaultAsync();
         }
 
         public async Task CreateCinemaAsync(Cinema cinema) => await CreateAsync(cinema);
 
+        public void UpdateCinema(Cinema cinema) => Update(cinema);
+        
         public void DeleteCinema(Cinema cinema) => Delete(cinema);
     }
 }

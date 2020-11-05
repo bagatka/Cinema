@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RegistrationScreenComponent } from './registration-screen.component';
+import {RegistrationScreenComponent} from './registration-screen.component';
 
 describe('RegistrationScreenComponent', () => {
   let component: RegistrationScreenComponent;
@@ -8,9 +8,9 @@ describe('RegistrationScreenComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RegistrationScreenComponent ]
+      declarations: [RegistrationScreenComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

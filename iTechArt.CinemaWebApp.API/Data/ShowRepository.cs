@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,18 +17,68 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
         }
 
-        public async Task<IEnumerable<Show>> GetShowsAsync(ShowParameters showParameters, bool trackChanges)
+        public async Task<IEnumerable<Show>> GetShowsAsync(ShowParameters showParameters)
         {
-            var shows = await FindAll(trackChanges)
-                .OrderBy(show => show.Film.Title)
-                .ToListAsync();
+            var shows = FindAll()
+                .Include(show => show.Film)
+                .Include(show => show.Hall)
+                    .ThenInclude(hall => hall.Cinema)
+                .AsNoTracking();
 
-            return PagedList<Show>.ToPagedList(shows, showParameters.PageNumber, showParameters.PageSize);
+            if (showParameters.HallId != null)
+            {
+                shows = shows.Where(show => show.HallId.Equals(showParameters.HallId));
+            }
+
+            if (!string.IsNullOrEmpty(showParameters.FilmTitle))
+            {
+                shows = shows.Where(show => show.Film.Title.Equals(showParameters.FilmTitle));
+            }
+
+            if (!string.IsNullOrEmpty(showParameters.City))
+            {
+                shows = shows.Where(show => show.Hall.Cinema.City.Equals(showParameters.City));
+            }
+
+            if (!string.IsNullOrEmpty(showParameters.CinemaName))
+            {
+                shows = shows.Where(show => show.Hall.Cinema.Name.Equals(showParameters.CinemaName));
+            }
+
+            if (!string.IsNullOrEmpty(showParameters.StartDate))
+            {
+                var startDate = DateTime.Parse(showParameters.StartDate);
+                shows = shows.Where(show => show.StartDateTime.Date >= startDate.Date);
+            }
+            
+            if (!string.IsNullOrEmpty(showParameters.EndDate))
+            {
+                var endDate = DateTime.Parse(showParameters.EndDate);
+                shows = shows.Where(show => show.StartDateTime.Date <= endDate.Date);
+            }
+
+            if (!string.IsNullOrEmpty(showParameters.Date))
+            {
+                var date = DateTime.Parse(showParameters.Date);
+                shows = shows.Where(show => show.StartDateTime.Date.Equals(date.Date));
+            }
+
+            if (showParameters.Seats != null)
+            {
+                shows = shows.Where(show => show.FreeSeats > showParameters.Seats);
+            }
+
+            return await PagedList<Show>.ToPagedList(
+                shows.OrderBy(show => show.StartDateTime),
+                showParameters.PageNumber,
+                showParameters.PageSize
+            );
         }
 
-        public async Task<Show> GetShowAsync(int showId, bool trackChanges)
+        public async Task<Show> GetShowAsync(int showId)
         {
-            return await FindByCondition(show => show.Id.Equals(showId), trackChanges)
+            return await FindByCondition(show => show.Id.Equals(showId))
+                .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
         

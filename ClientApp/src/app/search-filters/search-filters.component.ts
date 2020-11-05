@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 
 import {Filter} from '../Interfaces/filter';
 import {Cinema} from '../Interfaces/cinema';
-import {CinemaService} from '../cinema.service';
+import {CinemaService} from '../Services/cinema.service';
 
 @Component({
   selector: 'app-search-filters',
@@ -54,7 +54,7 @@ export class SearchFiltersComponent implements OnInit {
   }
 
   onSitsChange(value): void {
-    this.filter.sits = value;
+    this.filter.seats = value;
     if (value >= 1) {
       this.addNewFilter(this.filter);
     }

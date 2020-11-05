@@ -1,1 +1,29 @@
-<p>admin-add-service works!</p>
+<div fxLayout="column">
+  <form [formGroup]="addServiceInput" (ngSubmit)="createService()">
+    <div fxLayout="column">
+      <mat-label class="option-title">Name</mat-label>
+      <mat-form-field>
+        <mat-label>Enter service name</mat-label>
+        <input formControlName="name" matInput placeholder="Popcorn"
+               type="text">
+        <mat-error>Name is required</mat-error>
+      </mat-form-field>
+      <mat-label class="option-title">Description</mat-label>
+      <mat-form-field>
+        <mat-label>Enter service description</mat-label>
+        <textarea matInput maxlength="1000" formControlName="description" #description></textarea>
+        <mat-hint align="end">{{description.value.length}} / 1000</mat-hint>
+        <mat-error>Description is required</mat-error>
+      </mat-form-field>
+      <mat-label class="option-title">Icon URL</mat-label>
+      <mat-form-field>
+        <mat-label>Enter icon URL</mat-label>
+        <input formControlName="iconUrl" matInput
+               type="text">
+      </mat-form-field>
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button color="primary" [disabled]="!addServiceInput.valid" type="submit">Add</button>
+      </div>
+    </div>
+  </form>
+</div>

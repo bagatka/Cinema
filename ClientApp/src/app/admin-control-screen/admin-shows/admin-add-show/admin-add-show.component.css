@@ -14,8 +14,8 @@
 }
 
 .film-title {
-  font-size: 1.1vw;
-  font-weight: 600;
+  font-size: 1.1vw !important;
+  font-weight: 600 !important;
 }
 
 .film-list {
@@ -33,4 +33,8 @@ textarea {
 mat-list-option {
   margin-bottom: 2vh;
   height: auto !important;
+}
+
+mat-selection-list {
+  outline: none;
 }

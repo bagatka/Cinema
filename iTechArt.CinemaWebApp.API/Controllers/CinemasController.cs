@@ -8,6 +8,7 @@ using AutoMapper;
 using iTechArt.CinemaWebApp.API.Application.ActionFilters;
 using iTechArt.CinemaWebApp.API.Application.Contracts;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Cinema;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Hall;
 using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
 
@@ -29,7 +30,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         [HttpGet(Name = "GetCinemas")]
         public async Task<IActionResult> GetCinemas([FromQuery] CinemaParameters cinemaParameters)
         {
-            var cinemas = await _repository.Cinemas.GetAllCinemasAsync(cinemaParameters, trackChanges: false);
+            var cinemas = await _repository.Cinemas.GetCinemasAsync(cinemaParameters);
 
             var cinemasDto = _mapper.Map<IEnumerable<CinemaDto>>(cinemas);
                 
@@ -37,18 +38,42 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetCinemaById")]
-        public async Task<IActionResult> GetCinema(int id)
+        public async Task<IActionResult> GetCinema(int id, [FromQuery] HallParameters hallParameters)
         {
-            var cinema = await _repository.Cinemas.GetCinemaAsync(id, trackChanges: false);
+            var cinema = await _repository.Cinemas.GetCinemaAsync(id);
             
             if (cinema == null)
             {
                 return NotFound($"Cinema with id: {id} doesn't exist in the database.");
             }
 
-            var cinemaDto = _mapper.Map<CinemaDto>(cinema);
+            var cinemaDto = _mapper.Map<CinemaFullDto>(cinema);
             
             return Ok(cinemaDto);
+        }
+        
+        [HttpGet("{id}/halls", Name = "GetHallsByCinemaId")]
+        public async Task<IActionResult> GetHalls(int id, [FromQuery] HallParameters hallParameters)
+        {
+            var cinema = await _repository.Cinemas.GetCinemaAsync(id);
+            
+            if (cinema == null)
+            {
+                return NotFound($"Cinema with id: {id} doesn't exist in the database.");
+            }
+
+            if (!string.IsNullOrEmpty(hallParameters.CinemaName) && !string.Equals(cinema.Name, hallParameters.CinemaName))
+            {
+                return BadRequest("Incorrect cinema name or cinema id.");
+            }
+
+            hallParameters.CinemaId = id;
+
+            var halls = await _repository.Halls.GetHallsAsync(hallParameters);
+
+            var hallsDto = _mapper.Map<IEnumerable<HallDto>>(halls);
+
+            return Ok(hallsDto);
         }
         
         [HttpPost]

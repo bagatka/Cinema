@@ -72,6 +72,10 @@
   color: red;
 }
 
+.services-list {
+  padding-right: 15vw;
+}
+
 app-hall-schema {
   padding-right: 3vw;
 }

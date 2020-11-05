@@ -1,42 +1,55 @@
-import {Component, Inject, OnInit, AfterContentChecked} from '@angular/core';
+import {Component, Inject, AfterContentInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
+import {Observable} from 'rxjs';
+
 import {SeatPosition} from '../../../../Interfaces/seat-position';
+import {Service} from '../../../../Interfaces/service';
+import {HallService} from '../../../../Interfaces/hall-service';
+
 import {SeatType} from '../../../../Enums/seat-type.enum';
+
+import {HallServiceService} from '../../../../Services/hall-service.service';
 
 @Component({
   selector: 'app-edit-hall-dialog',
   templateUrl: './edit-hall-dialog.component.html',
   styleUrls: ['./edit-hall-dialog.component.css']
 })
-export class EditHallDialogComponent implements OnInit, AfterContentChecked {
+export class EditHallDialogComponent implements AfterContentInit {
 
   addHallInput: FormGroup;
   onCurrentSeatPosition: SeatPosition;
-  seatsSchema: SeatPosition[];
+  seatsSchemas: SeatPosition[];
   activeSeatType: SeatType;
-  selectedSeatsNumber: number;
+  selectedSeats: number;
   hallSizeError: boolean;
+  services$: Observable<Service[]>;
+  selectedServiceId: number;
+  selectedServicePrice: string;
+  selectedServiceName: string;
+  hallServices: HallService[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<EditHallDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private hallServiceService: HallServiceService
+  ) {
   }
 
-  ngOnInit(): void {
-    this.seatsSchema = [...this.data.hallData.seatsSchema];
-    this.selectedSeatsNumber = this.seatsSchema.length;
-    this.hallSizeError = this.selectedSeatsNumber !== this.seatsSchema.length;
+  ngAfterContentInit(): void {
+    this.seatsSchemas = [...this.data.hallData.seatsSchemas];
+    this.selectedSeats = this.seatsSchemas.length;
+    this.hallSizeError = this.selectedSeats !== this.seatsSchemas.length;
+    this.hallServices = this.data.hallData.hallServices;
     this.addHallInput = this.formBuilder.group({
       name: new FormControl(this.data.hallData.name, Validators.required),
-      size: new FormControl(this.data.hallData.size, [Validators.required, Validators.min(1)])
+      seats: new FormControl(this.data.hallData.seats, [Validators.required, Validators.min(1)])
     });
-  }
-
-  ngAfterContentChecked(): void {
     this.checkHallSize();
+    this.services$ = this.hallServiceService.getServices();
   }
 
   onNoClick(): void {
@@ -46,11 +59,13 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
   updateHall(): void {
     if (this.addHallInput.dirty && this.addHallInput.valid) {
       this.data.hallData.name = this.addHallInput.value.name;
-      this.data.hallData.size = this.addHallInput.value.size;
-      this.data.hallData.cinemaName = this.addHallInput.value.cinemaName;
+      this.data.hallData.seats = this.addHallInput.value.seats;
     }
-    if (!this.schemasCompare(this.data.hallData.seatsSchema, this.seatsSchema) && this.addHallInput.valid) {
-      this.data.hallData.seatsSchema = this.seatsSchema;
+    if (!this.schemasCompare(this.data.hallData.seatsSchemas, this.seatsSchemas) && this.addHallInput.valid) {
+      this.data.hallData.seatsSchemas = this.seatsSchemas;
+    }
+    if (!this.servicesCompare(this.data.hallData.hallServices, this.hallServices)) {
+      this.data.hallData.hallServices = this.hallServices;
     }
     this.dialogRef.close();
   }
@@ -67,20 +82,33 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
     element.classList.add('active-seat-type');
   }
 
-  setSelectedSeatsNumber(value): void {
-    this.selectedSeatsNumber = value;
-    const hallSizeErrorStatus = value !== this.addHallInput.value.size;
+  setSelectedSeats(value): void {
+    this.selectedSeats = value;
+    const hallSizeErrorStatus = value !== this.addHallInput.value.seats;
     this.setHallSizeError(hallSizeErrorStatus);
   }
 
   checkHallSize(): void {
-    const hallSizeErrorStatus = this.selectedSeatsNumber !== this.addHallInput.value.size;
+    const hallSizeErrorStatus = this.selectedSeats !== this.addHallInput.value.seats;
     this.setHallSizeError(hallSizeErrorStatus);
   }
 
   setHallSizeError(status: boolean): void {
     status ? this.addHallInput.setErrors(Validators) : this.addHallInput.setErrors(null);
     this.hallSizeError = status;
+  }
+
+  addHallService(): void {
+    const service: HallService = {
+      price: parseInt(this.selectedServicePrice, 10),
+      serviceId: this.selectedServiceId,
+      available: true,
+      name: this.selectedServiceName
+    };
+    this.hallServices.push(service);
+    this.selectedServicePrice = null;
+    this.selectedServiceId = null;
+    this.selectedServiceName = null;
   }
 
   public get SeatType(): typeof SeatType {
@@ -98,5 +126,12 @@ export class EditHallDialogComponent implements OnInit, AfterContentChecked {
       }
     }
     return objectsAreSame;
+  }
+
+  private servicesCompare(x, y): boolean {
+    if (!x || !y || x.length !== y.length) {
+      return false;
+    }
+    return true;
   }
 }

@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int SeatsNumber { get; set; }
-        public int CinemaName { get; set; }
+        public int Seats { get; set; }
+        public string CinemaName { get; set; }
     }
 }

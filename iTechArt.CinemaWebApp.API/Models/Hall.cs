@@ -12,10 +12,9 @@ namespace iTechArt.CinemaWebApp.API.Models
         [Required(ErrorMessage = "Name is required.")]
         [StringLength(200, ErrorMessage = "Name length can't be more than 200.")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "Size is required.")]
+        [Required(ErrorMessage = "Seats is required.")]
         [Range(1, int.MaxValue)]
-        [Column("Seats")]
-        public int SeatsNumber { get; set; }
+        public int Seats { get; set; }
         [Required(ErrorMessage = "CinemaId is required.")]
         public int CinemaId { get; set; }
 
@@ -23,7 +22,7 @@ namespace iTechArt.CinemaWebApp.API.Models
         public Cinema Cinema { get; set; }
         
         public ICollection<Show> Shows { get; set; }
-        public ICollection<Seat> Seats { get; set; }
+        public ICollection<SeatsSchema> SeatsSchemas { get; set; }
         public ICollection<HallService> HallServices { get; set; }
     }
 }
