@@ -10,6 +10,7 @@ using iTechArt.CinemaWebApp.API.Application.Contracts;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Film;
 using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
@@ -27,6 +28,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         }
 
         [HttpGet(Name = "GetFilms")]
+        [Authorize(Policy = Policies.Admin)]
         public async Task<IActionResult> GetFilms([FromQuery] FilmParameters filmParameters)
         {
             var films = await _repository.Films.GetFilmsAsync(filmParameters);
