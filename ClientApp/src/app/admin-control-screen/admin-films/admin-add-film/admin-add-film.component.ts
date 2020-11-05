@@ -5,6 +5,7 @@ import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
 
 import {FilmService} from '../../../Services/film.service';
 import {SnackbarService} from '../../../Services/snackbar.service';
+import {Constants} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-add-film',
@@ -26,7 +27,7 @@ export class AdminAddFilmComponent implements OnInit {
     this.addFilmInput = this.formBuilder.group({
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
-      year: new FormControl('', [Validators.required, Validators.min(1878)]),
+      year: new FormControl('', [Validators.required, Validators.min(Constants.FIRST_FILM_YEAR)]),
       duration: new FormControl('', Validators.required),
       posterUrl: new FormControl(''),
       bannerUrl: new FormControl('')

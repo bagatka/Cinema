@@ -29,7 +29,7 @@ namespace iTechArt.CinemaWebApp.API.Data
                 halls = halls.Where(hall => hall.Cinema.Name.ToLower().Contains(hallParameters.CinemaName.ToLower()));
             }
 
-            if (hallParameters.CinemaId != -1)
+            if (hallParameters.CinemaId != null)
             {
                 halls = halls.Where(hall => hall.CinemaId == hallParameters.CinemaId);
             }

@@ -2,8 +2,8 @@
 {
     public class ShowParameters : RequestParameters
     {
-        public int HallId { get; set; } = -1;
-        public int Seats { get; set; } = -1;
+        public int? HallId { get; set; }
+        public int? Seats { get; set; }
         public string FilmTitle { get; set; }
         public string City { get; set; }
         public string CinemaName { get; set; }

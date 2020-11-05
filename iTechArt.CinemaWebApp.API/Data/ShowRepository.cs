@@ -25,9 +25,9 @@ namespace iTechArt.CinemaWebApp.API.Data
                     .ThenInclude(hall => hall.Cinema)
                 .AsNoTracking();
 
-            if (showParameters.HallId != -1)
+            if (showParameters.HallId != null)
             {
-                shows = shows.Where(show => show.HallId == showParameters.HallId);
+                shows = shows.Where(show => show.HallId.Equals(showParameters.HallId));
             }
 
             if (!string.IsNullOrEmpty(showParameters.FilmTitle))
@@ -60,10 +60,10 @@ namespace iTechArt.CinemaWebApp.API.Data
             if (!string.IsNullOrEmpty(showParameters.Date))
             {
                 var date = DateTime.Parse(showParameters.Date);
-                shows = shows.Where(show => show.StartDateTime.Date == date.Date);
+                shows = shows.Where(show => show.StartDateTime.Date.Equals(date.Date));
             }
 
-            if (showParameters.Seats != -1)
+            if (showParameters.Seats != null)
             {
                 shows = shows.Where(show => show.FreeSeats > showParameters.Seats);
             }

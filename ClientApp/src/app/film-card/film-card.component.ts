@@ -10,7 +10,4 @@ import {Film} from '../Interfaces/film';
 export class FilmCardComponent {
 
   @Input() filmData: Film;
-
-  buttonPress(): void {
-  }
 }

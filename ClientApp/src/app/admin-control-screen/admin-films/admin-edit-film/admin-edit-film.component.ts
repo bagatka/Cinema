@@ -9,6 +9,7 @@ import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
 
 import {FilmService} from '../../../Services/film.service';
 import {SnackbarService} from '../../../Services/snackbar.service';
+import {Constants} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-edit-fim',
@@ -49,7 +50,7 @@ export class AdminEditFilmComponent implements OnInit {
     this.editFilmInput = this.formBuilder.group({
       title: new FormControl(this.film.title, Validators.required),
       description: new FormControl(this.film.description, Validators.required),
-      year: new FormControl(this.film.year, [Validators.required, Validators.min(1878)]),
+      year: new FormControl(this.film.year, [Validators.required, Validators.min(Constants.FIRST_FILM_YEAR)]),
       duration: new FormControl(this.film.duration, Validators.required),
       posterUrl: new FormControl(this.film.posterUrl ? this.film.posterUrl : ''),
       bannerUrl: new FormControl(this.film.bannerUrl ? this.film.bannerUrl : '')
