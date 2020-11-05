@@ -48,7 +48,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
                 return new Response<LoginResponse>($"Invalid credentials for {request.Email}.");
             }
 
-            var response = GetReponseWithJWT(user);
+            var response = GetResponseWithJwt(user);
 
             return new Response<LoginResponse>(response, $"{request.Email} has been successfully logged in.");
         }
@@ -79,7 +79,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             await _repository.Users.CreateUserAsync(newUser);
             await _repository.SaveAsync();
 
-            var response = GetReponseWithJWT(newUser);
+            var response = GetResponseWithJwt(newUser);
 
             return new Response<LoginResponse>(response, $"{request.Email} has been successfully registered.");
         }
@@ -115,7 +115,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             return token;
         }
 
-        private LoginResponse GetReponseWithJWT(User user)
+        private LoginResponse GetResponseWithJwt(User user)
         {
             var jwtSecurityToken = GenerateJwtToken(user);
             var response = _mapper.Map<LoginResponse>(user);

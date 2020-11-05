@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,5 +37,11 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             }
             return Ok(await _accountService.RegisterAsync(request));
         }
+
+        /*[HttpPut("password")]
+        public async Task<IActionResult> ChangePasswordAsync(string password)
+        {
+            
+        }*/
     }
 }

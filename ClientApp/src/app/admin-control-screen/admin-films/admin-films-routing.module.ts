@@ -8,10 +8,24 @@ import {AdminEditFilmComponent} from './admin-edit-film/admin-edit-film.componen
 
 const routes: Routes = [
   {
-    path: '', component: AdminFilmsComponent, children: [
+    path: '',
+    component: AdminFilmsComponent,
+    children: [
       {path: '', component: AdminAllFilmsComponent},
-      {path: 'add', component: AdminAddFilmComponent},
-      {path: ':id', component: AdminEditFilmComponent}
+      {
+        path: 'add',
+        data: {
+          expectedRole: 'Admin'
+        },
+        component: AdminAddFilmComponent
+      },
+      {
+        path: ':id',
+        data: {
+          expectedRole: 'Admin'
+        },
+        component: AdminEditFilmComponent
+      }
     ]
   }
 ];

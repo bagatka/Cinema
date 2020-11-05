@@ -1,3 +1,3 @@
 export interface LoginJWT {
-  JWToken: string;
+  jwToken: string;
 }

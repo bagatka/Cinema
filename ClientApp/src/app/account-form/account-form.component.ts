@@ -1,6 +1,5 @@
 import {Component, Inject} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 import {AccountService} from '../Services/account.service';
@@ -15,8 +14,7 @@ export class AccountFormComponent {
   constructor(
     public dialogRef: MatDialogRef<AccountFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
-    private accountService: AccountService,
-    private router: Router
+    private accountService: AccountService
   ) {
   }
 
@@ -28,7 +26,7 @@ export class AccountFormComponent {
 
   login(): void {
     this.accountService.login(this.userInput.value);
-    this.router.navigateByUrl('/profile');
+    this.dialogRef.close();
   }
 
   closeDialog(): void {

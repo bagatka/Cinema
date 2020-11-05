@@ -26,10 +26,10 @@ export class AccountService {
   }
 
   register(requestBody: RegisterRequest): void {
-    this.http.post<LoginResponse>(`${this.baseUrl}/register`, requestBody, this.httpOptions).subscribe(
+    this.http.post<any>(`${this.baseUrl}/register`, requestBody, this.httpOptions).subscribe(
       (res) => {
         if (res.succeeded) {
-          this.JwtService.setToken(res.data.JWToken);
+          this.JwtService.setToken(res.data.jwToken);
         }
       }
     );
@@ -39,7 +39,7 @@ export class AccountService {
     this.http.post<LoginResponse>(`${this.baseUrl}/login`, requestBody, this.httpOptions).subscribe(
       (res) => {
         if (res.succeeded) {
-          this.JwtService.setToken(res.data.JWToken);
+          this.JwtService.setToken(res.data.jwToken);
         }
       }
     );
@@ -47,6 +47,10 @@ export class AccountService {
 
   logout(): void {
     this.JwtService.deleteToken();
+  }
+
+  getAuthorizationStatus(): boolean {
+    return this.JwtService.isTokenSet();
   }
 
   getEmail(): string {

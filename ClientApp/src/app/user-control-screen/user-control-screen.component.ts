@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {AccountService} from '../Services/account.service';
 
 enum UserMenuSelect {
   Bookmarks,
@@ -17,7 +19,10 @@ export class UserControlScreenComponent {
   menuSize: number;
   activeSettings: boolean[] = [];
 
-  constructor() {
+  constructor(
+    private accountService: AccountService,
+    private router: Router
+  ) {
     this.menuSize = Object.keys(UserMenuSelect).length / 2;
     for (let i = 0; i < this.menuSize; i++) {
       this.activeSettings.push(false);
@@ -31,5 +36,10 @@ export class UserControlScreenComponent {
   setActive(select: UserMenuSelect): void {
     this.activeSettings = this.activeSettings.map(() => false);
     this.activeSettings[select] = true;
+  }
+
+  logout(): void {
+    this.accountService.logout();
+    this.router.navigateByUrl('/home');
   }
 }

@@ -15,7 +15,7 @@
                       [style.color]="activeSettings[adminMenuSelect.Settings] ? 'black' : 'grey'"
                       mat-raised-button routerLink="/admin/settings">Settings
               </button>
-              <button class="log-out-btn" mat-raised-button routerLink="/home">Log out</button>
+              <button class="log-out-btn" mat-raised-button (click)="logout()">Log out</button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>

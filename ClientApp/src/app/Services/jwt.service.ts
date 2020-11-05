@@ -13,28 +13,39 @@ export class JWTService {
     }
   }
 
+  isTokenSet(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
   deleteToken(): void {
     localStorage.removeItem('token');
   }
 
   getUserName(): string {
-    return this.getDecodedTokenPayload().userName;
+    return this.getDecodedTokenPayload()?.userName;
   }
 
   getUserId(): number {
-    return this.getDecodedTokenPayload().sub;
+    return this.getDecodedTokenPayload()?.sub;
   }
 
   getUserRole(): string {
-    return this.getDecodedTokenPayload().role;
+    return this.getDecodedTokenPayload()?.role;
   }
 
   getUserEmail(): string {
-    return this.getDecodedTokenPayload().email;
+    return this.getDecodedTokenPayload()?.email;
+  }
+
+  getToken(): string {
+    return localStorage.getItem('token');
   }
 
   private getDecodedTokenPayload(): JwtPayload {
-    const jwtPayload = localStorage.getItem('token').split(/\./)[1];
+    const jwtPayload = this.getToken()?.split(/\./)[1];
+    if (!jwtPayload) {
+      return null;
+    }
     return JSON.parse(window.atob(jwtPayload));
   }
 }
