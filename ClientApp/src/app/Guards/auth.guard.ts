@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {CanActivateChild, ActivatedRouteSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate} from '@angular/router';
 
 import {AccountService} from '../Services/account.service';
 import {MatDialog} from '@angular/material/dialog';
@@ -8,7 +8,7 @@ import {AccountFormComponent} from '../account-form/account-form.component';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivateChild {
+export class AuthGuard implements CanActivate {
 
   constructor(
     private accountService: AccountService,
@@ -16,9 +16,9 @@ export class AuthGuard implements CanActivateChild {
   ) {
   }
 
-  canActivateChild(childRoute: ActivatedRouteSnapshot): boolean {
+  canActivate(route: ActivatedRouteSnapshot): boolean {
     if (this.accountService.getAuthorizationStatus()) {
-      const expectedRole = childRoute.data.expectedRole;
+      const expectedRole = route.data.expectedRole;
       const currentRole = this.accountService.getRole();
 
       console.log(`expectedRole: ${expectedRole}`);

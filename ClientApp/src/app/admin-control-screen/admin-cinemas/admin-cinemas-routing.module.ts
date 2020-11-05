@@ -14,16 +14,10 @@ const routes: Routes = [
       {path: '', component: AdminAllCinemasComponent},
       {
         path: 'add',
-        data: {
-          expectedRole: 'Admin'
-        },
         component: AdminAddCinemaComponent
       },
       {
         path: ':id',
-        data: {
-          expectedRole: 'Admin'
-        },
         component: AdminEditCinemaComponent
       }
     ]

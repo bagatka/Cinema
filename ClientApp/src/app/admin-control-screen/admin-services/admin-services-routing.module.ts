@@ -11,9 +11,6 @@ const routes: Routes = [
     children: [
       {
         path: 'add',
-        data: {
-          expectedRole: 'Admin'
-        },
         component: AdminAddServiceComponent
       },
     ]

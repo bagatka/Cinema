@@ -14,30 +14,18 @@ const routes: Routes = [
     children: [
       {
         path: 'bookmarks',
-        data: {
-          expectedRole: 'User'
-        },
         component: UserBookmarksComponent
       },
       {
         path: 'settings',
-        data: {
-          expectedRole: 'User'
-        },
         component: UserSettingsComponent
       },
       {
         path: 'tickets',
-        data: {
-          expectedRole: 'User'
-        },
         component: UserTicketsComponent
       },
       {
         path: 'history',
-        data: {
-          expectedRole: 'User'
-        },
         component: UserHistoryComponent
       }
     ]

@@ -15,7 +15,7 @@ const routes: Routes = [
   {
     path: 'profile', loadChildren: () => import(`./user-control-screen/user-control-screen-routing.module`)
       .then(m => m.UserControlScreenRoutingModule),
-    canActivateChild: [AuthGuard],
+    canActivate: [AuthGuard],
     data: {
       expectedRole: 'User'
     }
@@ -23,7 +23,7 @@ const routes: Routes = [
   {
     path: 'admin', loadChildren: () => import(`./admin-control-screen/admin-control-screen-routing.module`)
       .then(m => m.AdminControlScreenRoutingModule),
-    canActivateChild: [AuthGuard],
+    canActivate: [AuthGuard],
     data: {
       expectedRole: 'Admin'
     }
