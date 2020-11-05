@@ -31,7 +31,7 @@ namespace iTechArt.CinemaWebApp.API.Data
 
             if (hallParameters.CinemaId != null)
             {
-                halls = halls.Where(hall => hall.CinemaId == hallParameters.CinemaId);
+                halls = halls.Where(hall => hall.CinemaId.Equals(hallParameters.CinemaId));
             }
 
             return await PagedList<Hall>.ToPagedList(
