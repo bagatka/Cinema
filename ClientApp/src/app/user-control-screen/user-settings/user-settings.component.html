@@ -3,7 +3,8 @@
     <div class="account-settings" fxLayout="column">
       <div>
         <mat-label class="settings-titles email-label">Email</mat-label>
-        <mat-label class="current-email">{{currentEmail.substring(0,3) + '***' + currentEmail.substring(currentEmail.indexOf('@'))}}</mat-label>
+        <mat-label
+          class="current-email">{{currentEmail.substring(0, 3) + '***' + currentEmail.substring(currentEmail.indexOf('@'))}}</mat-label>
         <button mat-button (click)="onEmailFormCall()">Change email</button>
       </div>
       <div [hidden]="changeEmailStatus">
