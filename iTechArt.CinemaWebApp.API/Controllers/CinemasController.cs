@@ -41,7 +41,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("{id}", Name = "GetCinemaById")]
+        [HttpGet("{id:int}", Name = "GetCinemaById")]
         public async Task<IActionResult> GetCinema(int id, [FromQuery] HallParameters hallParameters)
         {
             var cinema = await _repository.Cinemas.GetCinemaAsync(id);
@@ -57,7 +57,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         }
         
         [AllowAnonymous]
-        [HttpGet("{id}/halls", Name = "GetHallsByCinemaId")]
+        [HttpGet("{id:int}/halls", Name = "GetHallsByCinemaId")]
         public async Task<IActionResult> GetHalls(int id, [FromQuery] HallParameters hallParameters)
         {
             var cinema = await _repository.Cinemas.GetCinemaAsync(id);
@@ -81,6 +81,15 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(hallsDto);
         }
         
+        [AllowAnonymous]
+        [HttpGet("cities")]
+        public async Task<IActionResult> GetCities()
+        {
+            var cities = await _repository.Cinemas.GetCinemaCities();
+            
+            return Ok(cities);
+        }
+
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCinema([FromBody] CinemaForManipulationDto cinema)

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,15 @@ namespace iTechArt.CinemaWebApp.API.Data
                 .Include(cinema => cinema.Halls)
                     .ThenInclude(hall => hall.SeatsSchemas)
                 .SingleOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetCinemaCities()
+        {
+            return await FindAll()
+                .Select(cinema => cinema.City)
+                .GroupBy(x => x)
+                .Select(g => g.Key)
+                .ToListAsync();
         }
 
         public async Task CreateCinemaAsync(Cinema cinema) => await CreateAsync(cinema);

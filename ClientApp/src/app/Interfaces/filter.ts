@@ -1,8 +1,8 @@
 export interface Filter{
-  filmTitle?: string;
+  title?: string;
   city?: string;
   cinemaName?: string;
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
   seats?: number;
 }

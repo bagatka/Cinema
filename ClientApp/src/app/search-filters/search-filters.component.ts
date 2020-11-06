@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 
 import {Filter} from '../Interfaces/filter';
 import {Cinema} from '../Interfaces/cinema';
+
 import {CinemaService} from '../Services/cinema.service';
 
 @Component({
@@ -21,12 +22,17 @@ export class SearchFiltersComponent implements OnInit {
   cities$ = new Observable<string[]>();
   cinemas$ = new Observable<Cinema[]>();
   formGroup = new FormGroup({
-    start: new FormControl(null),
-    end: new FormControl(null),
-    sits: new FormControl(null, Validators.min(1))
+    start: new FormControl(''),
+    end: new FormControl(''),
+    seats: new FormControl('', Validators.min(1))
   });
 
   constructor(private cinemaService: CinemaService) {
+  }
+
+  ngOnInit(): void {
+    this.cities$ = this.cinemaService.getCinemasCities();
+    this.cinemas$ = this.cinemaService.getCinemas();
   }
 
   addNewFilter(value: Filter): void {
@@ -45,23 +51,32 @@ export class SearchFiltersComponent implements OnInit {
   }
 
   onStartDateChange(value): void {
-    this.filter.startDate = value;
+    this.filter.startDate = this.formateDate(value);
   }
 
   onEndDateChange(value): void {
-    this.filter.endDate = value;
-    this.addNewFilter(this.filter);
+    this.filter.endDate = this.formateDate(value);
+    if (value) {
+      this.addNewFilter(this.filter);
+    }
   }
 
-  onSitsChange(value): void {
+  onSeatsChange(value): void {
     this.filter.seats = value;
     if (value >= 1) {
       this.addNewFilter(this.filter);
     }
   }
 
-  ngOnInit(): void {
-    this.cities$ = this.cinemaService.getCinemasCities();
-    this.cinemas$ = this.cinemaService.getCinemas();
+  private formateDate(dateString: string): string | null {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (1 + date.getMonth()).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+
+    if (year && month && year) {
+      return month + '/' + day + '/' + year;
+    }
+    return null;
   }
 }
