@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using AutoMapper;
 
@@ -14,6 +15,7 @@ using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
+    [Authorize(Policy = Policies.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class CinemasController : ControllerBase
@@ -27,6 +29,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet(Name = "GetCinemas")]
         public async Task<IActionResult> GetCinemas([FromQuery] CinemaParameters cinemaParameters)
         {
@@ -37,6 +40,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(cinemasDto);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetCinemaById")]
         public async Task<IActionResult> GetCinema(int id, [FromQuery] HallParameters hallParameters)
         {
@@ -52,6 +56,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(cinemaDto);
         }
         
+        [AllowAnonymous]
         [HttpGet("{id}/halls", Name = "GetHallsByCinemaId")]
         public async Task<IActionResult> GetHalls(int id, [FromQuery] HallParameters hallParameters)
         {
@@ -89,7 +94,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return CreatedAtRoute("GetCinemaById", new { id = cinemaToReturn.Id }, cinemaToReturn);
         }
-
+        
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateCinemaExistsAttribute))]
         public async Task<ActionResult> DeleteCinema(int id)
@@ -101,7 +106,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return NoContent();
         }
-
+        
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateCinemaExistsAttribute))]

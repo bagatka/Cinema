@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using AutoMapper;
 
@@ -14,6 +15,7 @@ using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
+    [Authorize(Policy = Policies.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class ServicesController : ControllerBase
@@ -27,6 +29,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet(Name = "GetServices")]
         public async Task<IActionResult> GetServices([FromQuery] ServiceParameters serviceParameters)
         {
@@ -37,6 +40,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(servicesDto);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetServiceById")]
         public async Task<IActionResult> GetService(int id)
         {
@@ -65,7 +69,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return CreatedAtRoute("GetServiceById", new { id = serviceToReturn.Id }, serviceToReturn);
         }
-
+        
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateServiceExistsAttribute))]
         public async Task<ActionResult> DeleteService(int id)
@@ -77,7 +81,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return NoContent();
         }
-
+        
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateServiceExistsAttribute))]
@@ -91,6 +95,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return NoContent();
         }
 
+        [AllowAnonymous]
         [HttpGet("/hall/", Name = "GetHallServices")]
         public async Task<IActionResult> GetHallServices([FromQuery] HallServiceParameters hallServiceParameters)
         {
@@ -101,6 +106,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(hallServiceDto);
         }
 
+        [AllowAnonymous]
         [HttpGet("/hall/{id}", Name = "GetHallServiceById")]
         public async Task<IActionResult> GetHallService(int id)
         {
@@ -129,7 +135,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return CreatedAtRoute("GetHallServiceById", new { id = hallServiceToReturn.Id }, hallServiceToReturn);
         }
-
+        
         [HttpDelete("/hall/{id}")]
         [ServiceFilter(typeof(ValidateHallServiceExistsAttribute))]
         public async Task<ActionResult> DeleteHallService(int id)
@@ -141,7 +147,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return NoContent();
         }
-
+        
         [HttpPut("/hall/{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateHallServiceExistsAttribute))]

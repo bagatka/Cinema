@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using AutoMapper;
 
@@ -13,6 +14,7 @@ using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
+    [Authorize(Policy = Policies.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class ShowsController : Controller
@@ -26,6 +28,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet(Name = "GetShows")]
         public async Task<IActionResult> GetShows([FromQuery] ShowParameters showParameters)
         {
@@ -36,6 +39,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(showsDto);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetShowById")]
         public async Task<IActionResult> GetShow(int id)
         {
@@ -50,7 +54,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             
             return Ok(showsDto);
         }
-
+        
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateShow([FromBody] ShowForManipulationDto show)
@@ -76,7 +80,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return NoContent();
         }
-
+        
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateShowExistsAttribute))]

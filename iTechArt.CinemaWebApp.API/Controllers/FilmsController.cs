@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using AutoMapper;
 
@@ -13,6 +14,7 @@ using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
+    [Authorize(Policy = Policies.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class FilmsController : ControllerBase
@@ -26,6 +28,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet(Name = "GetFilms")]
         public async Task<IActionResult> GetFilms([FromQuery] FilmParameters filmParameters)
         {
@@ -36,6 +39,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(filmsDto);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetFilmById")]
         public async Task<IActionResult> GetFilm(int id)
         {
@@ -64,7 +68,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return CreatedAtRoute("GetFilmById", new { id = filmToReturn.Id }, filmToReturn);
         }
-
+        
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateFilmExistsAttribute))]
         public async Task<ActionResult> DeleteFilm(int id)
@@ -76,7 +80,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return NoContent();
         }
-
+        
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateFilmExistsAttribute))]

@@ -14,7 +14,7 @@ export class JWTService {
   }
 
   isTokenSet(): boolean {
-    return !!localStorage.getItem('token');
+    return !!this.getToken();
   }
 
   deleteToken(): void {
@@ -38,7 +38,24 @@ export class JWTService {
   }
 
   getToken(): string {
-    return localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return null;
+    }
+    const tokenStatus = this.checkTokenExpired(token);
+    if (!tokenStatus) {
+      return null;
+    }
+    return token;
+  }
+
+  private checkTokenExpired(token: string): boolean {
+    const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+    if ((Math.floor((new Date()).getTime() / 1000)) >= expiry) {
+      this.deleteToken();
+      return false;
+    }
+    return true;
   }
 
   private getDecodedTokenPayload(): JwtPayload {

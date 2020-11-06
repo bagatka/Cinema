@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using iTechArt.CinemaWebApp.API.Application.DTOs.Account;
 using iTechArt.CinemaWebApp.API.Application.Services;
+using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
@@ -17,7 +19,8 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         {
             _accountService = accountService;
         }
-
+        
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(LoginRequest request)
         {
@@ -28,6 +31,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(await _accountService.LoginAsync(request));
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(RegisterRequest request)
         {
