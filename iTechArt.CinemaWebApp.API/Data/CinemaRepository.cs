@@ -49,8 +49,7 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
             return await FindAll()
                 .Select(cinema => cinema.City)
-                .GroupBy(x => x)
-                .Select(g => g.Key)
+                .Distinct() 
                 .ToListAsync();
         }
 
