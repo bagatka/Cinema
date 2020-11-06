@@ -1,4 +1,4 @@
-export interface Filter{
+export interface Filter {
   title?: string;
   city?: string;
   cinemaName?: string;
