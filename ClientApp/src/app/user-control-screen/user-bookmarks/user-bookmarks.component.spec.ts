@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserBookmarksComponent } from './user-bookmarks.component';
+import {UserBookmarksComponent} from './user-bookmarks.component';
 
 describe('UserBookmarksComponent', () => {
   let component: UserBookmarksComponent;
@@ -8,9 +8,9 @@ describe('UserBookmarksComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserBookmarksComponent ]
+      declarations: [UserBookmarksComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

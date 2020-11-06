@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserControlScreenComponent } from './user-control-screen.component';
+import {UserControlScreenComponent} from './user-control-screen.component';
 
 describe('UserControlScreenComponent', () => {
   let component: UserControlScreenComponent;
@@ -8,9 +8,9 @@ describe('UserControlScreenComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserControlScreenComponent ]
+      declarations: [UserControlScreenComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

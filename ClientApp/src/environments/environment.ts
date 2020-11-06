@@ -11,3 +11,7 @@ export enum ApiPaths {
   services = '/services',
   account = '/account'
 }
+
+export enum Constants {
+  FIRST_FILM_YEAR = 1878
+}

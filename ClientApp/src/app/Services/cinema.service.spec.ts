@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { CinemaService } from './Services/cinema.service';
+import {CinemaService} from './cinema.service';
 
 describe('CinemaService', () => {
   let service: CinemaService;
