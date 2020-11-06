@@ -5,6 +5,6 @@
     [ServiceId] INT               NOT NULL,
     [HallId]    INT               NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
-    FOREIGN KEY ([HallId]) REFERENCES [dbo].[Halls] ([Id]),
+    FOREIGN KEY ([HallId])    REFERENCES [dbo].[Halls] ([Id]),
     FOREIGN KEY ([ServiceId]) REFERENCES [dbo].[Services] ([Id])
 );

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using Newtonsoft.Json;
@@ -28,5 +29,7 @@ namespace iTechArt.CinemaWebApp.API.Models
         [Required(ErrorMessage = "Role is required.")]
         [StringLength(10, ErrorMessage = "Role length can't be more than 10.")]
         public string Role { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
     }
 }
