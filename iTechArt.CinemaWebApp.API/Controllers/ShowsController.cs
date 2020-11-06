@@ -14,6 +14,7 @@ using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
+    [Authorize(Policy = Policies.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class ShowsController : Controller
@@ -53,8 +54,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             
             return Ok(showsDto);
         }
-
-        [Authorize(Policy = Policies.Admin)]
+        
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateShow([FromBody] ShowForManipulationDto show)
@@ -69,7 +69,6 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return CreatedAtRoute("GetShowById", new { id = showToReturn.Id }, showToReturn);
         }
         
-        [Authorize(Policy = Policies.Admin)]
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateShowExistsAttribute))]
         public async Task<ActionResult> DeleteShow(int id)
@@ -81,8 +80,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return NoContent();
         }
-
-        [Authorize(Policy = Policies.Admin)]
+        
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateShowExistsAttribute))]

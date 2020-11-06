@@ -14,6 +14,7 @@ using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
+    [Authorize(Policy = Policies.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class FilmsController : ControllerBase
@@ -54,7 +55,6 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(filmDto);
         }
         
-        [Authorize(Policy = Policies.Admin)]
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateFilm([FromBody] FilmForManipulationDto film)
@@ -68,8 +68,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return CreatedAtRoute("GetFilmById", new { id = filmToReturn.Id }, filmToReturn);
         }
-
-        [Authorize(Policy = Policies.Admin)]
+        
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateFilmExistsAttribute))]
         public async Task<ActionResult> DeleteFilm(int id)
@@ -81,8 +80,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return NoContent();
         }
-
-        [Authorize(Policy = Policies.Admin)]
+        
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateFilmExistsAttribute))]

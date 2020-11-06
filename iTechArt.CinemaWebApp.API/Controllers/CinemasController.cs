@@ -15,6 +15,7 @@ using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
+    [Authorize(Policy = Policies.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class CinemasController : ControllerBase
@@ -80,7 +81,6 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(hallsDto);
         }
         
-        [Authorize(Policy = Policies.Admin)]
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCinema([FromBody] CinemaForManipulationDto cinema)
@@ -94,8 +94,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return CreatedAtRoute("GetCinemaById", new { id = cinemaToReturn.Id }, cinemaToReturn);
         }
-
-        [Authorize(Policy = Policies.Admin)]
+        
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateCinemaExistsAttribute))]
         public async Task<ActionResult> DeleteCinema(int id)
@@ -107,8 +106,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             return NoContent();
         }
-
-        [Authorize(Policy = Policies.Admin)]
+        
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateCinemaExistsAttribute))]
