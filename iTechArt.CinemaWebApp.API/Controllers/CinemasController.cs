@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using AutoMapper;
 
@@ -27,6 +28,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet(Name = "GetCinemas")]
         public async Task<IActionResult> GetCinemas([FromQuery] CinemaParameters cinemaParameters)
         {
@@ -37,6 +39,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(cinemasDto);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetCinemaById")]
         public async Task<IActionResult> GetCinema(int id, [FromQuery] HallParameters hallParameters)
         {
@@ -52,6 +55,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(cinemaDto);
         }
         
+        [AllowAnonymous]
         [HttpGet("{id}/halls", Name = "GetHallsByCinemaId")]
         public async Task<IActionResult> GetHalls(int id, [FromQuery] HallParameters hallParameters)
         {
@@ -76,6 +80,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(hallsDto);
         }
         
+        [Authorize(Policy = Policies.Admin)]
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCinema([FromBody] CinemaForManipulationDto cinema)
@@ -90,6 +95,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return CreatedAtRoute("GetCinemaById", new { id = cinemaToReturn.Id }, cinemaToReturn);
         }
 
+        [Authorize(Policy = Policies.Admin)]
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateCinemaExistsAttribute))]
         public async Task<ActionResult> DeleteCinema(int id)
@@ -102,6 +108,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return NoContent();
         }
 
+        [Authorize(Policy = Policies.Admin)]
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateCinemaExistsAttribute))]

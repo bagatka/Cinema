@@ -19,7 +19,8 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         {
             _accountService = accountService;
         }
-
+        
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> LoginAsync(LoginRequest request)
         {
@@ -30,6 +31,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(await _accountService.LoginAsync(request));
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAsync(RegisterRequest request)
         {

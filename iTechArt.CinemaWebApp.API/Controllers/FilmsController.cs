@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using AutoMapper;
 
@@ -10,7 +11,6 @@ using iTechArt.CinemaWebApp.API.Application.Contracts;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Film;
 using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
@@ -27,8 +27,8 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet(Name = "GetFilms")]
-        [Authorize(Policy = Policies.Admin)]
         public async Task<IActionResult> GetFilms([FromQuery] FilmParameters filmParameters)
         {
             var films = await _repository.Films.GetFilmsAsync(filmParameters);
@@ -38,6 +38,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(filmsDto);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetFilmById")]
         public async Task<IActionResult> GetFilm(int id)
         {
@@ -53,6 +54,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return Ok(filmDto);
         }
         
+        [Authorize(Policy = Policies.Admin)]
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateFilm([FromBody] FilmForManipulationDto film)
@@ -67,6 +69,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return CreatedAtRoute("GetFilmById", new { id = filmToReturn.Id }, filmToReturn);
         }
 
+        [Authorize(Policy = Policies.Admin)]
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateFilmExistsAttribute))]
         public async Task<ActionResult> DeleteFilm(int id)
@@ -79,6 +82,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return NoContent();
         }
 
+        [Authorize(Policy = Policies.Admin)]
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateFilmExistsAttribute))]
