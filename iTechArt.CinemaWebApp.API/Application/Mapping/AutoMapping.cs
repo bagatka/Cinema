@@ -5,6 +5,8 @@ using iTechArt.CinemaWebApp.API.Application.DTOs.Cinema;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Film;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Hall;
 using iTechArt.CinemaWebApp.API.Application.DTOs.HallService;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Order;
+using iTechArt.CinemaWebApp.API.Application.DTOs.OrderAddon;
 using iTechArt.CinemaWebApp.API.Application.DTOs.SeatsSchema;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Services;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Show;
@@ -108,10 +110,6 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
                     src => src.MapFrom(ticket => ticket.Show.StartDateTime)
                 )
                 .ForMember(
-                    ticketDto => ticketDto.UserName,
-                    src => src.MapFrom(ticket => ticket.User.UserName)
-                )
-                .ForMember(
                     ticketDto => ticketDto.Seat,
                     src => src.MapFrom(ticket => ticket.SeatsSchema.Seat)
                 )
@@ -121,6 +119,18 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
                 );
 
             CreateMap<TicketForManipulationDto, Ticket>();
+
+            CreateMap<OrderAddon, OrderAddonDto>()
+                .ForMember(
+                    orderAddonDto => orderAddonDto.ServiceName,
+                    src => src.MapFrom(orderAddon => orderAddon.HallService.Service.Name)
+                );
+
+            CreateMap<Order, OrderDto>()
+                .ForMember(
+                    orderDto => orderDto.UserName,
+                    src => src.MapFrom(order => order.User.UserName)
+                );
         }
     }
 }

@@ -10,8 +10,8 @@ namespace iTechArt.CinemaWebApp.API.Models
         public int Id { get; set; }
         [Required(ErrorMessage = "ShowId is required.")]
         public int ShowId { get; set; }
-        [Required(ErrorMessage = "UserId is required.")]
-        public int UserId { get; set; }
+        [Required(ErrorMessage = "OrderId is required.")]
+        public int OrderId { get; set; }
         [Required(ErrorMessage = "SeatId is required.")]
         public int SeatId { get; set; }
         [Required(ErrorMessage = "Price is required.")]
@@ -21,8 +21,8 @@ namespace iTechArt.CinemaWebApp.API.Models
 
         [ForeignKey(nameof(ShowId))]
         public Show Show { get; set; }
-        [ForeignKey(nameof(UserId))]
-        public User User { get; set; }
+        [ForeignKey(nameof(OrderId))]
+        public Order Order { get; set; }
         [ForeignKey(nameof(SeatId))]
         public SeatsSchema SeatsSchema { get; set; }
     }
