@@ -71,5 +71,7 @@
     <Build Include="dbo\Tables\services.sql" />
     <Build Include="dbo\Tables\hallServices.sql" />
     <Build Include="dbo\Tables\seatsSchemas.sql" />
+    <Build Include="dbo\Tables\orders.sql" />
+    <Build Include="dbo\Tables\orderAddons.sql" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 import {Observable, Subject} from 'rxjs';
-import {distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 
 import {Filter} from '../Interfaces/filter';
 import {Film} from '../Interfaces/film';
@@ -33,13 +33,13 @@ export class SearchScreenComponent implements OnInit {
   }
 
   search(): void {
-    this.filter.filmTitle = this.filmTitle;
+    this.filter.title = this.filmTitle;
     this.searchTerms.next(this.filter);
   }
 
   ngOnInit(): void {
     this.films$ = this.searchTerms.pipe(
-      distinctUntilChanged(),
+      debounceTime(400),
       switchMap((filter: Filter) => this.filmService.getFilmsByFilter(filter))
     );
   }

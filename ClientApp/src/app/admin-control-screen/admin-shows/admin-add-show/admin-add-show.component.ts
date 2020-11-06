@@ -104,7 +104,7 @@ export class AdminAddShowComponent implements OnInit {
     this.showData.price = this.addShowInput.value.price;
     this.showService.createShow(this.showData).subscribe();
     this.snackbarService.displaySnackbar(SnackbarMessages.created);
-    this.startHallTimeTableSearch(this.showData.hallId - 1);
+    this.startHallTimeTableSearch(0);
     this.startHallTimeTableSearch(this.showData.hallId);
   }
 

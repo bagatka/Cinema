@@ -19,14 +19,52 @@ namespace iTechArt.CinemaWebApp.API.Data
         public async Task<PagedList<Film>> GetFilmsAsync(FilmParameters filmParameters)
         {
             var films = FindAll()
+                .Include(film => film.Shows)
+                    .ThenInclude(show => show.Hall)
+                        .ThenInclude(hall => hall.Cinema)
                 .AsNoTracking()
-                .Where(film => !String.IsNullOrEmpty(film.BannerUrl) == filmParameters.WithBanner || !filmParameters.WithBanner);
+                .Where(film => !String.IsNullOrEmpty(film.BannerUrl) == filmParameters.WithBanner || !filmParameters.WithBanner)
+                .Where(film => !String.IsNullOrEmpty(film.PosterUrl) == filmParameters.WithPoster || !filmParameters.WithPoster);
 
             if (!string.IsNullOrEmpty(filmParameters.Title))
             {
                 films = films.Where(film => film.Title.ToLower().Contains(filmParameters.Title.ToLower()));
             }
 
+            if (!string.IsNullOrEmpty(filmParameters.CinemaName))
+            {
+                films = films.Where(film => film.Shows.Any(
+                        show => show.Hall.Cinema.Name.Equals(filmParameters.CinemaName)
+                    )
+                );
+            }
+
+            if (!string.IsNullOrEmpty(filmParameters.StartDate))
+            {
+                var startDate = DateTime.Parse(filmParameters.StartDate);
+                films = films.Where(film => film.Shows.Any(
+                        show => show.StartDateTime.Date >= startDate.Date
+                    )
+                );
+            }
+            
+            if (!string.IsNullOrEmpty(filmParameters.EndDate))
+            {
+                var endDate = DateTime.Parse(filmParameters.EndDate);
+                films = films.Where(film => film.Shows.Any(
+                        show => show.StartDateTime.Date <= endDate.Date
+                    )
+                );
+            }
+
+            if (filmParameters.Seats != null)
+            {
+                films = films.Where(film => film.Shows.Any(
+                        show => show.FreeSeats >= filmParameters.Seats
+                    )
+                );
+            }
+            
             return await PagedList<Film>.ToPagedList(
                 films.OrderBy(film => film.Title),
                 filmParameters.PageNumber,

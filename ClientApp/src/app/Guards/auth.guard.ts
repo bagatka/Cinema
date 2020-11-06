@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
     if (this.accountService.getAuthorizationStatus()) {
       const expectedRole = route.data.expectedRole;
       const currentRole = this.accountService.getRole();
-      
+
       if (expectedRole === currentRole) {
         return true;
       }
