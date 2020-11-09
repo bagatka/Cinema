@@ -1,5 +1,5 @@
 <div class="main-container" fxLayout="row" fxLayoutAlign="center">
-  <app-search-filters (applyFilter)="onFilterChange($event)"></app-search-filters>
+  <app-search-filters [filterHistory]="filter" (applyFilter)="onFilterChange($event)"></app-search-filters>
   <div class="search-container">
     <mat-card class="search-card">
       <mat-card-title class="search-title">
@@ -11,7 +11,7 @@
         </mat-form-field>
       </mat-card-content>
       <div class="results" *ngFor="let film of films$ | async">
-        <app-film-card [filmData]="film"></app-film-card>
+        <app-film-card [filmData]="film" (buyTicket)="buyTickets($event)"></app-film-card>
       </div>
     </mat-card>
   </div>

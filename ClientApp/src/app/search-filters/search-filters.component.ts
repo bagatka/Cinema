@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter, OnInit} from '@angular/core';
+import {Component, Output, EventEmitter, OnInit, Input, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 import {Observable} from 'rxjs';
@@ -7,6 +7,7 @@ import {Filter} from '../Interfaces/filter';
 import {Cinema} from '../Interfaces/cinema';
 
 import {CinemaService} from '../Services/cinema.service';
+import {MatInput} from '@angular/material/input';
 
 @Component({
   selector: 'app-search-filters',
@@ -16,21 +17,36 @@ import {CinemaService} from '../Services/cinema.service';
 export class SearchFiltersComponent implements OnInit {
 
   @Output() applyFilter = new EventEmitter<Filter>();
+  @Input() filterHistory: Filter;
+  @ViewChild('startDateInput') startDateInput: MatInput;
+  @ViewChild('endDateInput') endDateInput: MatInput;
 
   today = new Date();
   filter: Filter = {};
   cities$ = new Observable<string[]>();
   cinemas$ = new Observable<Cinema[]>();
-  formGroup = new FormGroup({
-    start: new FormControl(''),
-    end: new FormControl(''),
-    seats: new FormControl('', Validators.min(1))
-  });
+  formGroup: FormGroup;
 
   constructor(private cinemaService: CinemaService) {
   }
 
   ngOnInit(): void {
+    if (this.filterHistory) {
+      this.filter = this.filterHistory;
+    }
+    let startDate = null;
+    let endDate = null;
+    if (this.filter?.startDate) {
+      startDate = new Date(this.filter.startDate);
+    }
+    if (this.filter?.endDate) {
+      endDate = new Date(this.filter.endDate);
+    }
+    this.formGroup = new FormGroup({
+      start: new FormControl(startDate),
+      end: new FormControl(endDate),
+      seats: new FormControl(this.filter?.seats, Validators.min(1))
+    });
     this.cities$ = this.cinemaService.getCinemasCities();
     this.cinemas$ = this.cinemaService.getCinemas();
   }

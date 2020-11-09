@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 import {Film} from '../Interfaces/film';
 
@@ -10,4 +10,12 @@ import {Film} from '../Interfaces/film';
 export class FilmCardComponent {
 
   @Input() filmData: Film;
+  @Output() buyTicket = new EventEmitter<object>();
+
+  buy(): void {
+    this.buyTicket.emit({
+      title: this.filmData.title,
+      posterUrl: this.filmData.posterUrl
+    });
+  }
 }

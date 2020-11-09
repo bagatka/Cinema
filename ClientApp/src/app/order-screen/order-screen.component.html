@@ -1,0 +1,37 @@
+<div fxLayout="row" fxLayoutAlign="center start" class="container" fxLayoutGap="3vw">
+  <mat-card class="main-card">
+    <mat-horizontal-stepper [linear]="true" #stepper (selectionChange)="clearNextSteps($event)">
+      <mat-step label="Cinema and date" #cinemaStep>
+        <div fxLayout="row">
+          <app-search-filters [filterHistory]="filter" (applyFilter)="onFilterChange($event)"></app-search-filters>
+          <div fxLayout="column" fxLayoutAlign="start center">
+            <div *ngFor="let date of dates">
+              <div>
+                <mat-card-title class="date-title">{{date}}</mat-card-title>
+                <div *ngFor="let cinema of cinemas$ | async" class="cinemas">
+                  <app-cinema-card [cinema]="cinema"></app-cinema-card>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-step>
+      <mat-step label="Seats" #seatsStep>
+
+      </mat-step>
+      <mat-step label="Services" #servicesStep>
+
+      </mat-step>
+      <mat-step label="Submit" #confirmStep>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card>
+  <mat-card class="film-card">
+    <div class="status-windows" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="2vh">
+      <img [src]="filmPosterUrl" height="350px">
+      <mat-card-title>{{filmTitle}}</mat-card-title>
+    </div>
+
+  </mat-card>
+</div>
+

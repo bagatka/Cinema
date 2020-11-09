@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
 import {Observable, of} from 'rxjs';
 
@@ -7,6 +7,8 @@ import {Cinema} from '../Interfaces/cinema';
 import {Hall} from '../Interfaces/hall';
 
 import {ApiPaths, environment} from '../../environments/environment';
+import {Filter} from '../Interfaces/filter';
+import {Film} from '../Interfaces/film';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +47,21 @@ export class CinemaService {
       return of([]);
     }
     return this.http.get<Cinema[]>(`${this.baseUrl}/?name=${name}`);
+  }
+
+  getCinemasByFilter(filter: Filter): Observable<Cinema[]> {
+    if (!filter) {
+      return this.getCinemas();
+    }
+    const options = {
+      params: new HttpParams()
+    };
+    Object.keys(filter).forEach((key) => {
+      if (filter[key]) {
+        options.params = options.params.set(key, filter[key]);
+      }
+    });
+    return this.http.get<Cinema[]>(this.baseUrl, options);
   }
 
   getHallsByCinemaId(id: number): Observable<Hall[]> {

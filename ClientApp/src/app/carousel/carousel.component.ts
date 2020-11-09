@@ -3,7 +3,6 @@ import {trigger, transition, style, animate} from '@angular/animations';
 
 import {Film} from '../Interfaces/film';
 
-
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',

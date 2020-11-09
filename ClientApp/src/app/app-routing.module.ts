@@ -4,6 +4,8 @@ import {Routes, RouterModule} from '@angular/router';
 import {HomeScreenComponent} from './home-screen/home-screen.component';
 import {SearchScreenComponent} from './search-screen/search-screen.component';
 import {RegistrationScreenComponent} from './registration-screen/registration-screen.component';
+import {OrderScreenComponent} from './order-screen/order-screen.component';
+
 import {AuthGuard} from './Guards/auth.guard';
 
 const routes: Routes = [
@@ -12,6 +14,14 @@ const routes: Routes = [
   {path: 'cinemas', component: HomeScreenComponent},
   {path: 'films', component: SearchScreenComponent},
   {path: 'registration', component: RegistrationScreenComponent},
+  {
+    path: 'order',
+    component: OrderScreenComponent,
+    canActivate: [AuthGuard],
+    data: {
+      expectedRole: 'User'
+    }
+  },
   {
     path: 'profile', loadChildren: () => import(`./user-control-screen/user-control-screen-routing.module`)
       .then(m => m.UserControlScreenRoutingModule),

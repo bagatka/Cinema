@@ -3,9 +3,9 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
 import {Observable, of} from 'rxjs';
 
-import {Filter} from '../Interfaces/filter';
 import {Show} from '../Interfaces/show';
 import {ShowForManipulation} from '../Interfaces/show-for-manipulation';
+import {ShowParameters} from '../Interfaces/show-parameters';
 
 import {ApiPaths, environment} from '../../environments/environment';
 
@@ -42,15 +42,15 @@ export class ShowService {
     return this.http.get<Show[]>(`${this.baseUrl}?hallId=${id}&date=${this.formateDate(date)}`);
   }
 
-  searchShowsByFilter(filter: Filter): Observable<Show[]> {
-    if (!filter) {
+  getShowsByParameters(showParameters: ShowParameters): Observable<Show[]> {
+    if (!showParameters) {
       return this.getShows();
     }
     const options = {
       params: new HttpParams()
     };
-    Object.keys(filter).forEach((key) => {
-      options.params = options.params.set(key, filter[key]);
+    Object.keys(showParameters).forEach((key) => {
+      options.params = options.params.set(key, showParameters[key]);
     });
     return this.http.get<Show[]>(this.baseUrl, options);
   }

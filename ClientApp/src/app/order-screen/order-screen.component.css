@@ -1,0 +1,28 @@
+.container {
+  padding-top: 10vh;
+}
+
+.main-card {
+  width: 60vw;
+  min-height: 75vh;
+}
+
+.film-card {
+  width: 20vw;
+  height: 75vh;
+}
+
+.status-windows {
+  padding-top: 4vh;
+}
+
+.date-title {
+  padding-top: 5vh;
+  padding-left: 2vw;
+  font-size: 1.3vw;
+  font-weight: 700;
+}
+
+.cinemas {
+  padding-top: 5vh;
+}
