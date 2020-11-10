@@ -1,9 +1,8 @@
-<button mat-button (click)="setSelected()">
+<button mat-button (mousedown)="selectShow(show.id)">
   <mat-card-title class="time">
-    <!--{{show.startDateTime | date}}-->
-    13:30
+    {{getTime(show.startDateTime)}}
   </mat-card-title>
   <div>
-    <mat-progress-bar mode="determinate" [value]="20"></mat-progress-bar>
+    <mat-progress-bar mode="determinate" [value]="getPercentage(show.freeSeats, show.hallSize)"></mat-progress-bar>
   </div>
 </button>

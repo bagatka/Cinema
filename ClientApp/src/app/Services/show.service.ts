@@ -8,6 +8,7 @@ import {ShowForManipulation} from '../Interfaces/show-for-manipulation';
 import {ShowParameters} from '../Interfaces/show-parameters';
 
 import {ApiPaths, environment} from '../../environments/environment';
+import {DateTransformService} from './date-transform.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,10 @@ export class ShowService {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private dateTransform: DateTransformService
+  ) {
   }
 
   getShows(): Observable<Show[]> {
@@ -39,7 +43,7 @@ export class ShowService {
   }
 
   getShowsByHallId(id: number, date: Date): Observable<Show[]> {
-    return this.http.get<Show[]>(`${this.baseUrl}?hallId=${id}&date=${this.formateDate(date)}`);
+    return this.http.get<Show[]>(`${this.baseUrl}?hallId=${id}&date=${this.dateTransform.formateDate(date)}`);
   }
 
   getShowsByParameters(showParameters: ShowParameters): Observable<Show[]> {
@@ -50,7 +54,9 @@ export class ShowService {
       params: new HttpParams()
     };
     Object.keys(showParameters).forEach((key) => {
-      options.params = options.params.set(key, showParameters[key]);
+      if (!!showParameters[key] || showParameters[key] === 0) {
+        options.params = options.params.set(key, showParameters[key]);
+      }
     });
     return this.http.get<Show[]>(this.baseUrl, options);
   }
@@ -65,13 +71,5 @@ export class ShowService {
 
   updateShow(show: Show, id: number): Observable<Show> {
     return this.http.put<Show>(this.baseUrl + `/${id}`, show, this.httpOptions);
-  }
-
-  private formateDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = (1 + date.getMonth()).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-
-    return month + '/' + day + '/' + year;
   }
 }

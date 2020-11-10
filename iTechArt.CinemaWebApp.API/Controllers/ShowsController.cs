@@ -40,7 +40,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("{id}", Name = "GetShowById")]
+        [HttpGet("{id:int}", Name = "GetShowById")]
         public async Task<IActionResult> GetShow(int id)
         {
             var show = await _repository.Shows.GetShowAsync(id);
@@ -69,7 +69,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return CreatedAtRoute("GetShowById", new { id = showToReturn.Id }, showToReturn);
         }
         
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         [ServiceFilter(typeof(ValidateShowExistsAttribute))]
         public async Task<ActionResult> DeleteShow(int id)
         {
@@ -81,7 +81,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return NoContent();
         }
         
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateShowExistsAttribute))]
         public async Task<IActionResult> UpdateShow(int id, [FromBody] ShowForManipulationDto show)

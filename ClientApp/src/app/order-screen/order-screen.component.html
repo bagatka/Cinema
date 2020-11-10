@@ -1,28 +1,42 @@
 <div fxLayout="row" fxLayoutAlign="center start" class="container" fxLayoutGap="3vw">
   <mat-card class="main-card">
     <mat-horizontal-stepper [linear]="true" #stepper (selectionChange)="clearNextSteps($event)">
-      <mat-step label="Cinema and date" #cinemaStep>
+      <mat-step label="Cinema and date" [completed]="false" #cinemaStep>
         <div fxLayout="row">
           <app-search-filters [filterHistory]="filter" (applyFilter)="onFilterChange($event)"></app-search-filters>
           <div fxLayout="column" fxLayoutAlign="start center">
-            <div *ngFor="let date of dates">
-              <div>
-                <mat-card-title class="date-title">{{date}}</mat-card-title>
-                <div *ngFor="let cinema of cinemas$ | async" class="cinemas">
-                  <app-cinema-card [cinema]="cinema"></app-cinema-card>
-                </div>
+            <div *ngFor="let show of shows" class="cinemas">
+              <mat-card-title class="date-title">{{show[0]}}</mat-card-title>
+              <div *ngFor="let cinema of groupCinemasBy(show[1])">
+                <app-cinema-card [showData]="cinema" (setShow)="selectShow($event)"></app-cinema-card>
               </div>
             </div>
           </div>
         </div>
       </mat-step>
-      <mat-step label="Seats" #seatsStep>
-
+      <mat-step label="Seats" [completed]="false" #seatsStep>
+        <mat-card-title class="title">Select the seats</mat-card-title>
+        <div fxLayout="row" fxLayoutAlign="space-around start">
+          <app-hall-schema *ngIf="selectedHall" [(schemaData)]="selectedHall.seatsSchemas" [userSelect]="true"
+                           (userSelectSeats)="updateSelectedSeats($event)"></app-hall-schema>
+          <div fxLayout="column" fxLayoutAlign="start center" class="tickets-list">
+            <button mat-raised-button color="primary" [disabled]="!selectedSeats?.length" class="seat-confirm-button"
+                    (click)="confirmSeats()">Next
+            </button>
+            <mat-card-title>Tickets</mat-card-title>
+            <div *ngFor="let seat of selectedSeats">
+              <mat-card-title>
+                {{'Row: ' + seat.row + ' Seat: ' + seat.seat + ' x ' + selectedShow.price + '$'}}
+              </mat-card-title>
+            </div>
+          </div>
+        </div>
       </mat-step>
-      <mat-step label="Services" #servicesStep>
-
+      <mat-step label="Services" [completed]="false" #servicesStep>
+        
       </mat-step>
-      <mat-step label="Submit" #confirmStep>
+      <mat-step label="Submit" [completed]="false" #confirmStep>
+
       </mat-step>
     </mat-horizontal-stepper>
   </mat-card>
@@ -30,8 +44,13 @@
     <div class="status-windows" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="2vh">
       <img [src]="filmPosterUrl" height="350px">
       <mat-card-title>{{filmTitle}}</mat-card-title>
+      <div *ngIf="selectedShowId" fxLayout="column" fxLayoutAlign="start center">
+        <mat-card-subtitle class="cinema-name">{{selectedShow?.cinemaName}}</mat-card-subtitle>
+        <mat-card-subtitle>{{selectedShow?.startDateTime | date}}</mat-card-subtitle>
+        <mat-card-subtitle class="show-time">{{getTimeHM(selectedShow?.startDateTime)}}</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="selectedSeats?.length > 0">{{'Tickets x' + selectedSeats.length}}</mat-card-subtitle>
+      </div>
     </div>
-
   </mat-card>
 </div>
 

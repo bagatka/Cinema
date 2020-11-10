@@ -44,6 +44,8 @@ namespace iTechArt.CinemaWebApp.API.Data
         public Task<Hall> GetHallAsync(int id)
         {
             return FindByCondition(hall => hall.Id.Equals(id))
+                .Include(hall => hall.SeatsSchemas)
+                .Include(hall => hall.HallServices)
                 .AsNoTracking()
                 .SingleOrDefaultAsync();;
         }

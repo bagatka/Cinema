@@ -1,5 +1,9 @@
 export enum SeatType {
   Common = 'common',
   Sofa = 'sofa',
-  VIP = 'vip'
+  VIP = 'vip',
+  Sold = 'sold',
+  Reserved = 'reserved',
+  Booked = 'booked',
+  Empty = 'empty'
 }

@@ -26,3 +26,29 @@
 .cinemas {
   padding-top: 5vh;
 }
+
+.cinema-name {
+  font-size: 1.1vw;
+  font-weight: 400;
+}
+
+.show-time {
+  font-weight: 600;
+}
+
+.title {
+  font-weight: 800;
+  font-size: 1.3vw;
+  padding-bottom: 5vh;
+}
+
+.tickets-list {
+  min-width: 15vw;
+}
+
+.seat-confirm-button {
+  margin-left: 15vw;
+  margin-bottom: 10vh;
+  font-size: 1vw;
+  font-weight: 600;
+}

@@ -1,5 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+
 import {Show} from '../../Interfaces/show';
+
+import {DateTransformService} from '../../Services/date-transform.service';
 
 @Component({
   selector: 'app-hall-free-seats-bar',
@@ -8,10 +11,23 @@ import {Show} from '../../Interfaces/show';
 })
 export class HallFreeSeatsBarComponent {
 
-  @Output() setTime = new EventEmitter<object>();
+  @Output() setTime = new EventEmitter<number>();
   @Input() show: Show;
 
-  setSelected(): void {
+  constructor(
+    private dateTransform: DateTransformService
+  ) {
+  }
 
+  getTime(dateString: string): string {
+    return this.dateTransform.formateDateHM(dateString);
+  }
+
+  getPercentage(free, size): number {
+    return (size - free) * (100 / size);
+  }
+
+  selectShow(showId: number): void {
+    this.setTime.emit(showId);
   }
 }

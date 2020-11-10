@@ -4,5 +4,5 @@ export interface SeatPosition {
   id?: number;
   seat: number;
   row: number;
-  type: SeatType;
+  type?: SeatType;
 }

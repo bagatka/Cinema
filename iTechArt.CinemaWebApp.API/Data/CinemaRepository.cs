@@ -10,6 +10,7 @@ using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Data
 {
+    
     public class CinemaRepository : RepositoryBase<Cinema>, ICinemaRepository
     {
         public CinemaRepository(RepositoryContext repositoryContext) : base(repositoryContext)
@@ -18,7 +19,11 @@ namespace iTechArt.CinemaWebApp.API.Data
 
         public async Task<PagedList<Cinema>> GetCinemasAsync(CinemaParameters cinemaParameters)
         {
-            var cinemas = FindAll().AsNoTracking();
+            var cinemas = FindAll()
+                .Include(cinema => cinema.Halls)
+                    .ThenInclude(hall => hall.Shows)
+                        .ThenInclude(show => show.Film)
+                .AsNoTracking();
             
             if (!string.IsNullOrEmpty(cinemaParameters.Name))
             {

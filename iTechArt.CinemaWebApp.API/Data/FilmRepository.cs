@@ -41,30 +41,37 @@ namespace iTechArt.CinemaWebApp.API.Data
 
             if (!string.IsNullOrEmpty(filmParameters.StartDate))
             {
-                var startDate = DateTime.Parse(filmParameters.StartDate);
-                films = films.Where(film => film.Shows.Any(
-                        show => show.StartDateTime.Date >= startDate.Date
-                    )
-                );
+                if (DateTime.TryParse(filmParameters.StartDate, out var startDate))
+                {
+                    films = films.Where(film => film.Shows.Any(
+                            show => show.StartDateTime.Date >= startDate.Date
+                        )
+                    );
+                }
             }
             
             if (!string.IsNullOrEmpty(filmParameters.EndDate))
             {
-                var endDate = DateTime.Parse(filmParameters.EndDate);
-                films = films.Where(film => film.Shows.Any(
-                        show => show.StartDateTime.Date <= endDate.Date
-                    )
-                );
+                if (DateTime.TryParse(filmParameters.EndDate, out var endDate))
+                {
+                    films = films.Where(film => film.Shows.Any(
+                            show => show.StartDateTime.Date <= endDate.Date
+                        )
+                    );
+                }
             }
             
             if (!string.IsNullOrEmpty(filmParameters.StartDate) && !string.IsNullOrEmpty(filmParameters.EndDate))
             {
-                var startDate = DateTime.Parse(filmParameters.StartDate);
-                var endDate = DateTime.Parse(filmParameters.EndDate);
-                films = films.Where(film => film.Shows.Any(
-                        show => show.StartDateTime.Date >= startDate.Date && show.StartDateTime.Date <= endDate.Date
-                    )
-                );
+                if (DateTime.TryParse(filmParameters.StartDate, out var startDate)
+                    && DateTime.TryParse(filmParameters.EndDate, out var endDate))
+                {
+                    films = films.Where(film => film.Shows.Any(
+                            show => show.StartDateTime.Date >= startDate.Date && show.StartDateTime.Date <= endDate.Date
+                        )
+                    );
+                }
+                
             }
 
             if (filmParameters.Seats != null)
