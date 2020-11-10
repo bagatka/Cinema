@@ -33,7 +33,17 @@
         </div>
       </mat-step>
       <mat-step label="Services" [completed]="false" #servicesStep>
-        
+        <div fxLayout="column" fxLayoutAlign="start start">
+          <mat-card-title class="title">Select the services</mat-card-title>
+          <div *ngFor="let service of selectedHall?.hallServices; let i = index" fxLayout="row" fxLayoutAlign="space-between center" class="services-list">
+            <mat-card-title class="service">{{service.name + ' ' + service.price + '$'}}</mat-card-title>
+            <div fxLayout="row" fxLayoutAlign="center center" class="services-counter">
+              <button mat-button (click)="setSelectedServiceNumber(service.id, false)">-</button>
+              <mat-card-title>{{selectedServices[i] ? selectedServices[i].number : 0}}</mat-card-title>
+              <button mat-button (click)="setSelectedServiceNumber(service.id, true)">+</button>
+            </div>
+          </div>
+        </div>
       </mat-step>
       <mat-step label="Submit" [completed]="false" #confirmStep>
 

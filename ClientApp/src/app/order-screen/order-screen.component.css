@@ -40,6 +40,8 @@
   font-weight: 800;
   font-size: 1.3vw;
   padding-bottom: 5vh;
+  padding-top: 3vh;
+  padding-left: 2vh;
 }
 
 .tickets-list {
@@ -51,4 +53,18 @@
   margin-bottom: 10vh;
   font-size: 1vw;
   font-weight: 600;
+}
+
+.service {
+
+}
+
+.services-list {
+  padding-left: 5vw;
+  padding-bottom: 2vh;
+  min-width: 50vw;
+}
+
+.services-counter {
+  font-weight: 500;
 }

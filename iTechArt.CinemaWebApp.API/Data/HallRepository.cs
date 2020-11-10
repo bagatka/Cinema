@@ -46,6 +46,7 @@ namespace iTechArt.CinemaWebApp.API.Data
             return FindByCondition(hall => hall.Id.Equals(id))
                 .Include(hall => hall.SeatsSchemas)
                 .Include(hall => hall.HallServices)
+                    .ThenInclude(hallService => hallService.Service)
                 .AsNoTracking()
                 .SingleOrDefaultAsync();;
         }

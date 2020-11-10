@@ -43,7 +43,7 @@ export class EditHallDialogComponent implements AfterContentInit {
     this.seatsSchemas = [...this.data.hallData.seatsSchemas];
     this.selectedSeats = this.seatsSchemas.length;
     this.hallSizeError = this.selectedSeats !== this.seatsSchemas.length;
-    this.hallServices = this.data.hallData.hallServices;
+    this.hallServices = this.data.hallData.hallServices ? this.data.hallData.hallServices : [];
     this.addHallInput = this.formBuilder.group({
       name: new FormControl(this.data.hallData.name, Validators.required),
       seats: new FormControl(this.data.hallData.seats, [Validators.required, Validators.min(1)])

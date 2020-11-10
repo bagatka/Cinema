@@ -40,6 +40,7 @@ export class OrderScreenComponent implements OnInit {
   selectedShow: Show;
   selectedHall: Hall;
   selectedSeats: SeatPosition[];
+  selectedServices = [];
   private searchTerms = new Subject<Filter>();
   private searchSelectedShow = new Subject<number>();
   private searchSelectedHall = new Subject<number>();
@@ -68,7 +69,7 @@ export class OrderScreenComponent implements OnInit {
       switchMap((showId: number) => this.showService.getShowById(showId))
     ).subscribe(show => {
       this.selectedShow = show;
-      this.searchSelectedHall.next(show.hallId);
+      this.searchHallById(show.hallId);
     });
 
     this.searchSelectedHall.pipe(
@@ -122,6 +123,18 @@ export class OrderScreenComponent implements OnInit {
 
   confirmSeats(): void {
     this.changeStep(2);
+    this.selectedHall.hallServices.forEach(service => {
+      this.selectedServices.push({serviceId: service.id, number: 0});
+    });
+  }
+
+  setSelectedServiceNumber(serviceId: number, isIncrease: boolean): void {
+    const index = this.selectedServices.findIndex(selectedService => selectedService.serviceId === serviceId);
+    if (isIncrease) {
+      this.selectedServices[index].number++;
+    } else {
+      this.selectedServices[index].number > 0 ? this.selectedServices[index].number-- : this.selectedServices[index].number = 0;
+    }
   }
 
   private groupBy(array, keyGetter): ArrayLike<any> {

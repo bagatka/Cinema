@@ -25,7 +25,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         
         [AllowAnonymous]
         [HttpGet("{id:int}", Name = "GetHallById")]
-        public async Task<IActionResult> GetFilm(int id)
+        public async Task<IActionResult> GetHall(int id)
         {
             var hall = await _repository.Halls.GetHallAsync(id);
             
