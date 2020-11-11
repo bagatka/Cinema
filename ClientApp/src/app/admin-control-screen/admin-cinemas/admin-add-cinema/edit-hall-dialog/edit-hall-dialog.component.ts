@@ -111,6 +111,13 @@ export class EditHallDialogComponent implements AfterContentInit {
     this.selectedServiceName = null;
   }
 
+  onSelectionServiceChange(service: Service, event: any): void {
+    if (event.isUserInput) {
+      this.selectedServiceId = service.id;
+      this.selectedServiceName = service.name;
+    }
+  }
+
   public get SeatType(): typeof SeatType {
     return SeatType;
   }

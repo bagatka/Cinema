@@ -18,11 +18,16 @@ namespace iTechArt.CinemaWebApp.API.Data
         public async Task<PagedList<HallService>> GetHallServicesAsync(HallServiceParameters hallServiceParameters)
         {
             var hallServices = FindAll()
-                .AsNoTracking()
-                .OrderBy(hallService => hallService.Id);
+                .AsNoTracking();
 
+            if (hallServiceParameters.HallServicesIds != null)
+            {
+                hallServices = hallServices.Where(hallService =>
+                    hallServiceParameters.HallServicesIds.Contains(hallService.Id));
+            }
+            
             return await PagedList<HallService>.ToPagedList(
-                hallServices,
+                hallServices.OrderBy(hallService => hallService.Id),
                 hallServiceParameters.PageNumber,
                 hallServiceParameters.PageSize
             );

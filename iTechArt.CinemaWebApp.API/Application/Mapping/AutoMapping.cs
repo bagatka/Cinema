@@ -140,6 +140,8 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
                     orderDto => orderDto.UserName,
                     src => src.MapFrom(order => order.User.UserName)
                 );
+
+            CreateMap<OrderDetails, OrderDetailsDto>().ReverseMap();
         }
     }
 }

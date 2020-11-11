@@ -15,7 +15,9 @@ namespace iTechArt.CinemaWebApp.API.Data
         public DbSet<Service> Services { get; set; }
         public DbSet<HallService> HallServices { get; set; }
         public DbSet<SeatsSchema> SeatsSchemas { get; set; }
-
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderAddon> OrderAddons { get; set; }
+        
         public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
         {
         }

@@ -17,7 +17,7 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
         }
 
-        public async Task<IEnumerable<Show>> GetShowsAsync(ShowParameters showParameters)
+        public async Task<PagedList<Show>> GetShowsAsync(ShowParameters showParameters)
         {
             var shows = FindAll()
                 .Include(show => show.Film)

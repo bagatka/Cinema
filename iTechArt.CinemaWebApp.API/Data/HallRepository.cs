@@ -48,7 +48,7 @@ namespace iTechArt.CinemaWebApp.API.Data
                 .Include(hall => hall.HallServices)
                     .ThenInclude(hallService => hallService.Service)
                 .AsNoTracking()
-                .SingleOrDefaultAsync();;
+                .SingleOrDefaultAsync();
         }
 
         public async Task CreateHallAsync(Hall hall) => await CreateAsync(hall);

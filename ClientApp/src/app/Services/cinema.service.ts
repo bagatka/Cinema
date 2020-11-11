@@ -36,14 +36,14 @@ export class CinemaService {
   }
 
   getCinemasByCity(city: string): Observable<Cinema[]> {
-    if (!city.trim()) {
+    if (!city?.trim()) {
       return this.getCinemas();
     }
     return this.http.get<Cinema[]>(`${this.baseUrl}/?city=${city}`);
   }
 
   getCinemasByName(name: string): Observable<Cinema[]> {
-    if (!name.trim()) {
+    if (!name?.trim()) {
       return of([]);
     }
     return this.http.get<Cinema[]>(`${this.baseUrl}/?name=${name}`);

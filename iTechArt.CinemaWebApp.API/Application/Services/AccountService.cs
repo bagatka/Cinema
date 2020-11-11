@@ -10,10 +10,12 @@ using Microsoft.IdentityModel.Tokens;
 using BCrypter = BCrypt.Net.BCrypt;
 
 using AutoMapper;
+
 using iTechArt.CinemaWebApp.API.Application.Contracts;
 using iTechArt.CinemaWebApp.API.Models;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Account;
 using iTechArt.CinemaWebApp.API.Application.Wrappers;
+using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 namespace iTechArt.CinemaWebApp.API.Application.Services
 {

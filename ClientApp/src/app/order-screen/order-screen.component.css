@@ -44,15 +44,50 @@
   padding-left: 2vh;
 }
 
+.subtitle {
+  font-weight: 700;
+  font-size: 1.1vw;
+  padding-bottom: 3vh;
+  padding-top: 2vh;
+  padding-left: 6vh;
+}
+
+.data-container {
+  padding-left: 10vh;
+  min-width: 45vw;
+}
+
+.total-container {
+  padding-top: 4vh;
+}
+
+.total {
+  font-weight: 800;
+  font-size: 1.4vw;
+}
+
 .tickets-list {
   min-width: 15vw;
 }
 
-.seat-confirm-button {
-  margin-left: 15vw;
-  margin-bottom: 10vh;
+.confirm-button {
   font-size: 1vw;
   font-weight: 600;
+}
+
+.seat-button {
+  margin-left: 15vw;
+  margin-bottom: 10vh;
+}
+
+.services-button {
+  margin-left: 50vw;
+  margin-bottom: 5vh;
+}
+
+.buy-button {
+  margin-top: 5vh;
+  margin-left: 50vw;
 }
 
 .service {

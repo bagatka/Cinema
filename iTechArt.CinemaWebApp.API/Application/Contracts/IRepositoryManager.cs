@@ -13,6 +13,8 @@ namespace iTechArt.CinemaWebApp.API.Application.Contracts
         IShowRepository Shows { get; }
         IUserRepository Users { get; }
         ITicketRepository Tickets { get; }
+        IOrderRepository Orders { get; }
+        IOrderAddonRepository OrderAddons { get; }
         
         Task SaveAsync();
     }

@@ -14,6 +14,9 @@ import {ShowService} from '../Services/show.service';
 import {DateTransformService} from '../Services/date-transform.service';
 import {HallService} from '../Services/hall.service';
 import {SeatPosition} from '../Interfaces/seat-position';
+import {OrderDetails} from '../Interfaces/order-details';
+import {OrderService} from '../Services/order.service';
+import {getTokenAtPosition} from '@angular/compiler-cli/src/ngtsc/util/src/typescript';
 
 @Component({
   selector: 'app-order-screen',
@@ -41,6 +44,8 @@ export class OrderScreenComponent implements OnInit {
   selectedHall: Hall;
   selectedSeats: SeatPosition[];
   selectedServices = [];
+  totalPrice: number;
+  private orderDetails: OrderDetails;
   private searchTerms = new Subject<Filter>();
   private searchSelectedShow = new Subject<number>();
   private searchSelectedHall = new Subject<number>();
@@ -48,6 +53,7 @@ export class OrderScreenComponent implements OnInit {
   constructor(
     private showService: ShowService,
     private hallService: HallService,
+    private orderService: OrderService,
     private route: ActivatedRoute,
     private router: Router,
     private dateTransform: DateTransformService
@@ -91,10 +97,15 @@ export class OrderScreenComponent implements OnInit {
       case 1:
         this.servicesStep.reset();
         this.selectedSeats = [];
+        this.selectedServices = [];
         this.servicesStep.completed = false;
       case 2:
         this.confirmStep.reset();
+        this.totalPrice = 0;
         this.confirmStep.completed = false;
+        if (this?.selectedHall?.hallServices) {
+          this.initializeServices();
+        }
     }
   }
 
@@ -123,18 +134,62 @@ export class OrderScreenComponent implements OnInit {
 
   confirmSeats(): void {
     this.changeStep(2);
-    this.selectedHall.hallServices.forEach(service => {
-      this.selectedServices.push({serviceId: service.id, number: 0});
-    });
   }
 
   setSelectedServiceNumber(serviceId: number, isIncrease: boolean): void {
-    const index = this.selectedServices.findIndex(selectedService => selectedService.serviceId === serviceId);
+    const index = this.selectedServices.findIndex(selectedService => selectedService.hallServiceId === serviceId);
     if (isIncrease) {
       this.selectedServices[index].number++;
     } else {
       this.selectedServices[index].number > 0 ? this.selectedServices[index].number-- : this.selectedServices[index].number = 0;
     }
+  }
+
+  confirmServices(): void {
+    this.selectedServices = this.removeUnselectedServices();
+    this.updateOrderDetails();
+    this.changeStep(3);
+  }
+
+  getServiceName(id: number): string {
+    const service = this.selectedHall.hallServices.find(hallService => hallService.id === id);
+    return service.name;
+  }
+
+  getServicePrice(id: number): number {
+    const service = this.selectedHall.hallServices.find(hallService => hallService.id === id);
+    return service.price;
+  }
+
+  buy(): void {
+    this.orderService.buy(this.orderDetails).subscribe();
+  }
+
+  private initializeServices(): void {
+    this.selectedServices = [];
+    this.selectedHall.hallServices.forEach(service => {
+      this.selectedServices.push({hallServiceId: service.id, number: 0});
+    });
+  }
+
+  private updateOrderDetails(): void {
+    let total = 0;
+    total += this.selectedShow.price * this.selectedSeats.length;
+    this.selectedServices.forEach(service => {
+      const addon = this.selectedHall.hallServices.find(hallService => hallService.id === service.hallServiceId);
+      total += addon.price * service.number;
+    });
+    this.totalPrice = total;
+    this.orderDetails = {
+      showId: this.selectedShowId,
+      seatIds: this.selectedSeats.map(seat => seat.id),
+      orderAddons: this.selectedServices,
+      totalPrice: total
+    };
+  }
+
+  private removeUnselectedServices(): any[] {
+    return this.selectedServices.filter(service => service.number > 0);
   }
 
   private groupBy(array, keyGetter): ArrayLike<any> {

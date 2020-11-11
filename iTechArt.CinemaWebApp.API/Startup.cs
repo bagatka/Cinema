@@ -33,6 +33,8 @@ namespace iTechArt.CinemaWebApp.API
             services.AddAutoMapper(typeof(Startup));
 
             services.AddTransient<AccountService>();
+
+            services.AddTransient<OrderService>();
             
             services.AddRepositoryManager();
 
