@@ -39,7 +39,7 @@
         <h1
           class="current-seat">{{(onCurrentSeatPosition) ? 'Current seat: Row ' + onCurrentSeatPosition.row + ', Seat ' + onCurrentSeatPosition.seat : 'Current seat: '}} </h1>
         <app-hall-schema (enterSeatPosition)="displayCurrentSeatPosition($event)"
-                         [(schemaData)]="seatsSchemas" [activeSeatType]="activeSeatType"
+                         [(seatPositionsData)]="seatPositions" [activeSeatType]="activeSeatType"
                          (hallSize)="setSelectedSeats($event)"></app-hall-schema>
         <ng-container>
           <div class="picker" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1vw">

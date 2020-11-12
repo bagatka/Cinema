@@ -40,8 +40,11 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
                     new Ticket
                     {
                         ShowId = orderDetails.ShowId,
-                        SeatId = seatId,
-                        Price = show.Price
+                        TicketSeat = new TicketSeat
+                        {
+                            SeatPositionId = seatId,
+                            Status = "sold"
+                        }
                     }
                 )
                 .ToList();
@@ -71,14 +74,15 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
                 return false;
             }
 
-            var seats = await _repository.SeatsSchemas.GetSeatsAsync(
-                new SeatSchemaParameters
+            var seats = await _repository.SeatPositions.GetSeatsAsync(
+                new SeatPositionParameters
                 {
                     SeatIds = details.SeatIds
                 }
             );
 
-            var seatsCount = seats.Count();
+            var seatPositions = seats as SeatPosition[] ?? seats.ToArray();
+            var seatsCount = seatPositions.Count();
 
             if (seatsCount == 0)
             {
@@ -103,7 +107,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             if (details.OrderAddons.Length > 0)
             {
                 var hallServices = await _repository.HallServices.GetHallServicesAsync(
-                    new HallServiceParameters()
+                    new HallServiceParameters
                     {
                         HallServicesIds = details.OrderAddons.Select(orderAddon => orderAddon.HallServiceId)
                     }
@@ -122,7 +126,15 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
                 }
             }
 
-            return details.TotalPrice.Equals(show.Price * seatsCount + hallServicesTotal);
+            decimal seatsTotal = 0;
+            
+            foreach (var seatPosition in seatPositions)
+            {
+                seatsTotal += show.TypePrices
+                    .FirstOrDefault(typePrice => typePrice.SeatTypeId.Equals(seatPosition.SeatTypeId))?.Price ?? 0;
+            }
+            
+            return details.TotalPrice.Equals(seatsTotal + hallServicesTotal);
         }
     }
 }

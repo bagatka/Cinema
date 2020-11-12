@@ -14,10 +14,10 @@ const MAX_ROWS = 18;
 export class HallSchemaComponent implements OnInit, AfterViewInit {
 
   @Output() enterSeatPosition = new EventEmitter<SeatPosition>();
-  @Output() schemaDataChange = new EventEmitter<SeatPosition[]>();
+  @Output() seatPositionsDataChange = new EventEmitter<SeatPosition[]>();
   @Output() hallSize = new EventEmitter<number>();
   @Output() userSelectSeats = new EventEmitter<SeatPosition[]>();
-  @Input() schemaData: SeatPosition[];
+  @Input() seatPositionsData: SeatPosition[];
   @Input() soldSeats: SeatPosition[];
   @Input() activeSeatType: SeatType;
   @Input() userSelect: boolean;
@@ -53,7 +53,7 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
     if (!this.activeSeatType) {
       return;
     }
-    const seat = {seat: selectedColumn, row: selectedRow, type: this.activeSeatType};
+    const seat = {seat: selectedColumn, row: selectedRow, seatType: this.activeSeatType};
     if (this.userSelect) {
       const status = this.userSelectCheckBookingStatus(seat);
       this.userSelectColorizeSeat(seat, status);
@@ -63,15 +63,15 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private colorizeSeat(index: number, status: boolean, type: SeatType = this.activeSeatType): void {
+  private colorizeSeat(index: number, status: boolean, seatType: SeatType = this.activeSeatType): void {
     const element = document.getElementsByClassName('seat')[index];
     element.classList.remove(SeatType.Common, SeatType.Sofa, SeatType.VIP);
     if (status) {
-      element.classList.add(type);
+      element.classList.add(seatType);
     }
   }
 
-  private userSelectColorizeSeat(seat: SeatPosition, status: boolean, type: SeatType = this.activeSeatType): void {
+  private userSelectColorizeSeat(seat: SeatPosition, status: boolean, seatType: SeatType = this.activeSeatType): void {
     const index = this.countIndex(seat);
     const element = document.getElementsByClassName('seat')[index];
     if (status) {
@@ -80,8 +80,8 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
         selectedSeat.seat !== seat.seat || selectedSeat.row !== seat.row);
     } else {
       if (!element.classList.contains(SeatType.Empty)) {
-        element.classList.add(type);
-        const newSelectedSeat = this.schemaData.find(schemasSeat => schemasSeat.seat === seat.seat && schemasSeat.row === seat.row);
+        element.classList.add(seatType);
+        const newSelectedSeat = this.seatPositionsData.find(schemasSeat => schemasSeat.seat === seat.seat && schemasSeat.row === seat.row);
         this.userSelectedSeats.push(newSelectedSeat);
       }
     }
@@ -106,7 +106,7 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   }
 
   private checkSeat(seat: SeatPosition): boolean {
-    if (this.schemaData.find(s => s.row === seat.row && s.seat === seat.seat)) {
+    if (this.seatPositionsData.find(s => s.row === seat.row && s.seat === seat.seat)) {
       this.removeSeat(seat);
       return false;
     }
@@ -116,29 +116,29 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   }
 
   private removeSeat(seat: SeatPosition): void {
-    this.schemaData = this.schemaData.filter(savedSeat => savedSeat.row !== seat.row || savedSeat.seat !== seat.seat);
+    this.seatPositionsData = this.seatPositionsData.filter(savedSeat => savedSeat.row !== seat.row || savedSeat.seat !== seat.seat);
     this.updateSelectedSeatsData();
   }
 
   private addSeat(seat: SeatPosition): void {
-    this.schemaData.push(seat);
+    this.seatPositionsData.push(seat);
   }
 
   private drawSchema(): void {
-    for (const seat of this.schemaData) {
+    for (const seat of this.seatPositionsData) {
       const index = this.countIndex(seat);
       document.getElementsByClassName('seat')[index].classList.remove(SeatType.Empty);
-      this.colorizeSeat(index, true, seat.type);
+      this.colorizeSeat(index, true, seat.seatType);
     }
   }
 
   updateSelectedSeatsData(): void {
-    this.schemaDataChange.emit(this.schemaData);
-    this.hallSize.emit(this.schemaData.length);
+    this.seatPositionsDataChange.emit(this.seatPositionsData);
+    this.hallSize.emit(this.seatPositionsData.length);
   }
 
   updateSelectedHint(selectedRow, selectedColumn): void {
-    this.enterSeatPosition.emit({seat: selectedColumn, row: selectedRow, type: this.activeSeatType});
+    this.enterSeatPosition.emit({seat: selectedColumn, row: selectedRow, seatType: this.activeSeatType});
   }
 
   deleteSelectedHint(): void {

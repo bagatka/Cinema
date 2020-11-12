@@ -22,7 +22,7 @@ namespace iTechArt.CinemaWebApp.API.Models
         public Cinema Cinema { get; set; }
         
         public ICollection<Show> Shows { get; set; }
-        public ICollection<SeatsSchema> SeatsSchemas { get; set; }
+        public ICollection<SeatPosition> SeatPositions { get; set; }
         public ICollection<HallService> HallServices { get; set; }
     }
 }

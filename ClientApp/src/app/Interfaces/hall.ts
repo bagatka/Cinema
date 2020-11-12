@@ -6,6 +6,6 @@ export interface Hall {
   name: string;
   seats: number;
   cinemaName: string;
-  seatsSchemas: SeatPosition[];
+  seatPositions: SeatPosition[];
   hallServices: HallService[];
 }

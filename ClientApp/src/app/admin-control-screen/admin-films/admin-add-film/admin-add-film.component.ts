@@ -35,8 +35,11 @@ export class AdminAddFilmComponent implements OnInit {
   }
 
   createFilm(): void {
-    this.filmService.createFilm(this.addFilmInput.value).subscribe(() => {
+    this.filmService.createFilm(this.addFilmInput.value).subscribe(() =>
+      {
       this.snackbarService.displaySnackbar(SnackbarMessages.created);
-    });
+    },
+      () => this.snackbarService.displaySnackbar(SnackbarMessages.error)
+    );
   }
 }

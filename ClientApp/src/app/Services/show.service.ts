@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 
 import {Show} from '../Interfaces/show';
 import {ShowForManipulation} from '../Interfaces/show-for-manipulation';
@@ -10,6 +10,7 @@ import {ShowParameters} from '../Interfaces/show-parameters';
 import {ApiPaths, environment} from '../../environments/environment';
 import {DateTransformService} from './date-transform.service';
 import {SeatPosition} from '../Interfaces/seat-position';
+import {TypePrice} from '../Interfaces/type-price';
 
 @Injectable({
   providedIn: 'root'
@@ -36,13 +37,6 @@ export class ShowService {
     return this.http.get<Show>(this.baseUrl + `/${id}`);
   }
 
-  getShowsByFilmTitle(term: string): Observable<Show[]> {
-    if (!term.trim()) {
-      return of([]);
-    }
-    return this.http.get<Show[]>(`${this.baseUrl}/?filmTitle=${term}`);
-  }
-
   getShowsByHallId(id: number, date: Date): Observable<Show[]> {
     return this.http.get<Show[]>(`${this.baseUrl}?hallId=${id}&date=${this.dateTransform.formateDate(date)}`);
   }
@@ -64,6 +58,10 @@ export class ShowService {
 
   getSoldSeatsByShowId(showId: number): Observable<SeatPosition[]> {
     return this.http.get<SeatPosition[]>(`${this.baseUrl}/${showId}/seats/sold`);
+  }
+
+  getSeatPricesByShowId(showId: number): Observable<TypePrice[]> {
+    return this.http.get<TypePrice[]>(`${this.baseUrl}/${showId}/seats/prices`);
   }
 
   createShow(show: ShowForManipulation): Observable<Show> {

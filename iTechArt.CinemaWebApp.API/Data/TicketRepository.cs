@@ -25,7 +25,7 @@ namespace iTechArt.CinemaWebApp.API.Data
 
             if (ticketParameters.SeatIds != null)
             {
-                tickets = tickets.Where(ticket => ticketParameters.SeatIds.Contains(ticket.SeatId));
+                tickets = tickets.Where(ticket => ticketParameters.SeatIds.Contains(ticket.TicketSeat.SeatPosition.Id));
             }
 
             if (ticketParameters.ShowId != null)

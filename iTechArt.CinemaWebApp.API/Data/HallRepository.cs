@@ -19,7 +19,8 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
             var halls = FindAll()
                 .Include(hall => hall.Cinema)
-                .Include(hall => hall.SeatsSchemas)
+                .Include(hall => hall.SeatPositions)
+                    .ThenInclude(seatPosition => seatPosition.SeatType)
                 .Include(hall => hall.HallServices)
                 .Include(hall => hall.Shows)
                 .AsNoTracking();
@@ -44,7 +45,8 @@ namespace iTechArt.CinemaWebApp.API.Data
         public Task<Hall> GetHallAsync(int id)
         {
             return FindByCondition(hall => hall.Id.Equals(id))
-                .Include(hall => hall.SeatsSchemas)
+                .Include(hall => hall.SeatPositions)
+                    .ThenInclude(seatPosition => seatPosition.SeatType)
                 .Include(hall => hall.HallServices)
                     .ThenInclude(hallService => hallService.Service)
                 .AsNoTracking()

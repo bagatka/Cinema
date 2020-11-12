@@ -7,8 +7,8 @@
     <div class="popular-films">
       <div *ngFor="let film of films$ | async">
         <div class="item">
-          <img [src]="film.posterUrl" class="poster">
-          <h3 class="film-title">{{film.title}}</h3>
+          <img [src]="film?.posterUrl" class="poster">
+          <h3 class="film-title">{{film?.title}}</h3>
         </div>
       </div>
     </div>

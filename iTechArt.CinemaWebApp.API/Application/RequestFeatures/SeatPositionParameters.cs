@@ -2,7 +2,7 @@
 
 namespace iTechArt.CinemaWebApp.API.Application.RequestFeatures
 {
-    public class SeatSchemaParameters : RequestParameters
+    public class SeatPositionParameters : RequestParameters
     {
         public IEnumerable<int> SeatIds { get; set; }
     }

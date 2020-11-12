@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace iTechArt.CinemaWebApp.API.Application.DTOs.SeatsSchema
+namespace iTechArt.CinemaWebApp.API.Application.DTOs.SeatPosition
 {
-    public class SeatsSchemaForManipulationDto
+    public class SeatPositionForManipulationDto
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Seat is required.")]
@@ -11,8 +11,7 @@ namespace iTechArt.CinemaWebApp.API.Application.DTOs.SeatsSchema
         [Required(ErrorMessage = "Row is required.")]
         [Range(0, int.MaxValue)]
         public int Row { get; set; }
-        [Required]
-        [MaxLength(10, ErrorMessage = "Type length can't be more than 10.")]
-        public string Type { get; set; }
+        [Required(ErrorMessage = "SeatTypeId is required.")]
+        public int SeatTypeId { get; set; }
     }
 }

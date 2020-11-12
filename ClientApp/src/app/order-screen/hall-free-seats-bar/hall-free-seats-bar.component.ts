@@ -23,8 +23,8 @@ export class HallFreeSeatsBarComponent {
     return this.dateTransform.formateDateHM(dateString);
   }
 
-  getPercentage(free, size): number {
-    return (size - free) * (100 / size);
+  getPercentage(sold, size): number {
+    return (100 / size) * sold;
   }
 
   selectShow(showId: number): void {

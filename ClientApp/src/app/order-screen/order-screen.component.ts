@@ -18,6 +18,7 @@ import {OrderDetails} from '../Interfaces/order-details';
 import {OrderService} from '../Services/order.service';
 import {SnackbarService} from '../Services/snackbar.service';
 import {SnackbarMessages} from '../Enums/snackbar-messages.enum';
+import {TypePrice} from '../Interfaces/type-price';
 
 @Component({
   selector: 'app-order-screen',
@@ -46,12 +47,14 @@ export class OrderScreenComponent implements OnInit {
   selectedSeats: SeatPosition[];
   soldSeats: SeatPosition[];
   selectedServices = [];
+  selectedShowPrices: TypePrice[] = [];
   totalPrice: number;
   private orderDetails: OrderDetails;
   private searchTerms = new Subject<Filter>();
   private searchSelectedShow = new Subject<number>();
   private searchSoldSeats = new Subject<number>();
   private searchSelectedHall = new Subject<number>();
+  private searchSelectedShowPrice = new Subject<number>();
 
   constructor(
     private showService: ShowService,
@@ -75,19 +78,10 @@ export class OrderScreenComponent implements OnInit {
       return this.dateTransform.formateDateDMY(new Date(show.startDateTime));
     }));
 
-    this.searchSelectedShow.pipe(
-      switchMap((showId: number) => this.showService.getShowById(showId))
-    ).subscribe(show => {
-      this.selectedShow = show;
-      this.searchSoldSeatsByShowId(show.id);
-      this.searchHallById(show.hallId);
-    });
-
-    this.searchSoldSeats.pipe(
-      switchMap((showId: number) => this.showService.getSoldSeatsByShowId(showId))
-    ).subscribe(soldSeats => {
-      console.log(soldSeats);
-      this.soldSeats = soldSeats;
+    this.searchSelectedShowPrice.pipe(
+      switchMap((showId: number) => this.showService.getSeatPricesByShowId(showId))
+    ).subscribe(typePrices => {
+      this.selectedShowPrices = typePrices;
     });
 
     this.searchSelectedHall.pipe(
@@ -95,6 +89,21 @@ export class OrderScreenComponent implements OnInit {
     ).subscribe(hall => {
       this.selectedHall = hall;
       this.initializeServices();
+    });
+
+    this.searchSoldSeats.pipe(
+      switchMap((showId: number) => this.showService.getSoldSeatsByShowId(showId))
+    ).subscribe(soldSeats => {
+      this.soldSeats = soldSeats;
+      this.searchShowPricesByShowId(this.selectedShowId);
+    });
+
+    this.searchSelectedShow.pipe(
+      switchMap((showId: number) => this.showService.getShowById(showId))
+    ).subscribe(show => {
+      this.selectedShow = show;
+      this.searchSoldSeatsByShowId(show.id);
+      this.searchHallById(show.hallId);
     });
   }
 
@@ -109,6 +118,7 @@ export class OrderScreenComponent implements OnInit {
         this.selectedHall = null;
         this.selectedSeats = [];
         this.selectedServices = [];
+        this.selectedShowPrices = [];
       case 1:
         this.servicesStep.reset();
         this.servicesStep.completed = false;
@@ -140,6 +150,11 @@ export class OrderScreenComponent implements OnInit {
 
   updateSelectedSeats(selectedSeats: SeatPosition[]): void {
     this.selectedSeats = selectedSeats;
+    this.selectedSeats.map(selectedSeat => {
+        selectedSeat.price = this.selectedShowPrices.find(typePrice => typePrice.seatTypeId === selectedSeat.seatTypeId).price;
+        return selectedSeat;
+      }
+    );
     if (this.selectedSeats.length === 0) {
       this.seatsStep.completed = false;
     }
@@ -177,8 +192,7 @@ export class OrderScreenComponent implements OnInit {
     this.selectedServices = this.removeUnselectedServices();
     this.orderService.buy(this.orderDetails).subscribe(
       () => this.router.navigateByUrl('/profile/tickets'),
-      (error) => {
-        console.log(error);
+      () => {
         this.snackbarService.displaySnackbar(SnackbarMessages.error);
       }
     );
@@ -193,7 +207,7 @@ export class OrderScreenComponent implements OnInit {
 
   private updateOrderDetails(): void {
     let total = 0;
-    total += this.selectedShow.price * this.selectedSeats.length;
+    this.selectedSeats.forEach(selectedSeat => total += selectedSeat.price);
     this.selectedServices.forEach(service => {
       const addon = this.selectedHall.hallServices.find(hallService => hallService.id === service.hallServiceId);
       total += addon.price * service.number;
@@ -246,6 +260,10 @@ export class OrderScreenComponent implements OnInit {
 
   private searchSoldSeatsByShowId(showId: number): void {
     this.searchSoldSeats.next(showId);
+  }
+
+  private searchShowPricesByShowId(showId: number): void {
+    this.searchSelectedShowPrice.next(showId);
   }
 
   private checkFilterDates(): void {

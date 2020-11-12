@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using iTechArt.CinemaWebApp.API.Application.DTOs.HallService;
-using iTechArt.CinemaWebApp.API.Application.DTOs.SeatsSchema;
+using iTechArt.CinemaWebApp.API.Application.DTOs.SeatPosition;
 
 namespace iTechArt.CinemaWebApp.API.Application.DTOs.Hall
 {
@@ -17,7 +17,7 @@ namespace iTechArt.CinemaWebApp.API.Application.DTOs.Hall
         public int Seats { get; set; }
         
         [Required(ErrorMessage = "Seat schema is required.")]
-        public IEnumerable<SeatsSchemaForManipulationDto> SeatsSchemas { get; set; }
+        public IEnumerable<SeatPositionForManipulationDto> SeatPositions { get; set; }
         public IEnumerable<HallServiceForManipulationDto> HallServices { get; set; }
     }
 }

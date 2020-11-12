@@ -4,5 +4,7 @@ export interface SeatPosition {
   id?: number;
   seat: number;
   row: number;
-  type?: SeatType;
+  seatTypeId?: number;
+  seatType?: SeatType;
+  price?: number;
 }

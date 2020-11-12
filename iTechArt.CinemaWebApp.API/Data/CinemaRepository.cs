@@ -23,6 +23,9 @@ namespace iTechArt.CinemaWebApp.API.Data
                 .Include(cinema => cinema.Halls)
                     .ThenInclude(hall => hall.Shows)
                         .ThenInclude(show => show.Film)
+                .Include(cinema => cinema.Halls)
+                    .ThenInclude(hall => hall.SeatPositions)
+                        .ThenInclude(seatPosition => seatPosition.SeatType)
                 .AsNoTracking();
             
             if (!string.IsNullOrEmpty(cinemaParameters.Name))
@@ -46,7 +49,8 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
             return await FindByCondition(cinema => cinema.Id.Equals(cinemaId))
                 .Include(cinema => cinema.Halls)
-                    .ThenInclude(hall => hall.SeatsSchemas)
+                    .ThenInclude(hall => hall.SeatPositions)
+                        .ThenInclude(seatPosition => seatPosition.SeatType)
                 .SingleOrDefaultAsync();
         }
 

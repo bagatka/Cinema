@@ -13,6 +13,7 @@ import {SnackbarService} from '../../../Services/snackbar.service';
 import {CinemaService} from '../../../Services/cinema.service';
 
 import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
+import {SeatType} from '../../../Enums/seat-type.enum';
 
 
 @Component({
@@ -67,7 +68,7 @@ export class AdminEditCinemaComponent implements OnInit {
       name: 'Change the name',
       seats: 0,
       cinemaName: '',
-      seatsSchemas: [],
+      seatPositions: [],
       hallServices: []
     });
   }
@@ -76,9 +77,29 @@ export class AdminEditCinemaComponent implements OnInit {
     this.cinemaData = this.editCinemaInput.value;
     this.cinemaData.halls = this.halls;
     this.cinemaData.id = this.id;
-    this.cinemaService.updateCinema(this.cinemaData, this.id).subscribe();
-    this.snackbarService.displaySnackbar(SnackbarMessages.updated);
-    this.location.back();
+    this.cinemaData.halls.forEach(hall => hall.seatPositions.map(seatPosition => {
+      let seatId: number;
+      switch (seatPosition.seatType) {
+        case SeatType.Common:
+          seatId = 1;
+          break;
+        case SeatType.Sofa:
+          seatId = 2;
+          break;
+        case SeatType.VIP:
+          seatId = 3;
+          break;
+      }
+      seatPosition.seatTypeId = seatId;
+      seatPosition.seatType = null;
+    }));
+    this.cinemaService.updateCinema(this.cinemaData, this.id).subscribe(
+      () => {
+        this.location.back();
+        this.snackbarService.displaySnackbar(SnackbarMessages.updated);
+      },
+      () => this.snackbarService.displaySnackbar(SnackbarMessages.error)
+    );
   }
 
   cancel(): void {

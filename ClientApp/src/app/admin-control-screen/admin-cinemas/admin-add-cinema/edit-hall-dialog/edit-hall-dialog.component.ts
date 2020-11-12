@@ -21,7 +21,7 @@ export class EditHallDialogComponent implements AfterContentInit {
 
   addHallInput: FormGroup;
   onCurrentSeatPosition: SeatPosition;
-  seatsSchemas: SeatPosition[];
+  seatPositions: SeatPosition[];
   activeSeatType: SeatType;
   selectedSeats: number;
   hallSizeError: boolean;
@@ -40,9 +40,9 @@ export class EditHallDialogComponent implements AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-    this.seatsSchemas = [...this.data.hallData.seatsSchemas];
-    this.selectedSeats = this.seatsSchemas.length;
-    this.hallSizeError = this.selectedSeats !== this.seatsSchemas.length;
+    this.seatPositions = [...this.data.hallData.seatPositions];
+    this.selectedSeats = this.seatPositions.length;
+    this.hallSizeError = this.selectedSeats !== this.seatPositions.length;
     this.hallServices = this.data.hallData.hallServices ? this.data.hallData.hallServices : [];
     this.addHallInput = this.formBuilder.group({
       name: new FormControl(this.data.hallData.name, Validators.required),
@@ -61,8 +61,8 @@ export class EditHallDialogComponent implements AfterContentInit {
       this.data.hallData.name = this.addHallInput.value.name;
       this.data.hallData.seats = this.addHallInput.value.seats;
     }
-    if (!this.schemasCompare(this.data.hallData.seatsSchemas, this.seatsSchemas) && this.addHallInput.valid) {
-      this.data.hallData.seatsSchemas = this.seatsSchemas;
+    if (!this.schemasCompare(this.data.hallData.seatPositions, this.seatPositions) && this.addHallInput.valid) {
+      this.data.hallData.seatPositions = this.seatPositions;
     }
     if (!this.servicesCompare(this.data.hallData.hallServices, this.hallServices)) {
       this.data.hallData.hallServices = this.hallServices;

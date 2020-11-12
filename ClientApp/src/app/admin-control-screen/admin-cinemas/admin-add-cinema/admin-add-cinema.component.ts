@@ -11,6 +11,7 @@ import {SnackbarMessages} from '../../../Enums/snackbar-messages.enum';
 
 import {SnackbarService} from '../../../Services/snackbar.service';
 import {CinemaService} from '../../../Services/cinema.service';
+import {SeatType} from '../../../Enums/seat-type.enum';
 
 @Component({
   selector: 'app-admin-add-cinema',
@@ -45,7 +46,7 @@ export class AdminAddCinemaComponent implements OnInit {
       name: 'Change the name',
       seats: 0,
       cinemaName: '',
-      seatsSchemas: [],
+      seatPositions: [],
       hallServices: []
     });
   }
@@ -53,8 +54,29 @@ export class AdminAddCinemaComponent implements OnInit {
   createCinema(): void {
     this.cinemaData = this.addCinemaInput.value;
     this.cinemaData.halls = this.halls;
-    this.cinemaService.createCinema(this.cinemaData).subscribe();
-    this.snackbarService.displaySnackbar(SnackbarMessages.created);
+    this.cinemaData.halls.forEach(hall => hall.seatPositions.map(seatPosition => {
+      let seatId: number;
+      switch (seatPosition.seatType) {
+        case SeatType.Common:
+          seatId = 1;
+          break;
+        case SeatType.Sofa:
+          seatId = 2;
+          break;
+        case SeatType.VIP:
+          seatId = 3;
+          break;
+      }
+      seatPosition.seatTypeId = seatId;
+      seatPosition.seatType = null;
+    }));
+    this.cinemaService.createCinema(this.cinemaData).subscribe(
+      () => {
+        this.snackbarService.displaySnackbar(SnackbarMessages.created);
+        // TODO: Clean fields or redirect?
+      },
+      () => this.snackbarService.displaySnackbar(SnackbarMessages.error)
+    );
   }
 
   openEditHallDialog(hall): void {

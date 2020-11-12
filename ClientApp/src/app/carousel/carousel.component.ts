@@ -50,7 +50,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
 
   public getFilmName(): string {
     if (this.films) {
-      return this.films[this.currentSlide].title;
+      return this.films[this.currentSlide]?.title;
     }
     return '';
   }

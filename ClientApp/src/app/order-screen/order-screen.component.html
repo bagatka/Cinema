@@ -17,7 +17,7 @@
       <mat-step label="Seats" [completed]="false" #seatsStep>
         <mat-card-title class="title">Select the seats</mat-card-title>
         <div fxLayout="row" fxLayoutAlign="space-around start">
-          <app-hall-schema *ngIf="selectedHall" [(schemaData)]="selectedHall.seatsSchemas" [userSelect]="true"
+          <app-hall-schema *ngIf="selectedHall" [(seatPositionsData)]="selectedHall.seatPositions" [userSelect]="true"
                            (userSelectSeats)="updateSelectedSeats($event)" [soldSeats]="soldSeats"></app-hall-schema>
           <div fxLayout="column" fxLayoutAlign="start center" class="tickets-list">
             <button mat-raised-button color="primary" [disabled]="!selectedSeats?.length"
@@ -27,7 +27,7 @@
             <mat-card-title>Tickets</mat-card-title>
             <div *ngFor="let seat of selectedSeats">
               <mat-card-title>
-                {{'Row: ' + seat.row + ' Seat: ' + seat.seat + ' x ' + selectedShow.price + '$'}}
+                {{'Row: ' + seat.row + ' Seat: ' + seat.seat + ' x ' + seat.price + '$'}}
               </mat-card-title>
             </div>
           </div>
@@ -60,11 +60,11 @@
           <mat-card-title class="subtitle">Tickets</mat-card-title>
           <div class="data-container" fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let seat of selectedSeats">
             <mat-card-title>
-              {{seat.type}}
+              {{seat.seatType}}
             </mat-card-title>
             <div>
               <mat-card-title>
-                {{selectedShow.price + '$'}}
+                {{seat.price + '$'}}
               </mat-card-title>
             </div>
           </div>

@@ -7,7 +7,7 @@ using iTechArt.CinemaWebApp.API.Application.DTOs.Hall;
 using iTechArt.CinemaWebApp.API.Application.DTOs.HallService;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Order;
 using iTechArt.CinemaWebApp.API.Application.DTOs.OrderAddon;
-using iTechArt.CinemaWebApp.API.Application.DTOs.SeatsSchema;
+using iTechArt.CinemaWebApp.API.Application.DTOs.SeatPosition;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Services;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Show;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Ticket;
@@ -52,6 +52,9 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
                 .ForMember(showDto => showDto.HallSize,
                     src => src.MapFrom(show => show.Hall.Seats)
                 )
+                .ForMember(showDto => showDto.SoldTickets,
+                    src => src.MapFrom(show => show.Tickets.Count)
+                )
                 .ForMember(showDto => showDto.CinemaImageUrl,
                     src => src.MapFrom(show => show.Hall.Cinema.ImageUrl)
                 )
@@ -89,13 +92,21 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
 
             CreateMap<HallServiceForManipulationDto, HallService>();
 
-            CreateMap<SeatsSchema, SeatsSchemaDto>()
+            CreateMap<SeatPosition, SeatPositionDto>()
                 .ForMember(
-                    seatsSchemaDto => seatsSchemaDto.HallName,
-                    src => src.MapFrom(seatsSchema => seatsSchema.Hall.Name)
+                    seatPositionDto => seatPositionDto.HallName,
+                    src => src.MapFrom(seatPosition => seatPosition.Hall.Name)
+                )
+                .ForMember(
+                    seatPositionDto => seatPositionDto.SeatType,
+                    src => src.MapFrom(seatPosition => seatPosition.SeatType.Type)
+                )
+                .ForMember(
+                    seatPositionDto => seatPositionDto.SeatTypeId,
+                    src => src.MapFrom(seatPosition => seatPosition.SeatType.Id)
                 );
 
-            CreateMap<SeatsSchemaForManipulationDto, SeatsSchema>();
+            CreateMap<SeatPositionForManipulationDto, SeatPosition>();
 
             CreateMap<Service, ServiceDto>();
 
@@ -104,11 +115,11 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
             CreateMap<Ticket, TicketDto>()
                 .ForMember(
                     ticketDto => ticketDto.HallName,
-                    src => src.MapFrom(ticket => ticket.SeatsSchema.Hall.Name)
+                    src => src.MapFrom(ticket => ticket.Show.Hall.Name)
                 )
                 .ForMember(
                     ticketDto => ticketDto.CinemaName,
-                    src => src.MapFrom(ticket => ticket.SeatsSchema.Hall.Cinema.Name)
+                    src => src.MapFrom(ticket => ticket.Show.Hall.Cinema.Name)
                 )
                 .ForMember(
                     ticketDto => ticketDto.FilmTitle,
@@ -120,11 +131,11 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
                 )
                 .ForMember(
                     ticketDto => ticketDto.Seat,
-                    src => src.MapFrom(ticket => ticket.SeatsSchema.Seat)
+                    src => src.MapFrom(ticket => ticket.TicketSeat.SeatPosition.Seat)
                 )
                 .ForMember(
                     ticketDto => ticketDto.Row,
-                    src => src.MapFrom(ticket => ticket.SeatsSchema.Row)
+                    src => src.MapFrom(ticket => ticket.TicketSeat.SeatPosition.Row)
                 );
 
             CreateMap<TicketForManipulationDto, Ticket>();

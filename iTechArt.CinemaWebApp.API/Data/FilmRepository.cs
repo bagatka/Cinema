@@ -77,7 +77,7 @@ namespace iTechArt.CinemaWebApp.API.Data
             if (filmParameters.Seats != null)
             {
                 films = films.Where(film => film.Shows.Any(
-                        show => show.FreeSeats >= filmParameters.Seats
+                        show => show.Hall.Seats - show.Tickets.Count >= filmParameters.Seats
                     )
                 );
             }

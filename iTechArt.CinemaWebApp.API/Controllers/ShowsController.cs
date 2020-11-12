@@ -9,7 +9,7 @@ using AutoMapper;
 
 using iTechArt.CinemaWebApp.API.Application.ActionFilters;
 using iTechArt.CinemaWebApp.API.Application.Contracts;
-using iTechArt.CinemaWebApp.API.Application.DTOs.SeatsSchema;
+using iTechArt.CinemaWebApp.API.Application.DTOs.SeatPosition;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Show;
 using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
@@ -68,11 +68,33 @@ namespace iTechArt.CinemaWebApp.API.Controllers
                 return NotFound($"Show with id: {showId} doesn't exist in the database.");
             }
 
-            var soldSeats = show.Tickets.Select(ticket => ticket.SeatsSchema);
+            var soldSeats = show.Tickets.Select(ticket => ticket.TicketSeat.SeatPosition);
 
-            var soldSeatsDto = _mapper.Map<IEnumerable<SeatsSchemaDto>>(soldSeats);
+            var soldSeatsDto = _mapper.Map<IEnumerable<SeatPositionDto>>(soldSeats);
             
             return Ok(soldSeatsDto);
+        }
+        
+        [AllowAnonymous]
+        [HttpGet("{showId:int}/seats/prices")]
+        public async Task<IActionResult> GetSeatPrices(int showId)
+        {
+            var show = await _repository.Shows.GetShowAsync(showId);
+            
+            if (show == null)
+            {
+                return NotFound($"Show with id: {showId} doesn't exist in the database.");
+            }
+
+            var seatPrices = show.TypePrices.Select(typePrice => new TypePrice
+                {
+                    Id = typePrice.Id,
+                    SeatTypeId = typePrice.SeatTypeId,
+                    Price = typePrice.Price
+                }
+            );
+
+            return Ok(seatPrices);
         }
         
         [HttpPost]

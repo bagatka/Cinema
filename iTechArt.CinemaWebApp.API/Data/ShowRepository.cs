@@ -23,6 +23,7 @@ namespace iTechArt.CinemaWebApp.API.Data
                 .Include(show => show.Film)
                 .Include(show => show.Hall)
                     .ThenInclude(hall => hall.Cinema)
+                .Include(show => show.Tickets)
                 .AsNoTracking();
 
             if (showParameters.HallId != null)
@@ -76,7 +77,7 @@ namespace iTechArt.CinemaWebApp.API.Data
 
             if (showParameters.Seats != null)
             {
-                shows = shows.Where(show => show.FreeSeats > showParameters.Seats);
+                shows = shows.Where(show => show.Hall.Seats - show.Tickets.Count > showParameters.Seats); // TODO: Check > (>=)
             }
 
             return await PagedList<Show>.ToPagedList(
@@ -93,7 +94,9 @@ namespace iTechArt.CinemaWebApp.API.Data
                 .Include(show => show.Hall)
                     .ThenInclude(hall => hall.Cinema)
                 .Include(show => show.Tickets)
-                    .ThenInclude(ticket => ticket.SeatsSchema)
+                    .ThenInclude(ticket => ticket.TicketSeat)
+                        .ThenInclude(ticketSeat => ticketSeat.SeatPosition)
+                .Include(show => show.TypePrices)
                 .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
