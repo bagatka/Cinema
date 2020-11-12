@@ -16,7 +16,8 @@ import {HallService} from '../Services/hall.service';
 import {SeatPosition} from '../Interfaces/seat-position';
 import {OrderDetails} from '../Interfaces/order-details';
 import {OrderService} from '../Services/order.service';
-import {getTokenAtPosition} from '@angular/compiler-cli/src/ngtsc/util/src/typescript';
+import {SnackbarService} from '../Services/snackbar.service';
+import {SnackbarMessages} from '../Enums/snackbar-messages.enum';
 
 @Component({
   selector: 'app-order-screen',
@@ -43,17 +44,20 @@ export class OrderScreenComponent implements OnInit {
   selectedShow: Show;
   selectedHall: Hall;
   selectedSeats: SeatPosition[];
+  soldSeats: SeatPosition[];
   selectedServices = [];
   totalPrice: number;
   private orderDetails: OrderDetails;
   private searchTerms = new Subject<Filter>();
   private searchSelectedShow = new Subject<number>();
+  private searchSoldSeats = new Subject<number>();
   private searchSelectedHall = new Subject<number>();
 
   constructor(
     private showService: ShowService,
     private hallService: HallService,
     private orderService: OrderService,
+    private snackbarService: SnackbarService,
     private route: ActivatedRoute,
     private router: Router,
     private dateTransform: DateTransformService
@@ -75,13 +79,22 @@ export class OrderScreenComponent implements OnInit {
       switchMap((showId: number) => this.showService.getShowById(showId))
     ).subscribe(show => {
       this.selectedShow = show;
+      this.searchSoldSeatsByShowId(show.id);
       this.searchHallById(show.hallId);
+    });
+
+    this.searchSoldSeats.pipe(
+      switchMap((showId: number) => this.showService.getSoldSeatsByShowId(showId))
+    ).subscribe(soldSeats => {
+      console.log(soldSeats);
+      this.soldSeats = soldSeats;
     });
 
     this.searchSelectedHall.pipe(
       switchMap((hallId: number) => this.hallService.getHallById(hallId))
     ).subscribe(hall => {
       this.selectedHall = hall;
+      this.initializeServices();
     });
   }
 
@@ -94,18 +107,15 @@ export class OrderScreenComponent implements OnInit {
         this.seatsStep.reset();
         this.selectedShowId = null;
         this.selectedHall = null;
-      case 1:
-        this.servicesStep.reset();
         this.selectedSeats = [];
         this.selectedServices = [];
+      case 1:
+        this.servicesStep.reset();
         this.servicesStep.completed = false;
       case 2:
         this.confirmStep.reset();
         this.totalPrice = 0;
         this.confirmStep.completed = false;
-        if (this?.selectedHall?.hallServices) {
-          this.initializeServices();
-        }
     }
   }
 
@@ -130,6 +140,9 @@ export class OrderScreenComponent implements OnInit {
 
   updateSelectedSeats(selectedSeats: SeatPosition[]): void {
     this.selectedSeats = selectedSeats;
+    if (this.selectedSeats.length === 0) {
+      this.seatsStep.completed = false;
+    }
   }
 
   confirmSeats(): void {
@@ -146,7 +159,6 @@ export class OrderScreenComponent implements OnInit {
   }
 
   confirmServices(): void {
-    this.selectedServices = this.removeUnselectedServices();
     this.updateOrderDetails();
     this.changeStep(3);
   }
@@ -162,7 +174,14 @@ export class OrderScreenComponent implements OnInit {
   }
 
   buy(): void {
-    this.orderService.buy(this.orderDetails).subscribe();
+    this.selectedServices = this.removeUnselectedServices();
+    this.orderService.buy(this.orderDetails).subscribe(
+      () => this.router.navigateByUrl('/profile/tickets'),
+      (error) => {
+        console.log(error);
+        this.snackbarService.displaySnackbar(SnackbarMessages.error);
+      }
+    );
   }
 
   private initializeServices(): void {
@@ -223,6 +242,10 @@ export class OrderScreenComponent implements OnInit {
 
   private searchHallById(hallId: number): void {
     this.searchSelectedHall.next(hallId);
+  }
+
+  private searchSoldSeatsByShowId(showId: number): void {
+    this.searchSoldSeats.next(showId);
   }
 
   private checkFilterDates(): void {

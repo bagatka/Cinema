@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using iTechArt.CinemaWebApp.API.Application.DTOs.Ticket;
 
 namespace iTechArt.CinemaWebApp.API.Application.DTOs.Show
 {

@@ -92,6 +92,8 @@ namespace iTechArt.CinemaWebApp.API.Data
                 .Include(show => show.Film)
                 .Include(show => show.Hall)
                     .ThenInclude(hall => hall.Cinema)
+                .Include(show => show.Tickets)
+                    .ThenInclude(ticket => ticket.SeatsSchema)
                 .AsNoTracking()
                 .SingleOrDefaultAsync();
         }

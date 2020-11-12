@@ -18,7 +18,7 @@
         <mat-card-title class="title">Select the seats</mat-card-title>
         <div fxLayout="row" fxLayoutAlign="space-around start">
           <app-hall-schema *ngIf="selectedHall" [(schemaData)]="selectedHall.seatsSchemas" [userSelect]="true"
-                           (userSelectSeats)="updateSelectedSeats($event)"></app-hall-schema>
+                           (userSelectSeats)="updateSelectedSeats($event)" [soldSeats]="soldSeats"></app-hall-schema>
           <div fxLayout="column" fxLayoutAlign="start center" class="tickets-list">
             <button mat-raised-button color="primary" [disabled]="!selectedSeats?.length"
                     class="seat-button confirm-button"
@@ -69,14 +69,16 @@
             </div>
           </div>
           <mat-card-title class="subtitle" *ngIf="selectedServices?.length">Services</mat-card-title>
-          <div class="data-container" fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let service of selectedServices">
-            <mat-card-title>
-              {{getServiceName(service.hallServiceId)}}
-            </mat-card-title>
-            <div>
+          <div *ngFor="let service of selectedServices">
+            <div class="data-container" fxLayout="row" fxLayoutAlign="space-between center" *ngIf="service.number > 0">
               <mat-card-title>
-                {{service.number * getServicePrice(service.hallServiceId) + '$'}}
+                {{getServiceName(service.hallServiceId)}}
               </mat-card-title>
+              <div>
+                <mat-card-title>
+                  {{service.number * getServicePrice(service.hallServiceId) + '$'}}
+                </mat-card-title>
+              </div>
             </div>
           </div>
           <div class="data-container total-container" fxLayout="row" fxLayoutAlign="end center">

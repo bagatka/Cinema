@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using AutoMapper;
 
 using iTechArt.CinemaWebApp.API.Application.ActionFilters;
 using iTechArt.CinemaWebApp.API.Application.Contracts;
+using iTechArt.CinemaWebApp.API.Application.DTOs.SeatsSchema;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Show;
 using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
@@ -53,6 +55,24 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             var showsDto = _mapper.Map<ShowDto>(show);
             
             return Ok(showsDto);
+        }
+        
+        [AllowAnonymous]
+        [HttpGet("{showId:int}/seats/sold")]
+        public async Task<IActionResult> GetSoldSeats(int showId)
+        {
+            var show = await _repository.Shows.GetShowAsync(showId);
+            
+            if (show == null)
+            {
+                return NotFound($"Show with id: {showId} doesn't exist in the database.");
+            }
+
+            var soldSeats = show.Tickets.Select(ticket => ticket.SeatsSchema);
+
+            var soldSeatsDto = _mapper.Map<IEnumerable<SeatsSchemaDto>>(soldSeats);
+            
+            return Ok(soldSeatsDto);
         }
         
         [HttpPost]

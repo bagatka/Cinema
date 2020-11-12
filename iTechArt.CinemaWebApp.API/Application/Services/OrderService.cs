@@ -72,7 +72,7 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
             }
 
             var seats = await _repository.SeatsSchemas.GetSeatsAsync(
-                new SeatSchemaParameters()
+                new SeatSchemaParameters
                 {
                     SeatIds = details.SeatIds
                 }
@@ -80,9 +80,27 @@ namespace iTechArt.CinemaWebApp.API.Application.Services
 
             var seatsCount = seats.Count();
 
+            if (seatsCount == 0)
+            {
+                return false;
+            }
+
+            var tickets = await _repository.Tickets.GetTicketsAsync(
+                new TicketParameters
+                {
+                    SeatIds = details.SeatIds,
+                    ShowId = show.Id
+                }
+            );
+
+            if (tickets.Count > 0)
+            {
+                return false;
+            }
+
             decimal hallServicesTotal = 0;
 
-            if (details.OrderAddons != null)
+            if (details.OrderAddons.Length > 0)
             {
                 var hallServices = await _repository.HallServices.GetHallServicesAsync(
                     new HallServiceParameters()

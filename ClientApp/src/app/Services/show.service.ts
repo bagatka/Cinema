@@ -9,6 +9,7 @@ import {ShowParameters} from '../Interfaces/show-parameters';
 
 import {ApiPaths, environment} from '../../environments/environment';
 import {DateTransformService} from './date-transform.service';
+import {SeatPosition} from '../Interfaces/seat-position';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,10 @@ export class ShowService {
       }
     });
     return this.http.get<Show[]>(this.baseUrl, options);
+  }
+
+  getSoldSeatsByShowId(showId: number): Observable<SeatPosition[]> {
+    return this.http.get<SeatPosition[]>(`${this.baseUrl}/${showId}/seats/sold`);
   }
 
   createShow(show: ShowForManipulation): Observable<Show> {

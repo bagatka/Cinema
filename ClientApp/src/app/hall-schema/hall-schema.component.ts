@@ -18,6 +18,7 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   @Output() hallSize = new EventEmitter<number>();
   @Output() userSelectSeats = new EventEmitter<SeatPosition[]>();
   @Input() schemaData: SeatPosition[];
+  @Input() soldSeats: SeatPosition[];
   @Input() activeSeatType: SeatType;
   @Input() userSelect: boolean;
 
@@ -26,18 +27,26 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   activeSeat;
   userSelectedSeats: SeatPosition[] = [];
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.enterSeatPosition.emit(null);
     if (this.userSelect) {
       this.activeSeatType = SeatType.Booked;
     }
   }
 
-  public ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     if (this.userSelect) {
       this.initUserSelectSchema();
+      this.initSoldSeats();
     }
     this.drawSchema();
+  }
+
+  private initSoldSeats(): void {
+    for (const seat of this.soldSeats) {
+      const index = this.countIndex(seat);
+      document.getElementsByClassName('seat')[index].classList.add(SeatType.Sold);
+    }
   }
 
   selectSeat(selectedRow, selectedColumn): void {
@@ -89,7 +98,7 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   private userSelectCheckBookingStatus(seat: SeatPosition): boolean {
     const index = this.countIndex(seat);
     const element = document.getElementsByClassName('seat')[index];
-    return element.classList.contains(SeatType.Booked);
+    return element.classList.contains(SeatType.Booked) || element.classList.contains(SeatType.Sold);
   }
 
   private countIndex(seat: SeatPosition): number {

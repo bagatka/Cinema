@@ -20,11 +20,17 @@ namespace iTechArt.CinemaWebApp.API.Data
         public async Task<PagedList<Ticket>> GetTicketsAsync(TicketParameters ticketParameters)
         {
             var tickets = FindAll()
+                .Include(ticket => ticket.Show)
                 .AsNoTracking();
 
             if (ticketParameters.SeatIds != null)
             {
                 tickets = tickets.Where(ticket => ticketParameters.SeatIds.Contains(ticket.SeatId));
+            }
+
+            if (ticketParameters.ShowId != null)
+            {
+                tickets = tickets.Where(ticket => ticket.Show.Id.Equals(ticketParameters.ShowId));
             }
 
             return await PagedList<Ticket>.ToPagedList(

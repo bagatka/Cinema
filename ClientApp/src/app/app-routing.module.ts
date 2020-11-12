@@ -11,7 +11,6 @@ import {AuthGuard} from './Guards/auth.guard';
 const routes: Routes = [
   {path: 'home', component: HomeScreenComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'cinemas', component: HomeScreenComponent},
   {path: 'films', component: SearchScreenComponent},
   {path: 'registration', component: RegistrationScreenComponent},
   {
