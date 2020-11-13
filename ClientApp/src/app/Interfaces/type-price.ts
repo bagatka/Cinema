@@ -1,5 +1,5 @@
 export interface TypePrice {
-  seatTypeId: number;
-  seatType: string;
-  price: number;
+  seatTypeId?: number;
+  seatType?: string;
+  price?: number;
 }
