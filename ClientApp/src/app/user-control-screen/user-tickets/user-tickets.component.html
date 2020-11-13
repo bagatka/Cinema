@@ -1,11 +1,21 @@
 <div fxLayout="column" fxLayoutAlign="center center">
-  <div *ngFor="let film of films$ | async" fxLayout="row" fxLayoutAlign="center start">
-    <img src="{{film.posterUrl}}" height="210px">
+  <div *ngFor="let order of orders$ | async" fxLayout="row" fxLayoutAlign="center start">
+    <img src="{{order.tickets[0].filmPosterUrl}}" height="210px">
     <div fxLayout="column" fxLayoutAlign="center start" class="film-details">
-      <h1 class="film-title">{{film.title}}</h1>
-      <p class="film-description">{{film.description}}</p>
-      <h2 class="date">Date</h2>
-      <p class="date-value">Not implemented yet</p>
+      <h1 class="film-title">{{order.tickets[0].filmTitle}}</h1>
+      <p class="film-description">{{order.tickets[0].filmDescription}}</p>
+      <h2 class="date">{{order.tickets[0].startDateTime | date}} {{transformDate(order.tickets[0].startDateTime)}}</h2>
+      <h1 class="title">Seats:</h1>
+      <p class="ticket-value" *ngFor="let ticket of order.tickets">
+        {{'Row: ' + ticket.row + ', Seat: ' + ticket.seat + ' – ' + ticket.seatType}}
+      </p>
+      <h1 class="title">Services:</h1>
+      <div *ngFor="let service of order.orderAddons">
+        <p class="ticket-value" *ngIf="service.number > 0">
+          {{service.serviceName + ' x' + service.number}}
+        </p>
+      </div>
+      <mat-card-title class="total">Total: {{order.total  + '$'}}</mat-card-title>
     </div>
   </div>
 </div>

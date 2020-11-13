@@ -1,7 +1,33 @@
-.container {
-  width: 40vw;
+.film-title {
+  font-weight: 800;
+  font-size: 1.5vw;
 }
 
-table {
-  width: 100%;
+.title {
+  font-weight: 500;
+  font-size: 1.2vw;
+}
+
+.film-details {
+  padding-left: 2vw;
+}
+
+.film-description {
+  width: 70%;
+  font-size: 0.9vw;
+}
+
+.date {
+  margin-bottom: 0.1vh;
+}
+
+.ticket-value {
+  font-weight: 800;
+  font-size: 0.9vw;
+}
+
+.total {
+  padding-top: 3vh;
+  padding-bottom: 5vh;
+  font-weight: 700;
 }

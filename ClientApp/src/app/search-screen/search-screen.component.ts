@@ -74,7 +74,7 @@ export class SearchScreenComponent implements OnInit, AfterViewInit {
         title: filmTitle ? filmTitle : this.filmTitle,
         city: this.filter.city,
         cinemaName: this.filter.cinemaName,
-        seats: this.filter.seats,
+        seats: this.filter.seats > 0 ? this.filter.seats : null,
         startDate: this.filter.startDate,
         endDate: this.filter.endDate,
         posterUrl: filmPosterUrl ? filmPosterUrl : ''

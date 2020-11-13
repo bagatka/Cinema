@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,33 @@ namespace iTechArt.CinemaWebApp.API.Data
         public async Task<PagedList<Order>> GetOrdersAsync(OrderParameters orderParameters)
         {
             var orders = FindAll()
+                .Include(order => order.Tickets)
+                    .ThenInclude(ticket => ticket.TicketSeat)
+                        .ThenInclude(ticketSeat => ticketSeat.SeatPosition)
+                            .ThenInclude(seatPosition => seatPosition.SeatType)
+                .Include(order => order.Tickets)
+                    .ThenInclude(ticket => ticket.Show)
+                        .ThenInclude(show => show.Film)
+                .Include(order => order.Tickets)
+                    .ThenInclude(ticket => ticket.Show)
+                        .ThenInclude(show => show.Hall)
+                            .ThenInclude(hall => hall.Cinema)
+                .Include(order => order.OrderAddons)
+                    .ThenInclude(orderAddon => orderAddon.HallService)
+                        .ThenInclude(hallService => hallService.Service)
                 .AsNoTracking();
+
+            if (orderParameters.UserId != null)
+            {
+                orders = orders.Where(order => order.UserId.Equals(orderParameters.UserId));
+            }
+
+            if (orderParameters.Active != null)
+            {
+                orders = orders.Where(
+                        order => order.Tickets.All(ticket =>
+                            orderParameters.Active.Value ? ticket.Show.StartDateTime > DateTime.Now : ticket.Show.StartDateTime <= DateTime.Now));
+            }
 
             return await PagedList<Order>.ToPagedList(
                 orders.OrderBy(order => order.Id),

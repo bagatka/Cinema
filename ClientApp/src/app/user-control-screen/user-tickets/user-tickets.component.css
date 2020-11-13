@@ -3,6 +3,11 @@
   font-size: 1.5vw;
 }
 
+.title {
+  font-weight: 500;
+  font-size: 1.2vw;
+}
+
 .film-details {
   padding-left: 2vw;
 }
@@ -16,8 +21,13 @@
   margin-bottom: 0.1vh;
 }
 
-.date-value {
+.ticket-value {
   font-weight: 800;
   font-size: 0.9vw;
-  color: red;
+}
+
+.total {
+  padding-top: 3vh;
+  padding-bottom: 5vh;
+  font-weight: 700;
 }

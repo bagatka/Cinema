@@ -1,39 +1,30 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatSort} from '@angular/material/sort';
-import {MatPaginator} from '@angular/material/paginator';
+import {OnInit, Component} from '@angular/core';
 
-export interface Ticket {
-  id: number;
-  filmName: string;
-  date: Date;
-  price: number;
-}
+import {Order} from '../../Interfaces/order';
+import {OrderService} from '../../Services/order.service';
+import {Observable} from 'rxjs';
+import {DateTransformService} from '../../Services/date-transform.service';
 
 @Component({
   selector: 'app-user-history',
   templateUrl: './user-history.component.html',
   styleUrls: ['./user-history.component.css']
 })
-export class UserHistoryComponent implements AfterViewInit {
+export class UserHistoryComponent implements OnInit {
 
-  displayedColumns: string[] = ['Id', 'Film', 'Date', 'Price'];
-  dataSource: MatTableDataSource<Ticket>;
+  orders$: Observable<Order[]>;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  constructor(
+    private orderService: OrderService,
+    private dateTransform: DateTransformService
+  ) {
   }
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  ngOnInit(): void {
+    this.orders$ = this.orderService.getUserOrders(false);
+  }
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  transformDate(dateString: string): string {
+    return  this.dateTransform.formateDateHM(dateString);
   }
 }

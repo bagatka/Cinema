@@ -126,6 +126,14 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
                     src => src.MapFrom(ticket => ticket.Show.Film.Title)
                 )
                 .ForMember(
+                    ticketDto => ticketDto.FilmPosterUrl,
+                    src => src.MapFrom(ticket => ticket.Show.Film.PosterUrl)
+                )
+                .ForMember(
+                    ticketDto => ticketDto.FilmDescription,
+                    src => src.MapFrom(ticket => ticket.Show.Film.Description)
+                )
+                .ForMember(
                     ticketDto => ticketDto.StartDateTime,
                     src => src.MapFrom(ticket => ticket.Show.StartDateTime)
                 )
@@ -136,6 +144,10 @@ namespace iTechArt.CinemaWebApp.API.Application.Mapping
                 .ForMember(
                     ticketDto => ticketDto.Row,
                     src => src.MapFrom(ticket => ticket.TicketSeat.SeatPosition.Row)
+                )
+                .ForMember(
+                    ticketDto => ticketDto.SeatType,
+                    src => src.MapFrom(ticket => ticket.TicketSeat.SeatPosition.SeatType.Type)
                 );
 
             CreateMap<TicketForManipulationDto, Ticket>();

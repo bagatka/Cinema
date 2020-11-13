@@ -1,4 +1,5 @@
 export interface OrderAddonDetails {
-  hallServiceId: number;
-  number: number;
+  hallServiceId?: number;
+  serviceName: string;
+  number?: number;
 }

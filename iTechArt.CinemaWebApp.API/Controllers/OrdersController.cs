@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using iTechArt.CinemaWebApp.API.Application.ActionFilters;
+using iTechArt.CinemaWebApp.API.Application.Contracts;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Order;
+using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Application.Services;
 using iTechArt.CinemaWebApp.API.Models;
-using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
@@ -18,13 +19,30 @@ namespace iTechArt.CinemaWebApp.API.Controllers
     [ApiController]
     public class OrdersController : Controller
     {
+        private readonly IRepositoryManager _repository;
         private readonly OrderService _orderService;
         private readonly IMapper _mapper;
 
-        public OrdersController(OrderService orderService, IMapper mapper)
+        public OrdersController(IRepositoryManager repository, OrderService orderService, IMapper mapper)
         {
+            _repository = repository;
             _orderService = orderService;
             _mapper = mapper;
+        }
+
+        [Authorize(Policy = Policies.User)]
+        [HttpGet]
+        public async Task<IActionResult> GetUserOrders([FromQuery] OrderParameters orderParameters)
+        {
+            var userId = GetAuthorizedUserId();
+
+            orderParameters.UserId = userId;
+
+            var orders = await _repository.Orders.GetOrdersAsync(orderParameters);
+
+            var ordersDto = _mapper.Map<IEnumerable<OrderDto>>(orders);
+
+            return Ok(ordersDto);
         }
 
         [Authorize(Policy = Policies.User)]
