@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using iTechArt.CinemaWebApp.API.Application.Contracts;
 using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace iTechArt.CinemaWebApp.API.Data
 {

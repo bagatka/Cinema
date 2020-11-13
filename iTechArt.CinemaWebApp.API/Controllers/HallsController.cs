@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 
 using iTechArt.CinemaWebApp.API.Application.Contracts;
-using iTechArt.CinemaWebApp.API.Application.DTOs.Film;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Hall;
 
 namespace iTechArt.CinemaWebApp.API.Controllers

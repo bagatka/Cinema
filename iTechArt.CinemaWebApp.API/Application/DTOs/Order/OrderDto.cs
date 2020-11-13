@@ -1,6 +1,7 @@
-﻿using iTechArt.CinemaWebApp.API.Application.DTOs.OrderAddon;
+﻿using System.Collections.Generic;
+
+using iTechArt.CinemaWebApp.API.Application.DTOs.OrderAddon;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Ticket;
-using System.Collections.Generic;
 
 namespace iTechArt.CinemaWebApp.API.Application.DTOs.Order
 {
