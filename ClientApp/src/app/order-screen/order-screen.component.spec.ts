@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { OrderScreenComponent } from './order-screen.component';
+import {OrderScreenComponent} from './order-screen.component';
 
 describe('OrderScreenComponent', () => {
   let component: OrderScreenComponent;
@@ -8,9 +8,9 @@ describe('OrderScreenComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OrderScreenComponent ]
+      declarations: [OrderScreenComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

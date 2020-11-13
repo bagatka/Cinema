@@ -25,6 +25,6 @@ export class UserHistoryComponent implements OnInit {
   }
 
   transformDate(dateString: string): string {
-    return  this.dateTransform.formateDateHM(dateString);
+    return this.dateTransform.formateDateHM(dateString);
   }
 }

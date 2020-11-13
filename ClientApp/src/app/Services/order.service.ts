@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {ApiPaths, environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {OrderDetails} from '../Interfaces/order-details';
-import { Order } from '../Interfaces/order';
+import {Order} from '../Interfaces/order';
 
 @Injectable({
   providedIn: 'root'

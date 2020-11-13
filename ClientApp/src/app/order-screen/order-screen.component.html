@@ -58,7 +58,8 @@
         <div fxLayout="column" fxLayoutAlign="start start">
           <mat-card-title class="title">Order</mat-card-title>
           <mat-card-title class="subtitle">Tickets</mat-card-title>
-          <div class="data-container" fxLayout="row" fxLayoutAlign="space-between center" *ngFor="let seat of selectedSeats">
+          <div class="data-container" fxLayout="row" fxLayoutAlign="space-between center"
+               *ngFor="let seat of selectedSeats">
             <mat-card-title>
               {{seat.seatType}}
             </mat-card-title>

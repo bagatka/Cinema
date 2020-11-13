@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CinemaCardComponent } from './cinema-card.component';
+import {CinemaCardComponent} from './cinema-card.component';
 
 describe('CinemaCardComponent', () => {
   let component: CinemaCardComponent;
@@ -8,9 +8,9 @@ describe('CinemaCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CinemaCardComponent ]
+      declarations: [CinemaCardComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -66,9 +66,9 @@ import {HallSchemaComponent} from './hall-schema/hall-schema.component';
 import {AdminEditFilmComponent} from './admin-control-screen/admin-films/admin-edit-film/admin-edit-film.component';
 import {AdminAllCinemasComponent} from './admin-control-screen/admin-cinemas/admin-all-cinemas/admin-all-cinemas.component';
 import {AdminEditCinemaComponent} from './admin-control-screen/admin-cinemas/admin-edit-cinema/admin-edit-cinema.component';
-import { OrderScreenComponent } from './order-screen/order-screen.component';
-import { CinemaCardComponent } from './order-screen/cinema-card/cinema-card.component';
-import { HallFreeSeatsBarComponent } from './order-screen/hall-free-seats-bar/hall-free-seats-bar.component';
+import {OrderScreenComponent} from './order-screen/order-screen.component';
+import {CinemaCardComponent} from './order-screen/cinema-card/cinema-card.component';
+import {HallFreeSeatsBarComponent} from './order-screen/hall-free-seats-bar/hall-free-seats-bar.component';
 
 @NgModule({
   declarations: [

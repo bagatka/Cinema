@@ -2,7 +2,7 @@
   <div class="big-carousel">
     <app-carousel [films]="films$ | async"></app-carousel>
   </div>
-  <h1 class="today-films-title">Movies Today</h1>
+  <h1 class="today-films-title">Movies</h1>
   <div class="layout">
     <div class="popular-films">
       <div *ngFor="let film of films$ | async">
