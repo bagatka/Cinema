@@ -56,14 +56,14 @@ namespace iTechArt.CinemaWebApp.API.Controllers
 
             var userId = GetAuthorizedUserId();
 
-            var result = await _orderService.OrderCheckout(orderDetails, userId);
+            var orderResponse = await _orderService.OrderCheckout(orderDetails, userId);
 
-            if (result)
+            if (orderResponse.Succeeded)
             {
                 return Ok();
             }
 
-            return BadRequest("Incorrect order data.");
+            return BadRequest(orderResponse.Message);
         }
 
         private int GetAuthorizedUserId()

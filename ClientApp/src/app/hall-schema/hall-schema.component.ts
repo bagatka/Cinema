@@ -2,6 +2,7 @@ import {Component, OnInit, AfterViewInit, EventEmitter, Input, Output} from '@an
 
 import {SeatPosition} from '../Interfaces/seat-position';
 import {SeatType} from '../Enums/seat-type.enum';
+import {SeatStatus} from '../Enums/seat-status.enum';
 
 const MAX_COLUMNS = 32;
 const MAX_ROWS = 18;
@@ -19,7 +20,7 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   @Output() userSelectSeats = new EventEmitter<SeatPosition[]>();
   @Input() seatPositionsData: SeatPosition[];
   @Input() soldSeats: SeatPosition[];
-  @Input() activeSeatType: SeatType;
+  @Input() activeSeatType: SeatType | SeatStatus;
   @Input() userSelect: boolean;
 
   columns = Array(MAX_COLUMNS).fill(1).map((x, i) => i);
@@ -30,7 +31,7 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.enterSeatPosition.emit(null);
     if (this.userSelect) {
-      this.activeSeatType = SeatType.Booked;
+      this.activeSeatType = SeatStatus.Booked;
     }
   }
 
@@ -45,7 +46,7 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   private initSoldSeats(): void {
     for (const seat of this.soldSeats) {
       const index = this.countIndex(seat);
-      document.getElementsByClassName('seat')[index].classList.add(SeatType.Sold);
+      document.getElementsByClassName('seat')[index].classList.add(SeatStatus.Sold);
     }
   }
 
@@ -63,24 +64,24 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private colorizeSeat(index: number, status: boolean, seatType: SeatType = this.activeSeatType): void {
+  private colorizeSeat(index: number, status: boolean, seatStyle: SeatType | SeatStatus = this.activeSeatType): void {
     const element = document.getElementsByClassName('seat')[index];
     element.classList.remove(SeatType.Common, SeatType.Sofa, SeatType.VIP);
     if (status) {
-      element.classList.add(seatType);
+      element.classList.add(seatStyle);
     }
   }
 
-  private userSelectColorizeSeat(seat: SeatPosition, status: boolean, seatType: SeatType = this.activeSeatType): void {
+  private userSelectColorizeSeat(seat: SeatPosition, status: boolean, seatStyle: SeatType | SeatStatus = this.activeSeatType): void {
     const index = this.countIndex(seat);
     const element = document.getElementsByClassName('seat')[index];
     if (status) {
-      element.classList.remove(SeatType.Booked);
+      element.classList.remove(SeatStatus.Booked);
       this.userSelectedSeats = this.userSelectedSeats.filter(selectedSeat =>
         selectedSeat.seat !== seat.seat || selectedSeat.row !== seat.row);
     } else {
       if (!element.classList.contains(SeatType.Empty)) {
-        element.classList.add(seatType);
+        element.classList.add(seatStyle);
         const newSelectedSeat = this.seatPositionsData.find(schemasSeat => schemasSeat.seat === seat.seat && schemasSeat.row === seat.row);
         this.userSelectedSeats.push(newSelectedSeat);
       }
@@ -98,7 +99,7 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   private userSelectCheckBookingStatus(seat: SeatPosition): boolean {
     const index = this.countIndex(seat);
     const element = document.getElementsByClassName('seat')[index];
-    return element.classList.contains(SeatType.Booked) || element.classList.contains(SeatType.Sold);
+    return element.classList.contains(SeatStatus.Booked) || element.classList.contains(SeatStatus.Sold);
   }
 
   private countIndex(seat: SeatPosition): number {

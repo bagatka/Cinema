@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 import {Observable} from 'rxjs';
 
+import * as moment from 'moment';
+
 import {Filter} from '../Interfaces/filter';
 import {Cinema} from '../Interfaces/cinema';
 
@@ -67,11 +69,11 @@ export class SearchFiltersComponent implements OnInit {
   }
 
   onStartDateChange(value): void {
-    this.filter.startDate = this.formateDate(value);
+    this.filter.startDate = moment(value).format('L');
   }
 
   onEndDateChange(value): void {
-    this.filter.endDate = this.formateDate(value);
+    this.filter.endDate = moment(value).format('L');
     if (value) {
       this.addNewFilter(this.filter);
     }
@@ -82,17 +84,5 @@ export class SearchFiltersComponent implements OnInit {
     if (value >= 1) {
       this.addNewFilter(this.filter);
     }
-  }
-
-  private formateDate(dateString: string): string | null {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = (1 + date.getMonth()).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-
-    if (year && month && year) {
-      return month + '/' + day + '/' + year;
-    }
-    return null;
   }
 }

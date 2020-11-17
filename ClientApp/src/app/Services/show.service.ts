@@ -3,12 +3,13 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
 import {Observable} from 'rxjs';
 
+import * as moment from 'moment';
+
 import {Show} from '../Interfaces/show';
 import {ShowForManipulation} from '../Interfaces/show-for-manipulation';
 import {ShowParameters} from '../Interfaces/show-parameters';
 
 import {ApiPaths, environment} from '../../environments/environment';
-import {DateTransformService} from './date-transform.service';
 import {SeatPosition} from '../Interfaces/seat-position';
 import {TypePrice} from '../Interfaces/type-price';
 
@@ -24,8 +25,7 @@ export class ShowService {
   };
 
   constructor(
-    private http: HttpClient,
-    private dateTransform: DateTransformService
+    private http: HttpClient
   ) {
   }
 
@@ -38,7 +38,7 @@ export class ShowService {
   }
 
   getShowsByHallId(id: number, date: Date): Observable<Show[]> {
-    return this.http.get<Show[]>(`${this.baseUrl}?hallId=${id}&date=${this.dateTransform.formateDate(date)}`);
+    return this.http.get<Show[]>(`${this.baseUrl}?hallId=${id}&date=${moment(date).format('L')}`);
   }
 
   getShowsByParameters(showParameters: ShowParameters): Observable<Show[]> {

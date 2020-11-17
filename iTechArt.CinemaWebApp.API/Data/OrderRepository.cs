@@ -42,9 +42,13 @@ namespace iTechArt.CinemaWebApp.API.Data
 
             if (orderParameters.Active != null)
             {
-                orders = orders.Where(
-                        order => order.Tickets.All(ticket =>
-                            orderParameters.Active.Value ? ticket.Show.StartDateTime > DateTime.Now : ticket.Show.StartDateTime <= DateTime.Now));
+                orders = orders.Where(order => 
+                    order.Tickets.All(ticket =>
+                        orderParameters.Active.Value
+                            ? ticket.Show.StartDateTime > DateTime.Now
+                            : ticket.Show.StartDateTime <= DateTime.Now
+                    )
+                );
             }
 
             return await PagedList<Order>.ToPagedList(

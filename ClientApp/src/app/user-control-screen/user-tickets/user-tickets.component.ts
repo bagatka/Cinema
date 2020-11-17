@@ -2,10 +2,11 @@ import {Component, OnInit} from '@angular/core';
 
 import {Observable} from 'rxjs';
 
+import * as moment from 'moment';
+
 import {Order} from '../../Interfaces/order';
 
 import {OrderService} from '../../Services/order.service';
-import {DateTransformService} from '../../Services/date-transform.service';
 
 @Component({
   selector: 'app-user-tickets',
@@ -17,8 +18,7 @@ export class UserTicketsComponent implements OnInit {
   orders$: Observable<Order[]>;
 
   constructor(
-    private orderService: OrderService,
-    private dateTransform: DateTransformService
+    private orderService: OrderService
   ) {
   }
 
@@ -27,6 +27,6 @@ export class UserTicketsComponent implements OnInit {
   }
 
   transformDate(dateString: string): string {
-    return this.dateTransform.formateDateHM(dateString);
+    return moment.utc(dateString).local().format('hh:mm');
   }
 }

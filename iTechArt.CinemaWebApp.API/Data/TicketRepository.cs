@@ -19,11 +19,12 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
             var tickets = FindAll()
                 .Include(ticket => ticket.Show)
+                .Include(ticket => ticket.TicketSeat)
                 .AsNoTracking();
 
             if (ticketParameters.SeatIds != null)
             {
-                tickets = tickets.Where(ticket => ticketParameters.SeatIds.Contains(ticket.TicketSeat.SeatPosition.Id));
+                tickets = tickets.Where(ticket => ticketParameters.SeatIds.Contains(ticket.TicketSeat.SeatPositionId));
             }
 
             if (ticketParameters.ShowId != null)

@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 import {Show} from '../../Interfaces/show';
 
-import {DateTransformService} from '../../Services/date-transform.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-hall-free-seats-bar',
@@ -14,13 +14,8 @@ export class HallFreeSeatsBarComponent {
   @Output() setTime = new EventEmitter<number>();
   @Input() show: Show;
 
-  constructor(
-    private dateTransform: DateTransformService
-  ) {
-  }
-
   getTime(dateString: string): string {
-    return this.dateTransform.formateDateHM(dateString);
+    return moment.utc(dateString).local().format('hh:mm');
   }
 
   getPercentage(sold, size): number {

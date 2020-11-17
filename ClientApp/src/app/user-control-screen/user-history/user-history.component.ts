@@ -1,9 +1,12 @@
 import {OnInit, Component} from '@angular/core';
 
-import {Order} from '../../Interfaces/order';
-import {OrderService} from '../../Services/order.service';
 import {Observable} from 'rxjs';
-import {DateTransformService} from '../../Services/date-transform.service';
+
+import * as moment from 'moment';
+
+import {Order} from '../../Interfaces/order';
+
+import {OrderService} from '../../Services/order.service';
 
 @Component({
   selector: 'app-user-history',
@@ -15,8 +18,7 @@ export class UserHistoryComponent implements OnInit {
   orders$: Observable<Order[]>;
 
   constructor(
-    private orderService: OrderService,
-    private dateTransform: DateTransformService
+    private orderService: OrderService
   ) {
   }
 
@@ -25,6 +27,6 @@ export class UserHistoryComponent implements OnInit {
   }
 
   transformDate(dateString: string): string {
-    return this.dateTransform.formateDateHM(dateString);
+    return moment.utc(dateString).local().format('hh:mm');
   }
 }

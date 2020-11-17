@@ -5,13 +5,14 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {debounceTime, switchMap} from 'rxjs/operators';
 
+import * as moment from 'moment';
+
 import {Filter} from '../Interfaces/filter';
 import {ShowParameters} from '../Interfaces/show-parameters';
 import {Show} from '../Interfaces/show';
 import {Hall} from '../Interfaces/hall';
 
 import {ShowService} from '../Services/show.service';
-import {DateTransformService} from '../Services/date-transform.service';
 import {HallService} from '../Services/hall.service';
 import {SeatPosition} from '../Interfaces/seat-position';
 import {OrderDetails} from '../Interfaces/order-details';
@@ -62,8 +63,7 @@ export class OrderScreenComponent implements OnInit {
     private orderService: OrderService,
     private snackbarService: SnackbarService,
     private route: ActivatedRoute,
-    private router: Router,
-    private dateTransform: DateTransformService
+    private router: Router
   ) {
   }
 
@@ -75,7 +75,8 @@ export class OrderScreenComponent implements OnInit {
       debounceTime(400),
       switchMap((showParameters: ShowParameters) => this.showService.getShowsByParameters(showParameters))
     ).subscribe(shows => this.shows = this.groupBy(shows, show => {
-      return this.dateTransform.formateDateDMY(new Date(show.startDateTime));
+      console.log(show.startDateTime);
+      return moment(new Date(show.startDateTime)).format('DD/MM/YYYY');
     }));
 
     this.searchSelectedShowPrice.pipe(
@@ -145,7 +146,7 @@ export class OrderScreenComponent implements OnInit {
   }
 
   getTimeHM(dateString?: string): string {
-    return this.dateTransform.formateDateHM(dateString);
+    return moment.utc(dateString).local().format('hh:mm');
   }
 
   updateSelectedSeats(selectedSeats: SeatPosition[]): void {
@@ -268,12 +269,10 @@ export class OrderScreenComponent implements OnInit {
 
   private checkFilterDates(): void {
     if (!this.filter.startDate) {
-      const today = new Date();
-      this.filter.startDate = this.dateTransform.formateDate(today);
+      this.filter.startDate = moment().format('L');
     }
     if (!this.filter.endDate) {
-      const today = new Date();
-      this.filter.endDate = this.dateTransform.formateDate(today);
+      this.filter.endDate = moment().format('L');
     }
   }
 
