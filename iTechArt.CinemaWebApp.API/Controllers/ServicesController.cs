@@ -41,7 +41,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("{id}", Name = "GetServiceById")]
+        [HttpGet("{id:int}", Name = "GetServiceById")]
         public async Task<IActionResult> GetService(int id)
         {
             var service = await _repository.Services.GetServiceAsync(id);
@@ -70,7 +70,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return CreatedAtRoute("GetServiceById", new { id = serviceToReturn.Id }, serviceToReturn);
         }
         
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         [ServiceFilter(typeof(ValidateServiceExistsAttribute))]
         public async Task<ActionResult> DeleteService(int id)
         {
@@ -82,7 +82,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return NoContent();
         }
         
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateServiceExistsAttribute))]
         public async Task<IActionResult> UpdateService(int id, [FromBody] ServiceForManipulationDto service)

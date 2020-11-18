@@ -104,7 +104,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return CreatedAtRoute("GetCinemaById", new { id = cinemaToReturn.Id }, cinemaToReturn);
         }
         
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         [ServiceFilter(typeof(ValidateCinemaExistsAttribute))]
         public async Task<ActionResult> DeleteCinema(int id)
         {
@@ -116,7 +116,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return NoContent();
         }
         
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateCinemaExistsAttribute))]
         public async Task<IActionResult> UpdateCinema(int id, [FromBody] CinemaForManipulationDto cinema)

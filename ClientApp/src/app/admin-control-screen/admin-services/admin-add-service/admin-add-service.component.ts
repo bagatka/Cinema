@@ -36,7 +36,8 @@ export class AdminAddServiceComponent implements OnInit {
     this.hallServiceService.createService(this.addServiceInput.value).subscribe(
       () => {
         this.snackbarService.displaySnackbar(SnackbarMessages.created);
-      }
+      },
+      () => this.snackbarService.displaySnackbar(SnackbarMessages.error)
     );
   }
 }

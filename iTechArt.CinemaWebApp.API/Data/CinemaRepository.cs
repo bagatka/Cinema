@@ -10,6 +10,7 @@ using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Data
 {
+    
     public class CinemaRepository : RepositoryBase<Cinema>, ICinemaRepository
     {
         public CinemaRepository(RepositoryContext repositoryContext) : base(repositoryContext)
@@ -18,7 +19,14 @@ namespace iTechArt.CinemaWebApp.API.Data
 
         public async Task<PagedList<Cinema>> GetCinemasAsync(CinemaParameters cinemaParameters)
         {
-            var cinemas = FindAll().AsNoTracking();
+            var cinemas = FindAll()
+                .Include(cinema => cinema.Halls)
+                    .ThenInclude(hall => hall.Shows)
+                        .ThenInclude(show => show.Film)
+                .Include(cinema => cinema.Halls)
+                    .ThenInclude(hall => hall.SeatPositions)
+                        .ThenInclude(seatPosition => seatPosition.SeatType)
+                .AsNoTracking();
             
             if (!string.IsNullOrEmpty(cinemaParameters.Name))
             {
@@ -41,7 +49,8 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
             return await FindByCondition(cinema => cinema.Id.Equals(cinemaId))
                 .Include(cinema => cinema.Halls)
-                    .ThenInclude(hall => hall.SeatsSchemas)
+                    .ThenInclude(hall => hall.SeatPositions)
+                        .ThenInclude(seatPosition => seatPosition.SeatType)
                 .SingleOrDefaultAsync();
         }
 
@@ -49,8 +58,7 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
             return await FindAll()
                 .Select(cinema => cinema.City)
-                .GroupBy(x => x)
-                .Select(g => g.Key)
+                .Distinct() 
                 .ToListAsync();
         }
 

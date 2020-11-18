@@ -40,6 +40,22 @@
   background-color: darkorange;
 }
 
+.sold {
+  background-color: brown !important;
+}
+
+.reserved {
+  background-color: #4b25db;
+}
+
+.booked {
+  background-color: red !important;
+}
+
+.empty {
+  background-color: #adabc7;
+}
+
 .seat:hover {
   cursor: pointer;
   transform: scale(1.2);

@@ -45,6 +45,7 @@
   font-weight: 300;
   color: #adabc7;
   text-align: center;
+  max-width: 7vw;
 }
 
 .today-films-title {

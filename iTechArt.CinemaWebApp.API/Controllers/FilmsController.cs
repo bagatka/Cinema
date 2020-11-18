@@ -40,7 +40,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("{id}", Name = "GetFilmById")]
+        [HttpGet("{id:int}", Name = "GetFilmById")]
         public async Task<IActionResult> GetFilm(int id)
         {
             var film = await _repository.Films.GetFilmAsync(id);
@@ -69,7 +69,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return CreatedAtRoute("GetFilmById", new { id = filmToReturn.Id }, filmToReturn);
         }
         
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         [ServiceFilter(typeof(ValidateFilmExistsAttribute))]
         public async Task<ActionResult> DeleteFilm(int id)
         {
@@ -81,7 +81,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return NoContent();
         }
         
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateFilmExistsAttribute))]
         public async Task<IActionResult> UpdateFilm(int id, [FromBody] FilmForManipulationDto film)

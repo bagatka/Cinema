@@ -29,7 +29,7 @@ export class AdminAllCinemasComponent implements OnInit, AfterViewInit {
     private router: Router) {
   }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     this.cinemas$ = this.searchTerms.pipe(
       debounceTime(300),
       switchMap((title: string) => {
@@ -39,7 +39,7 @@ export class AdminAllCinemasComponent implements OnInit, AfterViewInit {
     );
   }
 
-  public ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     setTimeout(() => {
       this.searchFromQuery();
     }, 0);
@@ -79,5 +79,4 @@ export class AdminAllCinemasComponent implements OnInit, AfterViewInit {
       skipLocationChange: false
     });
   }
-
 }

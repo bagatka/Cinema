@@ -3,7 +3,7 @@
     public class HallServiceDto
     {
         public int Id { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public string IconUrl { get; set; }
         public decimal Price { get; set; }

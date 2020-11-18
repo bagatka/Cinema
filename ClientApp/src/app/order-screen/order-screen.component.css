@@ -1,0 +1,101 @@
+.container {
+  padding-top: 10vh;
+}
+
+.main-card {
+  width: 60vw;
+  min-height: 75vh;
+}
+
+.film-card {
+  width: 20vw;
+  height: 75vh;
+}
+
+.status-windows {
+  padding-top: 4vh;
+}
+
+.date-title {
+  padding-top: 5vh;
+  padding-left: 2vw;
+  font-size: 1.3vw;
+  font-weight: 700;
+}
+
+.cinemas {
+  padding-top: 5vh;
+}
+
+.cinema-name {
+  font-size: 1.1vw;
+  font-weight: 400;
+}
+
+.show-time {
+  font-weight: 600;
+}
+
+.title {
+  font-weight: 800;
+  font-size: 1.3vw;
+  padding-bottom: 5vh;
+  padding-top: 3vh;
+  padding-left: 2vh;
+}
+
+.subtitle {
+  font-weight: 700;
+  font-size: 1.1vw;
+  padding-bottom: 3vh;
+  padding-top: 2vh;
+  padding-left: 6vh;
+}
+
+.data-container {
+  padding-left: 10vh;
+  min-width: 45vw;
+}
+
+.total-container {
+  padding-top: 4vh;
+}
+
+.total {
+  font-weight: 800;
+  font-size: 1.4vw;
+}
+
+.tickets-list {
+  min-width: 15vw;
+}
+
+.confirm-button {
+  font-size: 1vw;
+  font-weight: 600;
+}
+
+.seat-button {
+  margin-left: 15vw;
+  margin-bottom: 10vh;
+}
+
+.services-button {
+  margin-left: 50vw;
+  margin-bottom: 5vh;
+}
+
+.buy-button {
+  margin-top: 5vh;
+  margin-left: 50vw;
+}
+
+.services-list {
+  padding-left: 5vw;
+  padding-bottom: 2vh;
+  min-width: 50vw;
+}
+
+.services-counter {
+  font-weight: 500;
+}

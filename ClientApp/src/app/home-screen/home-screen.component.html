@@ -2,13 +2,13 @@
   <div class="big-carousel">
     <app-carousel [films]="films$ | async"></app-carousel>
   </div>
-  <h1 class="today-films-title">Movies Today</h1>
+  <h1 class="today-films-title">Movies</h1>
   <div class="layout">
     <div class="popular-films">
       <div *ngFor="let film of films$ | async">
         <div class="item">
-          <img [src]="film.posterUrl" class="poster">
-          <h3 class="film-title">{{film.title}}</h3>
+          <img [src]="film?.posterUrl" class="poster">
+          <h3 class="film-title">{{film?.title}}</h3>
         </div>
       </div>
     </div>

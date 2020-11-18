@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,12 +16,13 @@ namespace iTechArt.CinemaWebApp.API.Data
         {
         }
 
-        public async Task<IEnumerable<Show>> GetShowsAsync(ShowParameters showParameters)
+        public async Task<PagedList<Show>> GetShowsAsync(ShowParameters showParameters)
         {
             var shows = FindAll()
                 .Include(show => show.Film)
                 .Include(show => show.Hall)
                     .ThenInclude(hall => hall.Cinema)
+                .Include(show => show.Tickets)
                 .AsNoTracking();
 
             if (showParameters.HallId != null)
@@ -30,9 +30,9 @@ namespace iTechArt.CinemaWebApp.API.Data
                 shows = shows.Where(show => show.HallId.Equals(showParameters.HallId));
             }
 
-            if (!string.IsNullOrEmpty(showParameters.FilmTitle))
+            if (!string.IsNullOrEmpty(showParameters.Title))
             {
-                shows = shows.Where(show => show.Film.Title.Equals(showParameters.FilmTitle));
+                shows = shows.Where(show => show.Film.Title.Equals(showParameters.Title));
             }
 
             if (!string.IsNullOrEmpty(showParameters.City))
@@ -45,27 +45,38 @@ namespace iTechArt.CinemaWebApp.API.Data
                 shows = shows.Where(show => show.Hall.Cinema.Name.Equals(showParameters.CinemaName));
             }
 
+            if (showParameters.Actual != null && showParameters.Actual.Value.Equals(true))
+            {
+                shows = shows.Where(show => show.StartDateTime.Date >= DateTime.Now.Date);
+            }
+
             if (!string.IsNullOrEmpty(showParameters.StartDate))
             {
-                var startDate = DateTime.Parse(showParameters.StartDate);
-                shows = shows.Where(show => show.StartDateTime.Date >= startDate.Date);
+                if (DateTime.TryParse(showParameters.StartDate, out var startDate))
+                {
+                    shows = shows.Where(show => show.StartDateTime.Date >= startDate.Date);
+                }
             }
             
             if (!string.IsNullOrEmpty(showParameters.EndDate))
             {
-                var endDate = DateTime.Parse(showParameters.EndDate);
-                shows = shows.Where(show => show.StartDateTime.Date <= endDate.Date);
+                if (DateTime.TryParse(showParameters.EndDate, out var endDate))
+                {
+                    shows = shows.Where(show => show.StartDateTime.Date <= endDate.Date);
+                }
             }
 
             if (!string.IsNullOrEmpty(showParameters.Date))
             {
-                var date = DateTime.Parse(showParameters.Date);
-                shows = shows.Where(show => show.StartDateTime.Date.Equals(date.Date));
+                if (DateTime.TryParse(showParameters.Date, out var date))
+                {
+                    shows = shows.Where(show => show.StartDateTime.Date.Equals(date.Date));
+                }
             }
 
             if (showParameters.Seats != null)
             {
-                shows = shows.Where(show => show.FreeSeats > showParameters.Seats);
+                shows = shows.Where(show => show.Hall.Seats - show.Tickets.Count > showParameters.Seats); // TODO: Check > (>=)
             }
 
             return await PagedList<Show>.ToPagedList(
@@ -78,6 +89,13 @@ namespace iTechArt.CinemaWebApp.API.Data
         public async Task<Show> GetShowAsync(int showId)
         {
             return await FindByCondition(show => show.Id.Equals(showId))
+                .Include(show => show.Film)
+                .Include(show => show.Hall)
+                    .ThenInclude(hall => hall.Cinema)
+                .Include(show => show.Tickets)
+                    .ThenInclude(ticket => ticket.TicketSeat)
+                        .ThenInclude(ticketSeat => ticketSeat.SeatPosition)
+                .Include(show => show.TypePrices)
                 .AsNoTracking()
                 .SingleOrDefaultAsync();
         }

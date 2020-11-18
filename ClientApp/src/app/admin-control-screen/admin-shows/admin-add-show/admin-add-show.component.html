@@ -62,8 +62,18 @@
         </mat-form-field>
         <mat-label class="option-title">Price</mat-label>
         <mat-form-field>
-          <mat-label>Enter the price</mat-label>
-          <input formControlName="price" matInput
+          <mat-label>Enter the price of common ticket</mat-label>
+          <input formControlName="priceCommon" matInput
+                 type="number">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Enter the price of sofa ticket (single seat)</mat-label>
+          <input formControlName="priceSofa" matInput
+                 type="number">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Enter the price of VIP ticket</mat-label>
+          <input formControlName="priceVIP" matInput
                  type="number">
         </mat-form-field>
         <div fxLayout="row" fxLayoutAlign="end center">

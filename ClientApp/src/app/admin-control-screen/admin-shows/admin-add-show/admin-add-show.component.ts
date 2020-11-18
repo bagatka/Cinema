@@ -54,7 +54,9 @@ export class AdminAddShowComponent implements OnInit {
       hall: new FormControl('', Validators.required),
       startDateTime: new FormControl('', Validators.required),
       time: new FormControl('', Validators.required),
-      price: new FormControl('', [Validators.required, Validators.min(0)])
+      priceCommon: new FormControl('', [Validators.required, Validators.min(0)]),
+      priceSofa: new FormControl('', [Validators.required, Validators.min(0)]),
+      priceVIP: new FormControl('', [Validators.required, Validators.min(0)])
     });
 
     this.films$ = this.searchFilms.pipe(
@@ -101,9 +103,28 @@ export class AdminAddShowComponent implements OnInit {
     this.showData.startDateTime = this.addShowInput.value.startDateTime;
     const time = this.addShowInput.value.time;
     this.showData.startDateTime.setHours(time.split(':')[0], time.split(':')[1]);
-    this.showData.price = this.addShowInput.value.price;
-    this.showService.createShow(this.showData).subscribe();
-    this.snackbarService.displaySnackbar(SnackbarMessages.created);
+    this.showData.typePrices = [];
+    this.showData.typePrices.push({
+        price: this.addShowInput.value.priceCommon,
+        seatTypeId: 1
+      }
+    );
+    this.showData.typePrices.push({
+        price: this.addShowInput.value.priceSofa,
+        seatTypeId: 2
+      }
+    );
+    this.showData.typePrices.push({
+        price: this.addShowInput.value.priceVIP,
+        seatTypeId: 3
+      }
+    );
+    this.showService.createShow(this.showData).subscribe(
+      () => {
+        this.snackbarService.displaySnackbar(SnackbarMessages.created);
+      },
+      () => this.snackbarService.displaySnackbar(SnackbarMessages.error)
+    );
     this.startHallTimeTableSearch(0);
     this.startHallTimeTableSearch(this.showData.hallId);
   }

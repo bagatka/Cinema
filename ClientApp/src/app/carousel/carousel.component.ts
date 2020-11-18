@@ -3,7 +3,6 @@ import {trigger, transition, style, animate} from '@angular/animations';
 
 import {Film} from '../Interfaces/film';
 
-
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
@@ -51,7 +50,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
 
   public getFilmName(): string {
     if (this.films) {
-      return this.films[this.currentSlide].title;
+      return this.films[this.currentSlide]?.title;
     }
     return '';
   }

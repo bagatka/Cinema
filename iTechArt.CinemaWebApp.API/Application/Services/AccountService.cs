@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
 using BCrypter = BCrypt.Net.BCrypt;
 
 using AutoMapper;
+
 using iTechArt.CinemaWebApp.API.Application.Contracts;
 using iTechArt.CinemaWebApp.API.Models;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Account;

@@ -58,8 +58,12 @@ export class AdminEditFilmComponent implements OnInit {
   }
 
   updateFilm(): void {
-    this.filmService.updateFilm(this.editFilmInput.value, this.id).subscribe();
-    this.snackbarService.displaySnackbar(SnackbarMessages.updated);
+    this.filmService.updateFilm(this.editFilmInput.value, this.id).subscribe(
+      () => {
+        this.snackbarService.displaySnackbar(SnackbarMessages.updated);
+      },
+      () => this.snackbarService.displaySnackbar(SnackbarMessages.error)
+    );
     this.location.back();
   }
 

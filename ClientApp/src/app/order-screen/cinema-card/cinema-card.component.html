@@ -1,0 +1,9 @@
+<div fxLayout="row" fxLayoutAlign="space-between start" class="cinema-container">
+  <img [src]="showData[1][0].cinemaImageUrl" height="200px">
+  <div fxLayout="column" fxLayoutAlign="end end" class="cinema-name">
+    <mat-card-title>{{showData[0]}}</mat-card-title>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" *ngFor="let show of showData[1]">
+      <app-hall-free-seats-bar [show]="show" (setTime)="setTime($event)"></app-hall-free-seats-bar>
+    </div>
+  </div>
+</div>

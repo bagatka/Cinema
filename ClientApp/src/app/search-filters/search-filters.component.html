@@ -6,7 +6,7 @@
     <h2 class="filter-text">Select city</h2>
     <mat-form-field appearance="fill">
       <mat-label>City</mat-label>
-      <mat-select (selectionChange)="onCityChange($event)">
+      <mat-select (selectionChange)="onCityChange($event)" [(value)]="filter.city">
         <mat-option>Select a city</mat-option>
         <mat-option [value]="city" *ngFor="let city of cities$ | async">{{ city }}</mat-option>
       </mat-select>
@@ -16,7 +16,7 @@
     <h2 class="filter-text">Select cinema</h2>
     <mat-form-field appearance="fill">
       <mat-label>Cinema</mat-label>
-      <mat-select (selectionChange)="onCinemaChange($event)">
+      <mat-select (selectionChange)="onCinemaChange($event)" [(value)]="filter.cinemaName">
         <mat-option>Select a cinema</mat-option>
         <mat-option [value]="cinema.name" *ngFor="let cinema of cinemas$ | async">{{ cinema.name }}</mat-option>
       </mat-select>
@@ -29,9 +29,9 @@
         <mat-label>Select a date range</mat-label>
         <mat-date-range-input [rangePicker]="picker" required [min]="today">
           <input matStartDate matInput placeholder="Start date" formControlName="start"
-                 (ngModelChange)="onStartDateChange($event)">
+                 (ngModelChange)="onStartDateChange($event)" #startDateInput>
           <input matEndDate matInput placeholder="End date" formControlName="end"
-                 (ngModelChange)="onEndDateChange($event)">
+                 (ngModelChange)="onEndDateChange($event)" #endDateInput>
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>

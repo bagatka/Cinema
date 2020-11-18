@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using AutoMapper;
 
 using iTechArt.CinemaWebApp.API.Application.ActionFilters;
 using iTechArt.CinemaWebApp.API.Application.Contracts;
+using iTechArt.CinemaWebApp.API.Application.DTOs.SeatPosition;
 using iTechArt.CinemaWebApp.API.Application.DTOs.Show;
 using iTechArt.CinemaWebApp.API.Application.RequestFeatures;
 using iTechArt.CinemaWebApp.API.Models;
@@ -40,7 +42,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("{id}", Name = "GetShowById")]
+        [HttpGet("{id:int}", Name = "GetShowById")]
         public async Task<IActionResult> GetShow(int id)
         {
             var show = await _repository.Shows.GetShowAsync(id);
@@ -53,6 +55,46 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             var showsDto = _mapper.Map<ShowDto>(show);
             
             return Ok(showsDto);
+        }
+        
+        [AllowAnonymous]
+        [HttpGet("{showId:int}/seats/sold")]
+        public async Task<IActionResult> GetSoldSeats(int showId)
+        {
+            var show = await _repository.Shows.GetShowAsync(showId);
+            
+            if (show == null)
+            {
+                return NotFound($"Show with id: {showId} doesn't exist in the database.");
+            }
+
+            var soldSeats = show.Tickets.Select(ticket => ticket.TicketSeat.SeatPosition);
+
+            var soldSeatsDto = _mapper.Map<IEnumerable<SeatPositionDto>>(soldSeats);
+            
+            return Ok(soldSeatsDto);
+        }
+        
+        [AllowAnonymous]
+        [HttpGet("{showId:int}/seats/prices")]
+        public async Task<IActionResult> GetSeatPrices(int showId)
+        {
+            var show = await _repository.Shows.GetShowAsync(showId);
+            
+            if (show == null)
+            {
+                return NotFound($"Show with id: {showId} doesn't exist in the database.");
+            }
+
+            var seatPrices = show.TypePrices.Select(typePrice => new TypePrice
+                {
+                    Id = typePrice.Id,
+                    SeatTypeId = typePrice.SeatTypeId,
+                    Price = typePrice.Price
+                }
+            );
+
+            return Ok(seatPrices);
         }
         
         [HttpPost]
@@ -69,7 +111,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return CreatedAtRoute("GetShowById", new { id = showToReturn.Id }, showToReturn);
         }
         
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         [ServiceFilter(typeof(ValidateShowExistsAttribute))]
         public async Task<ActionResult> DeleteShow(int id)
         {
@@ -81,7 +123,7 @@ namespace iTechArt.CinemaWebApp.API.Controllers
             return NoContent();
         }
         
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateShowExistsAttribute))]
         public async Task<IActionResult> UpdateShow(int id, [FromBody] ShowForManipulationDto show)

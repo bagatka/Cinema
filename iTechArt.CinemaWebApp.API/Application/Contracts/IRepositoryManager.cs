@@ -7,12 +7,14 @@ namespace iTechArt.CinemaWebApp.API.Application.Contracts
         IFilmRepository Films { get; }
         ICinemaRepository Cinemas { get; }
         IHallRepository Halls { get; }
-        ISeatsSchemaRepository SeatsSchemas { get; }
+        ISeatPositionRepository SeatPositions { get; }
         IServiceRepository Services { get; }
         IHallServiceRepository HallServices { get; }
         IShowRepository Shows { get; }
         IUserRepository Users { get; }
         ITicketRepository Tickets { get; }
+        IOrderRepository Orders { get; }
+        IOrderAddonRepository OrderAddons { get; }
         
         Task SaveAsync();
     }

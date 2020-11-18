@@ -1,35 +1,21 @@
-<div class="container">
-  <div *ngIf="dataSource.data; else noHistory">
-    <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-    </mat-form-field>
-    <div>
-      <table mat-table [dataSource]="dataSource" matSort>
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
-          <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-        </ng-container>
-        <ng-container matColumnDef="progress">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Film</th>
-          <td mat-cell *matCellDef="let row"> {{row.filmName}}%</td>
-        </ng-container>
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Date</th>
-          <td mat-cell *matCellDef="let row"> {{row.date}} </td>
-        </ng-container>
-        <ng-container matColumnDef="color">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Price</th>
-          <td mat-cell *matCellDef="let row"> {{row.price}} </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-        </tr>
-      </table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+<div fxLayout="column" fxLayoutAlign="center center">
+  <div *ngFor="let order of orders$ | async" fxLayout="row" fxLayoutAlign="center start">
+    <img src="{{order.tickets[0].filmPosterUrl}}" height="210px">
+    <div fxLayout="column" fxLayoutAlign="center start" class="film-details">
+      <h1 class="film-title">{{order.tickets[0].filmTitle}}</h1>
+      <p class="film-description">{{order.tickets[0].filmDescription}}</p>
+      <h2 class="date">{{order.tickets[0].startDateTime | date}} {{transformDate(order.tickets[0].startDateTime)}}</h2>
+      <h1 class="title">Seats:</h1>
+      <p class="ticket-value" *ngFor="let ticket of order.tickets">
+        {{'Row: ' + ticket.row + ', Seat: ' + ticket.seat + ' – ' + ticket.seatType}}
+      </p>
+      <h1 class="title">Services:</h1>
+      <div *ngFor="let service of order.orderAddons">
+        <p class="ticket-value" *ngIf="service.number > 0">
+          {{service.serviceName + ' x' + service.number}}
+        </p>
+      </div>
+      <mat-card-title class="total">Total: {{order.total + '$'}}</mat-card-title>
     </div>
   </div>
-  <h1 align="center" #noHistory>No history yet</h1>
 </div>

@@ -23,12 +23,16 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {AppRoutingModule} from './app-routing.module';
 
 import {AuthGuard} from './Guards/auth.guard';
+
+import {httpInterceptorProviders} from './http-interceptors';
 
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
@@ -62,7 +66,9 @@ import {HallSchemaComponent} from './hall-schema/hall-schema.component';
 import {AdminEditFilmComponent} from './admin-control-screen/admin-films/admin-edit-film/admin-edit-film.component';
 import {AdminAllCinemasComponent} from './admin-control-screen/admin-cinemas/admin-all-cinemas/admin-all-cinemas.component';
 import {AdminEditCinemaComponent} from './admin-control-screen/admin-cinemas/admin-edit-cinema/admin-edit-cinema.component';
-import {httpInterceptorProviders} from './http-interceptors';
+import {OrderScreenComponent} from './order-screen/order-screen.component';
+import {CinemaCardComponent} from './order-screen/cinema-card/cinema-card.component';
+import {HallFreeSeatsBarComponent} from './order-screen/hall-free-seats-bar/hall-free-seats-bar.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +103,10 @@ import {httpInterceptorProviders} from './http-interceptors';
     HallSchemaComponent,
     AdminEditFilmComponent,
     AdminAllCinemasComponent,
-    AdminEditCinemaComponent
+    AdminEditCinemaComponent,
+    OrderScreenComponent,
+    CinemaCardComponent,
+    HallFreeSeatsBarComponent
   ],
   imports: [
     BrowserModule,
@@ -124,6 +133,8 @@ import {httpInterceptorProviders} from './http-interceptors';
     MatListModule,
     MatGridListModule,
     MatSnackBarModule,
+    MatStepperModule,
+    MatProgressBarModule,
     FlexLayoutModule,
     HttpClientModule
   ],

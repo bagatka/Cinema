@@ -1,0 +1,15 @@
+.cinema-name {
+  padding-top: 2vh;
+}
+
+.cinema-container {
+  width: 40vw;
+  height: 20vh;
+  padding-left: 2vw;
+}
+
+.select-button {
+  width: 5vw;
+  font-weight: 600;
+  font-size: 1.1vw;
+}

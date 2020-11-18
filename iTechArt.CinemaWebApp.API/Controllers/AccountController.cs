@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 
 using iTechArt.CinemaWebApp.API.Application.DTOs.Account;
 using iTechArt.CinemaWebApp.API.Application.Services;
-using iTechArt.CinemaWebApp.API.Models;
 
 namespace iTechArt.CinemaWebApp.API.Controllers
 {
