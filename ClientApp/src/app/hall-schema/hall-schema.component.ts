@@ -1,6 +1,7 @@
-import {Component, OnInit, AfterViewInit, EventEmitter, Input, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
 
 import {SeatPosition} from '../Interfaces/seat-position';
+
 import {SeatType} from '../Enums/seat-type.enum';
 import {SeatStatus} from '../Enums/seat-status.enum';
 
@@ -12,7 +13,7 @@ const MAX_ROWS = 18;
   templateUrl: './hall-schema.component.html',
   styleUrls: ['./hall-schema.component.css']
 })
-export class HallSchemaComponent implements OnInit, AfterViewInit {
+export class HallSchemaComponent implements AfterViewInit {
 
   @Output() enterSeatPosition = new EventEmitter<SeatPosition>();
   @Output() seatPositionsDataChange = new EventEmitter<SeatPosition[]>();
@@ -20,20 +21,13 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   @Output() userSelectSeats = new EventEmitter<SeatPosition[]>();
   @Input() seatPositionsData: SeatPosition[];
   @Input() soldSeats: SeatPosition[];
-  @Input() activeSeatType: SeatType | SeatStatus;
+  @Input() activeSeatType: SeatType;
   @Input() userSelect: boolean;
 
   columns = Array(MAX_COLUMNS).fill(1).map((x, i) => i);
   rows = Array(MAX_ROWS).fill(1).map((x, i) => i);
   activeSeat;
   userSelectedSeats: SeatPosition[] = [];
-
-  ngOnInit(): void {
-    this.enterSeatPosition.emit(null);
-    if (this.userSelect) {
-      this.activeSeatType = SeatStatus.Booked;
-    }
-  }
 
   ngAfterViewInit(): void {
     if (this.userSelect) {
@@ -45,43 +39,38 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
 
   private initSoldSeats(): void {
     for (const seat of this.soldSeats) {
-      const index = this.countIndex(seat);
-      document.getElementsByClassName('seat')[index].classList.add(SeatStatus.Sold);
+      this.applySeatStatusStyle(seat, SeatStatus.Sold);
     }
   }
 
   selectSeat(selectedRow, selectedColumn): void {
-    if (!this.activeSeatType) {
-      return;
-    }
     const seat = {seat: selectedColumn, row: selectedRow, seatType: this.activeSeatType};
     if (this.userSelect) {
       const status = this.userSelectCheckBookingStatus(seat);
       this.userSelectColorizeSeat(seat, status);
     } else {
-      const status = this.checkSeat(seat);
-      this.colorizeSeat(this.countIndex(seat), status);
+      if (this.activeSeatType) {
+        const status = this.checkSeat(seat);
+        this.colorizeSeat(seat, status, true);
+      }
     }
   }
 
-  private colorizeSeat(index: number, status: boolean, seatStyle: SeatType | SeatStatus = this.activeSeatType): void {
-    const element = document.getElementsByClassName('seat')[index];
-    element.classList.remove(SeatType.Common, SeatType.Sofa, SeatType.VIP);
+  private colorizeSeat(seat: SeatPosition, status: boolean, commonStyle: boolean): void {
+    this.removeSeatStyle(seat, SeatType.Common, SeatType.Sofa, SeatType.VIP);
     if (status) {
-      element.classList.add(seatStyle);
+      this.applySeatTypeStyle(seat, commonStyle);
     }
   }
 
-  private userSelectColorizeSeat(seat: SeatPosition, status: boolean, seatStyle: SeatType | SeatStatus = this.activeSeatType): void {
-    const index = this.countIndex(seat);
-    const element = document.getElementsByClassName('seat')[index];
+  private userSelectColorizeSeat(seat: SeatPosition, status: boolean): void {
     if (status) {
-      element.classList.remove(SeatStatus.Booked);
+      this.removeSeatStyle(seat, SeatStatus.Booked);
       this.userSelectedSeats = this.userSelectedSeats.filter(selectedSeat =>
         selectedSeat.seat !== seat.seat || selectedSeat.row !== seat.row);
     } else {
-      if (!element.classList.contains(SeatType.Empty)) {
-        element.classList.add(seatStyle);
+      if (!this.checkSeatElementStyle(seat, SeatStatus.Empty)) {
+        this.applySeatStatusStyle(seat, SeatStatus.Booked);
         const newSelectedSeat = this.seatPositionsData.find(schemasSeat => schemasSeat.seat === seat.seat && schemasSeat.row === seat.row);
         this.userSelectedSeats.push(newSelectedSeat);
       }
@@ -92,14 +81,12 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
   private initUserSelectSchema(): void {
     const length = document.getElementsByClassName('seat').length;
     for (let i = 0; i < length; i++) {
-      document.getElementsByClassName('seat')[i].classList.add(SeatType.Empty);
+      document.getElementsByClassName('seat')[i].classList.add(SeatStatus.Empty);
     }
   }
 
   private userSelectCheckBookingStatus(seat: SeatPosition): boolean {
-    const index = this.countIndex(seat);
-    const element = document.getElementsByClassName('seat')[index];
-    return element.classList.contains(SeatStatus.Booked) || element.classList.contains(SeatStatus.Sold);
+    return this.checkSeatElementStyle(seat, SeatStatus.Booked) || this.checkSeatElementStyle(seat, SeatStatus.Sold);
   }
 
   private countIndex(seat: SeatPosition): number {
@@ -127,10 +114,38 @@ export class HallSchemaComponent implements OnInit, AfterViewInit {
 
   private drawSchema(): void {
     for (const seat of this.seatPositionsData) {
-      const index = this.countIndex(seat);
-      document.getElementsByClassName('seat')[index].classList.remove(SeatType.Empty);
-      this.colorizeSeat(index, true, seat.seatType);
+      this.removeSeatStyle(seat, SeatStatus.Empty);
+      this.colorizeSeat(seat, true, false);
     }
+  }
+
+  private applySeatTypeStyle(seat: SeatPosition, commonStyle: boolean): void {
+    const element = this.getSeatElement(seat);
+    if (commonStyle) {
+      element.classList.add(this.activeSeatType);
+    } else {
+      element.classList.add(seat.seatType);
+    }
+  }
+
+  private applySeatStatusStyle(seat: SeatPosition, seatStatus: SeatStatus): void {
+    const element = this.getSeatElement(seat);
+    element.classList.add(seatStatus);
+  }
+
+  private removeSeatStyle(seat: SeatPosition, ...criteria: Array<SeatType | SeatStatus>): void {
+    const element = this.getSeatElement(seat);
+    element.classList.remove(...criteria);
+  }
+
+  private checkSeatElementStyle(seat: SeatPosition, criterion: SeatType | SeatStatus): boolean {
+    const element = this.getSeatElement(seat);
+    return element.classList.contains(criterion);
+  }
+
+  private getSeatElement(seat: SeatPosition): Element {
+    const index = this.countIndex(seat);
+    return document.getElementsByClassName('seat')[index];
   }
 
   updateSelectedSeatsData(): void {

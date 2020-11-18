@@ -75,7 +75,6 @@ export class OrderScreenComponent implements OnInit {
       debounceTime(400),
       switchMap((showParameters: ShowParameters) => this.showService.getShowsByParameters(showParameters))
     ).subscribe(shows => this.shows = this.groupBy(shows, show => {
-      console.log(show.startDateTime);
       return moment(new Date(show.startDateTime)).format('DD/MM/YYYY');
     }));
 
